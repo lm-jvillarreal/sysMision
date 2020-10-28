@@ -1,0 +1,6 @@
+USER="root"
+PASSWORD=""
+DATABASE="sysadmision2"
+FINAL_OUTPUT=`date +%Y%m%d`_$DATABASE.sql
+mysqldump --user=$USER --password=$PASSWORD $DATABASE > $FINAL_OUTPUT
+gzip $FINAL_OUTPUT

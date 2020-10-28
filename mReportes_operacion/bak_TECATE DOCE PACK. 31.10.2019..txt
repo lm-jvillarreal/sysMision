@@ -1,0 +1,9 @@
+1	01	01	3032	1	Validar comentarios por articulos	1					1	0	0
+2	7501061601128	130									00043		
+2	7501061659365	800									00043		
+1	02	02	3032	2	Validar comentarios por articulos	1					1	0	0
+2	7501061601128	50									00043		
+2	7501061659365	400									00043		
+1	03	03	3032	3	Validar comentarios por articulos	1					1	0	0
+2	7501061601128	60									00043		
+2	7501061659365	150									00043		

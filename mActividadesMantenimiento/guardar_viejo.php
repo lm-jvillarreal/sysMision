@@ -1,0 +1,1454 @@
+<?php 
+error_reporting(E_ALL ^ E_NOTICE);
+    include "../configuracion/conexion.php";
+    session_name("login_supsys");
+    session_start();
+    $s_idUsuario = $_SESSION["s_IdUser"];
+    date_default_timezone_set('America/Monterrey');
+    $fecha=date('Y-m-d');
+    $hora = date('H:i:s');
+    $Fecha1 = $_POST["fecha"];
+    $Actividad = $_POST["actividad"];
+    $Area = $_POST["area"];
+    $TipoActividad = $_POST["tactividad"];
+    $Sucursal = $_POST["sucursal"];
+    $Tiempo = $_POST["tiempo"];
+    $Pieza = $_POST["pieza"];
+    $Empleado = $_POST["empleado"];
+    $longitud = count($Empleado);
+    $longitud2 = count($Pieza);
+        
+    
+    if($Fecha1 == null or $Actividad == null or $Area == null or $TipoActividad == null or $Sucursal == null or $Tiempo == null)
+        {
+            echo"1";
+        }
+    else
+        {
+            if ($longitud == null)
+                {
+                    if($longitud2 == null)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '0-0000')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if ($longitud2 == 1)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if ($longitud2 == 2)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if ($longitud2 == 3)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if ($longitud2 == 4)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if ($longitud2 == 5)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Pieza[4]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if ($longitud2 == 6)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Pieza[4]',
+                                                        '$Pieza[5]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if ($longitud2 == 7)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6,
+                                                    codigo_interno7
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Pieza[4]',
+                                                        '$Pieza[5]',
+                                                        '$Pieza[6]')") or die (mysql_error());
+                            echo"2";
+                        }
+                }
+            else if($longitud == 1)
+                {
+                    if($longitud2 == null)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    compañero1
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '0-0000',
+                                                        '$Empleado[0]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 1)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    compañero1
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$Empleado[0]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 2)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    compañero1
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$Empleado[0]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 3)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    compañero1
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$Empleado[0]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 4)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    compañero1
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$pieza[3]',
+                                                        '$Empleado[0]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 5)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    compañero1
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$pieza[3]',
+                                                        '$pieza[4]',
+                                                        '$Empleado[0]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 6)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6,
+                                                    compañero1
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$pieza[3]',
+                                                        '$pieza[4]',
+                                                        '$pieza[5]',
+                                                        '$Empleado[0]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 7)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6,
+                                                    codigo_interno7,
+                                                    compañero1
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$pieza[3]',
+                                                        '$pieza[4]',
+                                                        '$pieza[5]',
+                                                        '$pieza[6]',
+                                                        '$Empleado[0]')") or die (mysql_error());
+                            echo"2";
+                        }
+                }
+            else if($longitud == 2)
+                {
+                    if($longitud2 == null)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    compañero1,
+                                                    compañero2
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '0-0000',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 1)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    compañero1,
+                                                    compañero2
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 2)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    compañero1,
+                                                    compañero2
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 3)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    compañero1,
+                                                    compañero2
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 4)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    compañero1,
+                                                    compañero2
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 5)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    compañero1,
+                                                    compañero2
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Pieza[4]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 6)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6,
+                                                    compañero1,
+                                                    compañero2
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Pieza[4]',
+                                                        '$Pieza[5]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 7)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6,
+                                                    codigo_interno7,
+                                                    compañero1,
+                                                    compañero2
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Pieza[4]',
+                                                        '$Pieza[5]',
+                                                        '$Pieza[6]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]')") or die (mysql_error());
+                            echo"2";
+                        }
+                }
+            else if($longitud == 3)
+                {
+                    if($longitud2 == null)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '0-0000',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 1)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 2)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 3)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 4)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$pieza[3]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 5)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$pieza[3]',
+                                                        '$pieza[4]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 6)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$pieza[3]',
+                                                        '$pieza[4]',
+                                                        '$pieza[5]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 7)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6,
+                                                    codigo_interno7,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$pieza[0]',
+                                                        '$pieza[1]',
+                                                        '$pieza[2]',
+                                                        '$pieza[3]',
+                                                        '$pieza[4]',
+                                                        '$pieza[5]',
+                                                        '$pieza[6]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]')") or die (mysql_error());
+                            echo"2";
+                        }
+                }
+            else if($longitud == 4)
+                {
+                    if($longitud2 == null)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3,
+                                                    compañero4
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '0-0000',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]',
+                                                        '$Empleado[3]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 1)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3,
+                                                    compañero4
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]',
+                                                        '$Empleado[3]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 2)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3,
+                                                    compañero4
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]',
+                                                        '$Empleado[3]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 3)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3,
+                                                    compañero4
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]',
+                                                        '$Empleado[3]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 4)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3,
+                                                    compañero4
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]',
+                                                        '$Empleado[3]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 5)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3,
+                                                    compañero4
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Pieza[4]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]',
+                                                        '$Empleado[3]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 6)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3,
+                                                    compañero4
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Pieza[4]',
+                                                        '$Pieza[5]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]',
+                                                        '$Empleado[3]')") or die (mysql_error());
+                            echo"2";
+                        }
+                    else if($longitud2 == 7)
+                        {
+                            $insertar= mysqli_query($conexion,"INSERT INTO actividades_mantenimiento (
+                                                    fecha,
+                                                    actividad,
+                                                    id_area,
+                                                    id_t_actividad,
+                                                    id_sucursal,
+                                                    id_usuario,
+                                                    activo,
+                                                    tiempo,
+                                                    codigo_interno,
+                                                    codigo_interno2,
+                                                    codigo_interno3,
+                                                    codigo_interno4,
+                                                    codigo_interno5,
+                                                    codigo_interno6,
+                                                    codigo_interno7,
+                                                    compañero1,
+                                                    compañero2,
+                                                    compañero3,
+                                                    compañero4
+                                                )
+                                                VALUES
+                                                    (
+                                                        '$Fecha1',
+                                                        '$Actividad',
+                                                        '$Area',
+                                                        '$TipoActividad',
+                                                        '$Sucursal',
+                                                        '$s_idUsuario',
+                                                        '1',
+                                                        '$Tiempo',
+                                                        '$Pieza[0]',
+                                                        '$Pieza[1]',
+                                                        '$Pieza[2]',
+                                                        '$Pieza[3]',
+                                                        '$Pieza[4]',
+                                                        '$Pieza[5]',
+                                                        '$Pieza[6]',
+                                                        '$Empleado[0]',
+                                                        '$Empleado[1]',
+                                                        '$Empleado[2]',
+                                                        '$Empleado[3]')") or die (mysql_error());
+                            echo"2";
+                        }
+                }
+        }
+?>

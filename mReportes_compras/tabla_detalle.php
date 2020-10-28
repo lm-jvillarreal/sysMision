@@ -1,0 +1,52 @@
+<?php
+include '../global_seguridad/verificar_sesion.php';
+$folio=$_POST['folio'];
+$datos=array();
+$cadenaDetalle="SELECT 
+                  ARTC_ARTICULO, 
+                  ARTC_DESCRIPCION, 
+                  ARTC_COSTO, 
+                  ARTC_PRECIOVENTA, 
+                  ARTC_PRECIOOFERTA, 
+                  INVENTARIO_INICIAL, 
+                  CANTIDAD_COMPRA, 
+                  INV_ETRANS, 
+                  INV_EXDEV, 
+                  INV_ENTRADAS, 
+                  INV_TOTALENTRADAS, 
+                  INV_SALXVE, 
+                  INV_STRANS, 
+                  INV_SALIDAS, 
+                  INV_SGRAL, 
+                  INV_TOTALSALIDAS, 
+                  FECHAHORA_FOLIO, 
+                  ACTIVO, 
+                  USUARIO,
+                  INV_TEORICO,
+                  INV_DEVOLUCIONES
+                FROM com_kardexMovimientos WHERE FOLIO='$folio'";
+
+$detalle=mysqli_query($conexion,$cadenaDetalle);
+while($rowDetalle=mysqli_fetch_array($detalle)){
+  array_push($datos,array(
+    'artc_articulo'=>$rowDetalle[0],
+    'artc_descripcion'=>$rowDetalle[1],
+    'costo'=>$rowDetalle[2],
+    'ppublico'=>$rowDetalle[3],
+    'poferta'=>$rowDetalle[4],
+    'inicial'=>$rowDetalle[5],
+    'compra'=>$rowDetalle[6],
+    'etrans'=>$rowDetalle[7],
+    'exdev'=>$rowDetalle[8],
+    'entradas'=>$rowDetalle[9],
+    'totent'=>$rowDetalle[10],
+    'salxve'=>$rowDetalle[11],
+    'strans'=>$rowDetalle[12],
+    'devol'=>$rowDetalle[20],
+    'salidas'=>$rowDetalle[13],
+    'totsal'=>$rowDetalle[15],
+    'teorico'=>$rowDetalle[19]
+  ));
+}
+echo utf8_encode(json_encode($datos));
+?>

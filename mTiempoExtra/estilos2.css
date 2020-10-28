@@ -1,0 +1,22 @@
+ /* posicion del html para posicionar el footer */
+ html 
+  {
+   min-height: 100%;
+   position: relative;
+  }
+/* editar el body para posicionar el footer */
+ body
+  {
+   margin:0;
+   background-color:#F7F6F6;
+   margin-bottom: 40px;
+  } 
+/* posicionar el footer siempre al final */
+ footer 
+ {
+   background-color:F7F6F6;
+   position: absolute;
+   bottom: 0;
+   width: 95%;
+   height: 40px;
+ }
