@@ -28,7 +28,8 @@ error_reporting(E_ALL ^ E_NOTICE);
                 mapeo.mueble,
                 mapeo.cara,
                 sucursales.nombre,
-                usuarios.nombre_usuario
+                usuarios.nombre_usuario,
+                mapeo.id
             FROM
                 inv_mapeo mapeo
             INNER JOIN sucursales ON sucursales.id = mapeo.id_sucursal
@@ -42,6 +43,7 @@ error_reporting(E_ALL ^ E_NOTICE);
     $mueble = $s[1];
     $cara = $s[2];
     $usuario = $s[4];
+    $folio = $s[5];
 
 
   date_default_timezone_set('America/Monterrey');
@@ -88,6 +90,7 @@ class MYPDF extends TCPDF {
         global $cara;
         global $fecha;
         global $usuario;
+        global $folio;
         // Logo
         //$image_file = K_PATH_IMAGES.'logo_example.jpg';
         //$this->Image($image_file, 10, 10, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
@@ -97,6 +100,7 @@ class MYPDF extends TCPDF {
         $this->Cell(0, 8, 'La Mision Supermercados Suc.'.$sucursal, 0, true, 'C', 0, '', 0, false, 'M', 'M');
         $this->Cell(0, 5, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, true, 'R', 0, '', 0, false, 'T', 'M');
         //$this->Cell(0, 5, 'Prelistados para inventarios', 0, true, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Cell(0, 7, 'Folio: '. $folio, 0, true, 'L', 0, '', 0, false, 'M', 'M');
         $this->Cell(0, 7, 'Zona: '. $zona, 0, true, 'L', 0, '', 0, false, 'M', 'M');
         $this->Cell(0, 7, 'Mueble: '. $mueble, 0, true, 'L', 0, '', 0, false, 'M', 'M');
         $this->Cell(0, 7, 'Cara: '. $cara, 0, true, 'L', 0, '', 0, false, 'M', 'M');
