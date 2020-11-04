@@ -1,6 +1,6 @@
 <?php 	
 	error_reporting(E_ALL ^ E_NOTICE);
-	include '../global_settings/conexion_pruebas.php';
+	//include '../global_settings/conexion_pruebas.php';
 	include '../global_settings/conexion_oracle.php';
 	$codigo= $_POST['codigo'];
 	$sql_o = "SELECT artc_descripcion FROM COM_ARTICULOS WHERE ARTC_ARTICULO = '$codigo'";

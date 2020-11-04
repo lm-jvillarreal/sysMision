@@ -1,6 +1,6 @@
 <?php 	
 	error_reporting(E_ALL ^ E_NOTICE);
-	include '../global_settings/conexion_supsys.php';
+	include '../global_seguridad/verificar_sesion.php';
 	$id_caja = $_POST['id_caja'];
 	$codigo = $_POST['codigo'];
 	$cantidad = $_POST['cantidad'];
@@ -14,4 +14,7 @@
 	$update = "UPDATE cajas_articulos SET descripcion = '$descripcion_completa' WHERE id = '$id_caja'";
 	$ex_update = mysqli_query($conexion, $update);
 	$exSql = mysqli_query($conexion, $sql);
+
+
+	
  ?>

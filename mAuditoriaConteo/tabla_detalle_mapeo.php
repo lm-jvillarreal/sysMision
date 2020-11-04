@@ -10,7 +10,8 @@
 					D.Id,
 					C.Id
 				FROM inv_detalle_mapeo D
-				INNER JOIN inv_captura C ON D.id = C.id_detalle_mapeo 
+				INNER JOIN inv_captura C ON D.id = C.id_detalle_mapeo
+				INNER JOIN inv_mapeo M ON M.id = D.id_mapeo
 				AND D.id_mapeo = C.id_mapeo
 				where D.id_mapeo = '$id_mapeo'";
 				//echo "$qry";

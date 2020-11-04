@@ -79,7 +79,7 @@ while($row_articulo = oci_fetch_row($consultaPrincipal)){
     $faltante_pedido=$faltante_ue;
   }
   $sugerido = "<input type='hidden' id='sugerido_$conteo' value='$faltante' readonly='true' class='form-control'>";
-  $pedido="<div class='input-group'><span class='input-group-addon'><input type='checkbox' id='$conteo' name='articulos' value='$row_articulo[0]' onclick='pedido($row_articulo[0],$conteo)'></span><input type='number' min='0' step='1' id='cantidad_$conteo' value='$faltante_pedido' readonly='true' class='form-control'></div>";
+  $pedido="<div class='input-group'><span class='input-group-addon'><input type='checkbox' id='$conteo' name='articulos' value='$row_articulo[0]' onclick='pedido($row_articulo[0],$conteo)'></span><input type='number' min='0' step='1' id='cantidad_$conteo' value='$faltante' readonly='true' class='form-control'></div>";
   
   $cadenaFaltantePV="SELECT * FROM faltantes_pasven where sucursal='$id_sede' and cve_articulo='$row_articulo[0]' and (estatus='1' or estatus='3')
                     AND DATE(fecha_captura) BETWEEN DATE_SUB(NOW(),INTERVAL 7 DAY) AND DATE(NOW())";

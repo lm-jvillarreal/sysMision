@@ -1,6 +1,6 @@
 <?php
 		//include 'conexion_servidor.php';
-		include '../global_settings/conexion_supsys.php';
+		include '../global_seguridad/verificar_sesion.php';
 		session_name("login_supsys"); 
 		session_start(); 
 		date_default_timezone_set('America/Monterrey');
@@ -57,7 +57,7 @@
 	        				<a onclick="javascript:quitar_registro(<?php echo $row[0] ?>, <?php echo $row[4] ?>)" href="#" class="fa fa-trash color-icono fa-2x"></a>
 	        			</td>
 	        		</tr>
-	        	<?}
+	        	<?php }
 	        ?>
 	    </table>
 	</div>

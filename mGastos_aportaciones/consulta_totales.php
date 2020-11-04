@@ -4,7 +4,7 @@ date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d");
 $hora=date ("h:i:s");
 //$anio = date("Y");
-$anio = '2019';
+$anio = '2020';
 
 $cadena_NC = "SELECT CONCAT('$',FORMAT(SUM(total),2)) FROM gastos_aportaciones WHERE anio = '$anio' AND concepto = 'GASTO POR ANIVERSARIO'";
 $consulta_NC = mysqli_query($conexion, $cadena_NC);

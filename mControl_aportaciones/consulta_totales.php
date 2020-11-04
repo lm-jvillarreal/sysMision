@@ -4,7 +4,7 @@ date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d");
 $hora=date ("h:i:s");
 //$anio = date("Y");
-$anio = '2019';
+$anio = '2020';
 
 $filtro_rp = (!empty($registros_propios) == '1') ? "WHERE id_comprador = '$id_usuario' AND concepto = 'APORTACION ANIVERSARIO'" : "WHERE activo = '1' AND concepto = 'APORTACION ANIVERSARIO'";
 

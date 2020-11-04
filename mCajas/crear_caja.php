@@ -1,7 +1,7 @@
 <?php 
 	error_reporting(E_ALL ^ E_NOTICE);
 	//include '../configuracion/conexion_servidor.php';
-	include_once '../global_settings/conexion_supsys.php';
+	include '../global_seguridad/verificar_sesion.php';
 	$codigo = $_POST['codigo'];
 	$descripcion = $_POST['descripcion'];
 

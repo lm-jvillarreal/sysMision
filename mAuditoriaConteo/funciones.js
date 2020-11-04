@@ -32,6 +32,29 @@ function inicio(codigo, id_mapeo, estante, consecutivo) {
     });
 }
 
+function InsertDetalle(codigo, id_mapeo, cantidad_nueva, cantidad_antig, descripcion, id_renglon) {
+    $.ajax({
+        url: "insert_detalle.php",
+        type: "POST",
+        dateType: "html",
+        data: {
+            'codigo': codigo,
+            'id_mapeo': id_mapeo,
+            'cantidad_nueva': cantidad_nueva,
+            'cantidad_antig': cantidad_antig,
+            'descripcion': descripcion,
+            'id_renglon': id_renglon
+        },
+        success: function(respuesta) {
+            console.log(respuesta);
+            alertify.success("Guardado");
+        },
+        error: function(xhr, status) {
+            alert(xhr);
+        },
+    });
+}
+
 
 
 

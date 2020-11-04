@@ -4,7 +4,7 @@ include '../global_seguridad/verificar_sesion.php';
 date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d"); 
 $hora=date ("h:i:s");
-$anio = '2019';
+$anio = '2020';
 $filtro_rp = (!empty($registros_propios) == '1') ? " WHERE id_comprador = '$id_usuario'" : "";
 
 $cadena_aportaciones = "SELECT 
@@ -21,7 +21,7 @@ $cadena_aportaciones = "SELECT
 							consecutivo_nc,
 							cve_proveedor
 						FROM 
-							aportaciones ";
+							aportaciones WHERE (concepto='APORTACION ANIVERSARIO' OR concepto='PLAN COMERCIAL') AND anio='$anio'";
 
 //echo $cadena_aportaciones;
 $consulta_aportaciones = mysqli_query($conexion, $cadena_aportaciones);

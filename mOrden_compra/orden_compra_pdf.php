@@ -296,7 +296,7 @@ $mail->SMTPOptions = array(
 );
 $mail->CharSet = 'UTF-8';
 //Username to use for SMTP authentication
-$mail->Username = 'jvillarreal@lamisionsuper.com';
+$mail->Username = 'compras@lamisionsuper.com';
 //Password to use for SMTP authentication
 $mail->Password = 'GEX356qQ!';
 //Set who the message is to be sent from

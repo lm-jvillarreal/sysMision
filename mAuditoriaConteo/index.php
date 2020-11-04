@@ -219,7 +219,7 @@ $hora = date("h:i:s");
         dateType: "html",
         data: datos,
         success: function(respuesta) {
-          
+          alertify.success("Guardado")
         },
         error: function(xhr, status) {
           alert(xhr);

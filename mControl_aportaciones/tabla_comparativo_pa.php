@@ -4,7 +4,7 @@ include '../global_seguridad/verificar_sesion.php';
 date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d"); 
 $hora=date ("h:i:s");
-$anio = '2019';
+$anio = '2020';
 $filtro_rp = (!empty($registros_propios) == '1') ? " AND id_comprador = '$id_usuario'" : "";
 
 $cadena_aportaciones = "SELECT proy.id, proy.cve_proveedor, proy.nombre_proveedor, proy.monto, aport.total, usr.nombre_usuario 

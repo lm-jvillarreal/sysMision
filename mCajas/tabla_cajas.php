@@ -1,7 +1,5 @@
 <?php
-		include '../global_settings/conexion_supsys.php';
-		session_name("login_supsys"); 
-		session_start(); 
+		include '../global_seguridad/verificar_sesion.php';
 		date_default_timezone_set('America/Monterrey');
 		$fecha = date('Y-m-d');
         $qry = "SELECT
@@ -54,7 +52,7 @@
 	            	<a  onclick="javascript:borrar_caja(<?php echo $row[0] ?>)" class="fa fa-trash color-icono fa-2x"></a>
 	            </td>
 	          </tr>
-	          <?
+	          <?php
 	        }
 	        ?>
 	    </table>
