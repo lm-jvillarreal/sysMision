@@ -21,6 +21,8 @@ $cadenaValidar = "SELECT
                     AND usuarios.activo='1' 
                     AND personas.activo='1'";
 
+                    echo "$cadenaValidar";
+
 $consultaValidar = mysqli_query($conexion,$cadenaValidar);
 $rowUsuario = mysqli_fetch_array($consultaValidar);
 $datos=array();
