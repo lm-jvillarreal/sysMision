@@ -16,15 +16,15 @@ header("Content-Type: application/json; charset=UTF-8");
     // session_name("sysApp");
     // session_start();
 
-   //  $database = new Database();
-   //  $db = $database->getConnection();
+    $database = new Database();
+    $db = $database->getConnection();
 
-   //  $area = new Areas($db);
- 	 //  date_default_timezone_set('America/Monterrey');
-  	// $fecha = date('Y-m-d');
-  	// $hora = date('H:i:s');
-   //  // get posted data
-   //  $suc = $_GET['suc'];
+    $area = new Areas($db);
+ 	  date_default_timezone_set('America/Monterrey');
+  	$fecha = date('Y-m-d');
+  	$hora = date('H:i:s');
+    // get posted data
+    $suc = $_GET['suc'];
 
 
    //  $data = json_decode(file_get_contents("php://input"));
