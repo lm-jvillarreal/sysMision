@@ -13,8 +13,8 @@ header("Content-Type: application/json; charset=UTF-8");
     // instantiate product object
     include_once '../Classes/Areas.php';
     //include '../../global_seguridad/verificar_sesion.php';
-    session_name("sysApp");
-    session_start();
+    // session_name("sysApp");
+    // session_start();
 
    //  $database = new Database();
    //  $db = $database->getConnection();
