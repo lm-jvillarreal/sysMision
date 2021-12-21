@@ -15,12 +15,7 @@ header("Content-Type: application/json; charset=UTF-8");
     //include '../../global_seguridad/verificar_sesion.php';
     // session_name("sysApp");
     // session_start();
-
-    try {
-      $database = new Database();
-    } catch (Exception $e) {
-      echo 'Caught exception: ',  $e->getMessage();
-    }
+    $database = new Database();
     
     //$db = $database->getConnection();
 
