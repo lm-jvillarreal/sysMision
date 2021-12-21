@@ -24,36 +24,36 @@ header("Content-Type: application/json; charset=UTF-8");
   	$fecha = date('Y-m-d');
   	$hora = date('H:i:s');
     // get posted data
-    //$suc = $_GET['suc'];
+    $suc = $_GET['suc'];
 
 
-   //  $data = json_decode(file_get_contents("php://input"));
+    $data = json_decode(file_get_contents("php://input"));
 
-   //  // set product property values
-   //  $area->id_sucursal = $suc;
+    // set product property values
+    $area->id_sucursal = $suc;
 
-   //  $stmt = $area->read();
-   //  $num = $stmt->rowCount();
+    $stmt = $area->read();
+    $num = $stmt->rowCount();
 
-   //  $obras_arr=array();
-   //  if($num > 0){
-   //    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-   //      // extract row
-   //      // this will make $row['name'] to
-   //      // just $name only
-   //      extract($row);
+    $obras_arr=array();
+    if($num > 0){
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        // extract row
+        // this will make $row['name'] to
+        // just $name only
+        extract($row);
 
-   //      $obra_item = array(
-   //        "id" => $id,
-   //        "nombre" => $nombre,
-   //        "clave" => $clave,
-   //        "idSucursal" => $idSucursal
-   //      );
+        $obra_item = array(
+          "id" => $id,
+          "nombre" => $nombre,
+          "clave" => $clave,
+          "idSucursal" => $idSucursal
+        );
 
-   //      array_push($obras_arr, $obra_item);
+        array_push($obras_arr, $obra_item);
 
-   //    }
-   //  }
-   //  echo json_encode($obras_arr);
+      }
+    }
+    echo json_encode($obras_arr);
 
  ?>
