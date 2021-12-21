@@ -12,20 +12,22 @@ class Database{
     public function getConnection(){
 
         /* Connect to a MySQL database using driver invocation */
-            $dsn_p = 'mysql:dbname=sysadmision2;host=74.208.211.84';
-            $user_p = 'mision';
-            $password_p = 'ABC1238f47';
+        //$conexion=mysqli_connect($db_host,$db_user,$db_pass,$db_name);
 
-            $dbh = new PDO($dsn, $user, $password);
 
         $this->conn = null;
-        try{
-            $this->conn = new PDO($dsn_p, $user_p, $password_p);
-            //$this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            //$this->conn->exec("set names utf8");
-        }catch(PDOException $exception){
-            echo "Connection error: " . $exception->getMessage();
+        $this->conn = mysqli_connect($db_host,$db_user,$db_pass,$db_name);
+        if(mysqli_connect_errno()){
+         printf(mysqli_connect_error());
         }
+        mysqli_set_charset($this->con, 'utf8');
+        // try{
+            
+        //     //$this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+        //     //$this->conn->exec("set names utf8");
+        // }catch(PDOException $exception){
+        //     echo "Connection error: " . $exception->getMessage();
+        // }
 
         return $this->conn;
     }
