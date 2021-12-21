@@ -16,7 +16,12 @@ header("Content-Type: application/json; charset=UTF-8");
     // session_name("sysApp");
     // session_start();
 
-    $database = new Database();
+    try {
+      $database = new Database();
+    } catch (Exception $e) {
+      echo 'Caught exception: ',  $e->getMessage();
+    }
+    
     //$db = $database->getConnection();
 
     //$area = new Areas($db);
