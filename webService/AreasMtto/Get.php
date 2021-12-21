@@ -25,7 +25,6 @@ header("Content-Type: application/json; charset=UTF-8");
   	$hora = date('H:i:s');
     // get posted data
     $suc = $_GET['suc'];
-    $estatus = $_GET['estatus'];
 
 
     $data = json_decode(file_get_contents("php://input"));
