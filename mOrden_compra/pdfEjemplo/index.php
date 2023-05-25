@@ -233,7 +233,7 @@ $mail->SMTPDebug = 0;
 //Set the hostname of the mail server
 $mail->Host = 'mail.lamisionsuper.com';
 //Set the SMTP port number - likely to be 25, 465 or 587
-$mail->Port = 2525;
+$mail->Port = 587;
 //Whether to use SMTP authentication
 $mail->SMTPAuth = True;
 
@@ -248,9 +248,9 @@ $mail->SMTPOptions = array(
 );
 $mail->CharSet = 'UTF-8';
 //Username to use for SMTP authentication
-$mail->Username = 'jvillarreal@lamisionsuper.com';
+$mail->Username = '';
 //Password to use for SMTP authentication
-$mail->Password = 'GEX356qQ!';
+$mail->Password = '';
 //Set who the message is to be sent from
 $mail->setFrom($correo_persona, $nombre_persona);
 //Set an alternative reply-to address

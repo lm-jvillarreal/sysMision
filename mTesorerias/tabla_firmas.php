@@ -3,7 +3,7 @@
   date_default_timezone_set('America/Monterrey');
   $fecha_actual = date('Y-m-d');
   
-  $cadena  = "SELECT firmas.id,CONCAT(personas.nombre,' ',personas.ap_paterno,' ',personas.ap_materno)AS Nomb,firmas.activo
+  $cadena  = "SELECT firmas.id,CONCAT(personas.titulo,' ',personas.nombre,' ',personas.ap_paterno,' ',personas.ap_materno)AS Nomb,firmas.activo
               FROM firmas
               INNER JOIN personas ON personas.id = firmas.id_persona";
   $consulta = mysqli_query($conexion, $cadena);

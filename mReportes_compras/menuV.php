@@ -45,6 +45,8 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
     <li><a href="index_rpt_kardexMovimientos.php"><i class="fa fa-bars"></i><span>Verificador Inventarios</span></a></li>
     <li><a href="index_rpt_detalleArticulos.php"><i class="fa fa-bars"></i><span>Detalle artículos</span></a></li>
     <li><a href="index_rpt_existencias.php"><i class="fa fa-bars"></i><span>Reporte de Existencias</span></a></li>
+    <li><a href="index_desced.php"><i class="fa fa-bars"></i><span>Desplazamiento CEDIS</span></a></li>
+    <li><a href="indexInicioReportes.php"><i class="fa fa-bars"></i><span>Inicio</span></a></li>
   </ul>
   <ul class="sidebar-menu" data-widget="tree">
     <li class="header">Opciones de navegaci&oacute;n</li>

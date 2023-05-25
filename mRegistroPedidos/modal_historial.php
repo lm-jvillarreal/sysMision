@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-historial">
-  <div class="modal-dialog" id="modal_historial">
+  <div class="modal-dialog modal-lg" id="modal_historial">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -16,15 +16,27 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="cantidad_modal">Cantidad:</label>
+              <input type="number" id="modal_cantidad" id="modal_cantidad" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="form-group">
+              <label for="descripcion_modal">Descripción</label>
+              <input type="text" id="descripcion_modal" id="descripcion_modal" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-12">
             <div class="table-responsive">
               <table id="lista_detalleResumen" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
-                  <th width='5%'>Código</th>
-                  <th>Descripción</th>
-                  <th width='5%'>U.M.</th>
                   <th width='5%'>Cant.</th>
-                  <th width='10%'>Surtido</th>
+                  <th>Descripción</th>
+                  <th width='5%'></th>
                 </thead>
               </table>
             </div>

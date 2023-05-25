@@ -36,27 +36,33 @@
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th >No. Empleado</th>
+                        <th >Nombre</th>
                          <th>Departamento</th>
                          <th>Sucursal</th>
                         <th>Incidencia</th>
-                        <th>Categoría</th>
+                        <th>Comentario</th>
+                        <th>Registra</th>
+                        <th>Fecha</th>
                         <th>Estado</th>
-                        <th>Archivo</th>
-                        <th>Subir Acta</th>
+                        <th>Autoriza</th>
+                        <th>Perfil</th>
+                        <th>Liberar</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
                         <th>ID</th>
-                        <th>No. Empleado</th>
+                        <th>Nombre</th>
                         <th>Departamento</th>
                         <th>Sucursal</th>
                         <th>Incidencia</th>
-                        <th>Categoría</th>
+                        <th>Comentario</th>
+                        <th>Registra</th>
+                        <th>Fecha</th>
                         <th>Estado</th>
-                        <th>Archivo</th>
-                        <th>Subir Acta</th>
+                        <th>Autoriza</th>
+                        <th>Perfil</th>
+                        <th>Liberar</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -137,8 +143,9 @@
 	        ],
       "ajax": {
         "type": "POST",
-        "url": "http://200.1.1.197/SMPruebas/mRegistro_incidencias/tabla_autorizados.php",
+        "url": "tabla_autorizados.php",
         "dataSrc": ""
+        //http://200.1.1.197/SMPruebas/mRegistro_incidencias/
       },
       "columns": [
         { "data": "id" },
@@ -146,12 +153,38 @@
         { "data": "departamento" },
         { "data": "sucursal" },
         { "data": "incidencia" },
-        { "data": "categoria" },
+        { "data": "comentario" },
+        { "data": "registra" },
+        { "data": "fecha" },
         { "data": "activo"},
-        { "data": "imprimir"},
-        { "data": "subir"}
+        { "data": "autoriza"},
+        { "data": "perfil"},
+        { "data": "liberar"}
       ]
     });
   }
+  function autorizacion(registro){
+    var id_registro = registro;
+    var url = 'liberar.php';
+    $.ajax({
+      url: url,
+      type: "POST",
+      dateType: "html",
+      data: {id_registro: id_registro},
+      success: function(respuesta) {
+        if (respuesta=="ok") {
+          alertify.success("Incidencia Liberada");
+          cargar_tabla();
+        }
+      },
+      error: function(xhr, status) {
+        alert("error");
+        //alert(xhr);
+      },
+    });
+  }
+  function imp_fichaP(id){
+          window.open("imprimir.php?id_registro="+id,"folio","width=320,height=900,menubar=no,titlebar=no");
+        }
 </script>
 </html>

@@ -131,8 +131,9 @@
 	        ],
       "ajax": {
         "type": "POST",
-        "url": "http://200.1.1.197/SMPruebas/mRegistro_incidencias/tabla_rechazados.php",
+        "url": "tabla_rechazados.php",
         "dataSrc": ""
+        //http://200.1.1.197/SMPruebas/mRegistro_incidencias/
       },
       "columns": [
         { "data": "id" },

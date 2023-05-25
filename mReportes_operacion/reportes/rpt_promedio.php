@@ -54,7 +54,7 @@ $fecha_f=str_replace("-","",$fecha_final);
 
 	$fila = 2;
 	$i = 1;
-	while($i <= 5)
+	while($i <= 6)
 	{
 
 		$consulta_principal  = "SELECT
@@ -82,6 +82,8 @@ $fecha_f=str_replace("-","",$fecha_final);
 			$sucursal = "Allende";
 		}elseif($i == 5){
 			$sucursal = "Petaca";
+		}elseif($i == 6){
+			$sucursal = "Montemorelos";
 		}
 	
 		 $objPHPExcel->setActiveSheetIndex(0)

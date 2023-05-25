@@ -12,6 +12,7 @@ $arra = explode(',', $array);
 $cantidad = count($arra);
 $departamento = $_POST['departamento'];
 $or="";
+
 if ($departamento == "" && $proveedor == "" && $familia == "") {
 	for ($i=1; $i < $cantidad; $i++) { 
 		$consulta = " OR ARTC_ARTICULO = '$arra[$i]'";

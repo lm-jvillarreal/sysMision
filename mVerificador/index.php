@@ -28,13 +28,13 @@ $hora = date("h:i:s");
           <div class="box-body">
             <form method="POST" id="frmDatos">
               <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                   <div class="form-group">
                     <label>*Fecha Inicial</label>
                     <input type="date" name="fecha_inicial" class="form-control" id="fecha_inicial">
                   </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                   <div class="form-group">
                     <label for="descripcion">*Fecha Final</label>
                     <input type="date" name="fecha_final" id="fecha_final" class="form-control">
@@ -52,6 +52,14 @@ $hora = date("h:i:s");
                     <input class="form-control" type="text" readonly name="descripcion" id="artc_descripcion">
                   </div>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                  <div class="form-group">
+                    <label for="artc_fechaalta">*Alta:</label>
+                    <input type="text" name="artc_fechaalta" id="artc_fechaalta" class="form-control" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                   <div class="form-group">
                     <label for="bodega">Sucursal</label>
@@ -61,6 +69,7 @@ $hora = date("h:i:s");
                       <option value="3">Villegas</option>
                       <option value="4">Allende</option>
                       <option value="5">La Petaca</option>
+                      <option value="6">Montemorelos</option>
                       <option value="99">CEDIS</option>
                     </select>
                   </div>
@@ -68,9 +77,6 @@ $hora = date("h:i:s");
                 <div class="col-lg-4" style="display: none" id="barra">
                   <img src="barra.gif" height="100" width="100">
                 </div>
-              </div>
-              <div class="row">
-
               </div>
             </form>
           </div>
@@ -626,12 +632,9 @@ $hora = date("h:i:s");
         dateType: 'html',
         beforeSend: function() {},
         success: function(response) {
-          if (response == "") {
-            response = "N/A";
-          } else {
-            response = response;
-          }
-          $('#artc_descripcion').val(response);
+          var array = eval(response);
+          $('#artc_descripcion').val(array[0]);
+          $("#artc_fechaalta").val(array[1]);
         }
       });
     });
@@ -655,7 +658,7 @@ $hora = date("h:i:s");
           $('#altas_inventario').val(array[2]);
           $('#devolucion_venta').val(array[3]);
           $('#ajustes_forzosos').val(array[4]);
-          $('#cantidad_vendida').val(array[5]-array[3]);
+          $('#cantidad_vendida').val(array[5] - array[3]);
           $('#salidas_transf').val(array[6]);
           $('#bajas_inventario').val(array[7]);
           $('#devolucion_compra').val(array[8]);
@@ -686,10 +689,11 @@ $hora = date("h:i:s");
       var comprada = $('#cantidad_comprada').val();
       var entradas_transf = $('#entradas_transf').val();
       var altas_inventario = $('#altas_inventario').val();
+      var atrans_ = $('#atrans').val();
       //var devolucion_venta = $('#devolucion_venta').val();
 
       //var total = parseFloat(comprada) + parseFloat(entradas_transf) + parseFloat(altas_inventario) + parseFloat(devolucion_venta);
-      var total = parseFloat(comprada) + parseFloat(entradas_transf) + parseFloat(altas_inventario);
+      var total = parseFloat(comprada) + parseFloat(entradas_transf) + parseFloat(altas_inventario) + parseFloat(atrans_);
       $('#total_entradas').val(total);
     }
 
@@ -697,11 +701,12 @@ $hora = date("h:i:s");
       var venta = $('#cantidad_vendida').val();
       var mermas = $('#mermas').val();
       var salida_transf = $('#salidas_transf').val();
+      var astrans_ = $("#aetrans").val();
       var bajas_inv = $('#bajas_inventario').val();
       var devolucion_compra = $('#devolucion_compra').val();
       var salida_transf_res = $('#salida_restaurante').val();
 
-      var total = parseFloat(venta) + parseFloat(salida_transf) + parseFloat(bajas_inv) + parseFloat(devolucion_compra) + parseFloat(salida_transf_res) + parseFloat(mermas);
+      var total = parseFloat(venta) + parseFloat(salida_transf) + parseFloat(astrans_) + parseFloat(bajas_inv) + parseFloat(devolucion_compra) + parseFloat(salida_transf_res) + parseFloat(mermas);
       var grupo = {
         venta: venta,
         mermas: mermas,

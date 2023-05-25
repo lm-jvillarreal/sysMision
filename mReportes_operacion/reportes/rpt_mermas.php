@@ -18,6 +18,8 @@ if ($sucursal == 1) {
 	$suc = "Allende";
 }elseif($sucursal==5){
 	$suc="La Petaca";
+}elseif($sucursal==99){
+	$suc="CEDIS";
 }
 
 

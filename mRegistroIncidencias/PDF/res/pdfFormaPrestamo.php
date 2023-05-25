@@ -102,13 +102,13 @@ ini_set('max_execution_time', 500);
 mysqli_set_charset($conexion,'utf8');
 
 $consulta2=mysqli_query($conexion,"SELECT
-id,
-departamento,
+incidencias.id,
+incidencias.departamento,
 comentario,
 (SELECT nombre FROM sanciones_incidencias WHERE incidencias.decision = sanciones_incidencias.id) as decision,
-(SELECT nombre FROM catalogo_incidencias WHERE incidencias.incidencia = catalogo_incidencias.id_incidencia )as incidencia,
+(SELECT incidencia FROM catalogo_incidencias WHERE incidencias.incidencia = catalogo_incidencias.id)as incidencia,
 sucursal,
-nombre
+incidencias.nombre
 FROM
 incidencias
 WHERE folio = '1'
@@ -116,9 +116,9 @@ and incidencias.id= '$id_registro'");
 
 
 $row_incidencias=mysqli_fetch_array($consulta2); //row_incidencia para llenar los campos adicionales
-
 $consulta3=sqlsrv_query($conn,"SELECT nombre + ' ' + ap_paterno + ' ' + ap_materno AS 'nombre' FROM empleados WHERE codigo ='$row_incidencias[6]' ");
-$row_persona = sqlsrv_fetch_array($consulta3);//row_persona para llenar campos de persona             
+
+$row_persona = sqlsrv_fetch_array($consulta3);//row_persona para llenar campos de persona           
 ?>
 <style type="text/css">
 table
@@ -155,7 +155,7 @@ table
     
     <tr>
         <td align="left">
-            El día <?php echo $dia_mas;?> de <?php echo $mes_nuevo;?> del año <?php echo $año_mas;?> se levanta la presente ACTA ADMINISTRATIVA 
+            El día <?php echo $dia;?> de <?php echo $mes_nuevo;?> del año <?php echo $año_mas;?> se levanta la presente ACTA ADMINISTRATIVA 
         </td>
     </tr>
     <tr>

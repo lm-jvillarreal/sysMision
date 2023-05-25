@@ -52,13 +52,14 @@ while($rowDetalle=mysqli_fetch_array($detalle)){
                             (SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 5, artc.artc_articulo) FROM dual) EX_LP,
                             (SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 99, artc.artc_articulo) FROM dual) EX_CEDIS,
                             (SELECT FAMC_DESCRIPCION FROM COM_FAMILIAS WHERE FAM.FAMC_FAMILIAPADRE = COM_FAMILIAS.FAMC_FAMILIA AND ROWNUM =1) Departamento,
-                            FAM.FAMC_DESCRIPCION Familia
+                            FAM.FAMC_DESCRIPCION Familia,
+                            (SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 6, artc.artc_articulo) FROM dual) EX_MM
                           FROM COM_ARTICULOS artc INNER JOIN COM_FAMILIAS FAM ON FAM.FAMC_FAMILIA = artc.ARTC_FAMILIA WHERE artc.ARTC_ARTICULO='$rowDetalle[1]'";
   $st = oci_parse($conexion_central, $cadena_consulta);
         oci_execute($st);
   $row_producto = oci_fetch_row($st);
 
-  $total_teorico=$row_producto[5]+$row_producto[6]+$row_producto[7]+$row_producto[8]+$row_producto[9]+$row_producto[10];
+  $total_teorico=$row_producto[5]+$row_producto[6]+$row_producto[7]+$row_producto[8]+$row_producto[9]+$row_producto[10]+$row_producto[13];
   if(is_null($row_producto[3]) || is_null($row_producto[4])){
     $margen_ppublico=0;
   }else{
@@ -76,6 +77,8 @@ while($rowDetalle=mysqli_fetch_array($detalle)){
     $conexion_sucursal = $conexion_all;
   }elseif($rowDetalle[0]=='5'){
     $conexion_sucursal = $conexion_lp;
+  }elseif($rowDetalle[0]=='6'){
+    $conexion_sucursal = $conexion_mm;
   }
 
   $cadenaOferta="SELECT prfn_precio_con_imp_y_desc P_OFERTA, TO_CHAR(prfd_fin_vigencia,'DD/MM/YYYY') VIGENCIA FROM pvs_precios_finales_vw WHERE artc_articulo = '$rowDetalle[1]'";
@@ -105,6 +108,7 @@ while($rowDetalle=mysqli_fetch_array($detalle)){
     'vill'=>$row_producto[7],
     'all'=>$row_producto[8],
     'lp'=>$row_producto[9],
+    'mm'=>$row_producto[13],
     'cedis'=>$row_producto[10],
     'total'=>$total_teorico,
     'depto'=>$row_producto[11],

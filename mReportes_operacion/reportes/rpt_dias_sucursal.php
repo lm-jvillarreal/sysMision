@@ -112,9 +112,9 @@ $consulta_principal  = "SELECT DISTINCT
 	            ->setCellValue('D1', 'Familia')
 	            ->setCellValue('E1', 'Ultimo costo')
 	            ->setCellValue('F1', 'Ventas')
-							->setCellValue('G1', 'Existencias')
-							->setCellValue('H1', 'Faltante')
-							->setCellValue('I1', 'Dias de inventario');
+				->setCellValue('G1', 'Existencias')
+				->setCellValue('H1', 'Faltante')
+				->setCellValue('I1', 'Dias de inventario');
 
 
 	$fila = 2;

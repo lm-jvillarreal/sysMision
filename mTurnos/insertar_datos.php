@@ -5,7 +5,7 @@ $fecha = date("Y-m-d");
 $hora = date("h:i:s");
 $prefijo = date("Y") . date("m") . date("d");
 
-$consulta = mysqli_query($conexion, "SELECT id, MAX(consecutivo) FROM turnos WHERE prefijo = '$prefijo'");
+$consulta = mysqli_query($conexion, "SELECT id, MAX(consecutivo) FROM turnos WHERE prefijo = '$prefijo' AND id_sede='$id_sede'");
 $row_consecutivo = mysqli_fetch_array($consulta);
 $consecutivo = $row_consecutivo[1] + 1;
 

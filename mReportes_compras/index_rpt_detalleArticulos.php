@@ -82,7 +82,7 @@ include '../global_settings/conexion_oracle.php';
                         <th width="15%">Fecha</th>
                         <th width="15%">Sucursal</th>
                         <th width="15%">Usuario</th>
-                        <th width="5%"></th>
+                        <th width="10%"></th>
                       </tr>
                     </thead>
                   </table>
@@ -189,31 +189,40 @@ include '../global_settings/conexion_oracle.php';
         "paging": false,
         "dom": 'Bfrtip',
         buttons: [{
-            extend: 'pageLength',
-            text: 'Registros',
-            className: 'btn btn-default'
-          },
-          {
-            extend: 'excel',
-            text: 'Exportar a Excel',
-            className: 'btn btn-default',
-            title: 'Modulos-Lista',
-            exportOptions: {
-              columns: ':visible'
-            }
-          },
-          {
-            extend: 'copy',
-            text: 'Copiar registros',
-            className: 'btn btn-default',
-            copyTitle: 'Ajouté au presse-papiers',
-            copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
-            copySuccess: {
-              _: '%d lignes copiées',
-              1: '1 ligne copiée'
-            }
-          },
-        ],
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					}
+				],
         "ajax": {
           "type": "POST",
           "url": "tabla_folios_detalle.php",
@@ -329,6 +338,9 @@ include '../global_settings/conexion_oracle.php';
             "data": "lp"
           },
           {
+            "data": "mm"
+          },
+          {
             "data": "cedis"
           },
           {
@@ -369,6 +381,21 @@ include '../global_settings/conexion_oracle.php';
         }
       });
       // Evitar ejecutar el submit del formulario.
+      return false;
+    }
+
+    function eliminar(folio) {
+      var url = 'eliminar_folios.php';
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+          folio: folio
+        }, // Adjuntar los campos del formulario enviado.
+        success: function(respuesta) {
+          alertify.success("Registro eliminado correctamente");
+        }
+      });
       return false;
     }
   </script>

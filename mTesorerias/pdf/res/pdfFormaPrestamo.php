@@ -97,6 +97,7 @@ switch ($mes_mas) {
 
 mysqli_set_charset($conexion,'utf8');
 $consulta=mysqli_query($conexion,"SELECT
+                                        FORMAT(SUM(resultado),2),
                                         SUM(resultado)
                                     FROM
                                         prestamos_morralla
@@ -126,7 +127,8 @@ $consulta3=mysqli_query($conexion,"SELECT
                                     INNER JOIN personas ON personas.id = usuarios.id_persona
                                     WHERE
                                         usuarios.id_perfil = '10'
-                                    AND personas.id_sede = '$row2[0]'");
+                                    AND personas.id_sede = '$row2[0]'
+                                    AND personas.activo=1");
 $cantidad = mysqli_num_rows($consulta3);
 $numero = 1;
 
@@ -150,6 +152,8 @@ $consulta4=mysqli_query($conexion,"SELECT
 
 $consulta5 =mysqli_query($conexion,"SELECT
                                         CONCAT(
+                                            personas.titulo,
+                                            ' ',
                                             personas.nombre,
                                             ' ',
                                             personas.ap_paterno,
@@ -330,7 +334,7 @@ function subfijo($xx)
 }
 
 
-$cantidad_letras = numtoletras($row[0]);               
+$cantidad_letras = numtoletras($row[1]);               
 ?>
 <style type="text/css">
 
@@ -442,6 +446,7 @@ label{
             <!-- <img src="../../d_plantilla/dist/img/logo.png" width="150"> -->
         </td>
         <td align="right">
+            <br><br><br><br>
             <h4>Linares, Nuevo León a <?php echo $dia;?> de <?php echo $mes;?> de <?php echo $año;?></h4>
         </td>
     </tr>

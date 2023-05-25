@@ -8,166 +8,163 @@ $hora       = date('h:i:s');
 ?>
 <!DOCTYPE html>
 <html>
-
-<head>
-  <?php include '../head.php'; ?>
-</head>
-
-<body class="hold-transition skin-red sidebar-mini">
-  <div class="wrapper">
-    <header class="main-header">
-      <!-- //ajustar el zoom en el navegador -->
-      <?php include '../header.php'; ?>
-    </header>
+  <head>
+    <?php include '../head.php'; ?>
+  </head>
+  <body class="hold-transition skin-red sidebar-mini">
+    <div class="wrapper">
+      <header class="main-header">
+        <?php include '../header.php'; ?>
+      </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
+      <aside class="main-sidebar">
       <!-- sidebar: style can be found in sidebar.less -->
-      <?php include 'menuV.php'; ?>
+        <?php include 'menuV.php'; ?>
       <!-- /.sidebar -->
-    </aside>
+      </aside>
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+      <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <!-- Main content -->
-      <section class="content">
-        <div class="box box-danger">
-          <div class="box-header">
-            <h3 class="box-title">Registro de Tiempo Extra</h3>
-          </div>
-          <div class="box-body">
-            <form method="POST" id="form_datos">
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input type="hidden" id="idUsr" value="<?php echo $id_usuario ?>">
-                    <label for="id_persona">*Nombre:</label>
-                    <input type="hidden" name="id_registro" id="id_registro">
-                    <select name="id_persona" id="id_persona" class="select2" style="width: 260px" onchange="llenar()">
-                      <option value=""></option>
-                    </select>
+        <section class="content">
+          <div class="box box-danger">
+            <div class="box-header">
+              <h3 class="box-title">Registro de Tiempo Extra</h3>
+            </div>
+            <div class="box-body">
+              <form method="POST" id="form_datos">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <input type="hidden" id="idUsr" value="<?php echo $id_usuario ?>">
+                      <label for="id_persona">*Nombre:</label>
+                      <input type="hidden" name="id_registro" id="id_registro">
+                      <select name="id_persona" id="id_persona" class="select2" style="width: 250px" onchange="llenar()">
+                        <option value=""></option>
+                      </select>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="departamento">*Departamento:</label>
-                    <input type="text" name="departamento" id="departamento" class="form-control" style="width: 260px" readonly>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="departamento">*Departamento:</label>
+                      <input type="text" name="departamento" id="departamento" class="form-control" style="width: 250px" readonly>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="sucursal">*Sucursal:</label>
-                    <input type="text" name="sucursal" id="sucursal" class="form-control" style="width: 260px" readonly>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="sucursal">*Sucursal:</label>
+                      <input type="text" name="sucursal" id="sucursal" class="form-control" style="width: 250px" readonly>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label>*Fecha/Hora Inicio:</label>
-                    <div class="input-group date form_datetime" id='datetimepicker_inicio'>
-                      <input type='text' class="form-control" id="fecha_inicio" name="fecha_inicio" onchange="diferencia()" value="<?php echo $fecha ?>" />
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>*Fecha/Hora Inicio:</label>
+                      <div class="input-group date form_datetime" id='datetimepicker_inicio'>
+                        <input type='text' class="form-control" id="fecha_inicio" name="fecha_inicio" onchange="diferencia()" value="<?php echo $fecha ?>" />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label>*Fecha/Hora Fin:</label>
-                    <div class='input-group date form_datetime' id='datetimepicker_fin'>
-                      <input type='text' class="form-control" id="fecha_fin" name="fecha_fin" onchange="diferencia()" value="<?php echo $fecha ?>" />
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>*Fecha/Hora Fin:</label>
+                      <div class='input-group date form_datetime' id='datetimepicker_fin'>
+                        <input type='text' class="form-control" id="fecha_fin" name="fecha_fin" onchange="diferencia()" value="<?php echo $fecha ?>" />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="tiempo">*Tiempo:</label>
+                      <input type="text" name="tiempo" id="tiempo" class="form-control" style="width: 250px">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="comentario">*Motivo:</label>
+                      <select name="motivo" id="motivo" class="form-control" style="width: 250px" onchange="if(this.value=='Otro') {document.getElementById('otro').disabled = false} else {document.getElementById('otro').disabled = true}">
+                        <option value=""></option>
+                        <option value="Inventario">Inventario</option>
+                        <option value="Novillo Gordo">Novillo Gordo</option>
+                        <option value="Dia de Muertos">Día de Muertos</option>
+                        <option value="Dia de las Madres">Día de las Madres</option>
+                        <option value="San Valentin">San Valentín</option>
+                        <option value="Dia del Niño">Día del Niño</option>
+                        <option value="Rosca de Reyes">Rosca de Reyes</option>
+                        <option value="Navideño">Navideño</option>
+                        <option value="Falta de Persona">Falta de Persona</option>
+                        <option value="Cubrir Descanso">Cubrir Descanso</option>
+                        <option value="Velada">Velada</option>
+                        <option value="Produccion Extra">Producción Extra</option>
+                        <option value="Otro">Otro</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="otro">*Motivo(Otro):</label>
+                      <input type="text" name="otro" id="otro" class="form-control" style="width: 220px" placeholder="Especifique motivo" disabled>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="tiempo">*Tiempo:</label>
-                    <input type="text" name="tiempo" id="tiempo" class="form-control" style="width: 260px">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="comentario">*Comentario:</label>
+                      <input type="text" name="comentario" id="comentario" style="width: 250px" class="form-control" placeholder="Agregue un comentario">
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="comentario">*Motivo:</label>
-                    <select name="motivo" id="motivo" class="form-control" style="width: 260px" onchange="if(this.value=='Otro') {document.getElementById('otro').disabled = false} else {document.getElementById('otro').disabled = true}">
-                      <option value=""></option>
-                      <option value="Inventario">Inventario</option>
-                      <option value="Novillo Gordo">Novillo Gordo</option>
-                      <option value="Dia de Muertos">Día de Muertos</option>
-                      <option value="Dia de las Madres">Día de las Madres</option>
-                      <option value="San Valentin">San Valentín</option>
-                      <option value="Dia del Niño">Día del Niño</option>
-                      <option value="Rosca de Reyes">Rosca de Reyes</option>
-                      <option value="Navideño">Navideño</option>
-                      <option value="Falta de Persona">Falta de Persona</option>
-                      <option value="Cubrir Descanso">Cubrir Descanso</option>
-                      <option value="Velada">Velada</option>
-                      <option value="Produccion Extra">Producción Extra</option>
-                      <option value="Otro">Otro</option>
-                    </select>
-                  </div>
+                <div class="box-footer text-right">
+                  <button type="submit" class="btn btn-warning" id="guardar">Guardar</button>
                 </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="otro">*Motivo(Otro):</label>
-                    <input type="text" name="otro" id="otro" class="form-control" style="width: 260px" placeholder="Especifique motivo" disabled>
-                  </div>
-                </div>
-              </div>
+              </form>
+            </div>
+          </div>
+          <div class="box box-danger">
+            <div class="box-header">
+              <h3 class="box-title">Lista Tiempo Extra</h3>
+            </div>
+            <div class="box-body">
               <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="comentario">*Comentario:</label>
-                    <input type="text" name="comentario" id="comentario" style="width: 260px" class="form-control" placeholder="Agregue un comentario">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table id="lista_extras" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th width="5%"> ID</th>
+                          <th width="35%">Empleado</th>
+                          <th width="10%">Departamento</th>
+                          <th width="10%">Sucursal</th>
+                          <th width="15%">Motivo</th>
+                          <th width="35%">Autoriza</th>
+                          <th width="15%">Tiempo</th>
+                          <th width="15%">Comentario</th>
+                          <th width="15%">Fecha</th>
+                        </tr>
+                      </thead>
+                    </table>
                   </div>
-                </div>
-              </div>
-              <div class="box-footer text-right">
-                <button type="submit" class="btn btn-warning" id="guardar">Guardar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="box box-danger">
-          <div class="box-header">
-            <h3 class="box-title">Lista Tiempo Extra</h3>
-          </div>
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="table-responsive">
-                  <table id="lista_extras" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                      <tr>
-                        <th width="5%"> ID</th>
-                        <th width="35%">Empleado</th>
-                        <th width="10%">Departamento</th>
-                        <th width="10%">Sucursal</th>
-                        <th width="15%">Motivo</th>
-                        <th width="35%">Autoriza</th>
-                        <th width="15%">Tiempo</th>
-                        <th width="15%">Comentario</th>
-                        <th width="15%">Fecha</th>
-                      </tr>
-                    </thead>
-                  </table>
                 </div>
               </div>
             </div>
           </div>
-        </div>
         <!-- /.row -->
-      </section>
+        </section>
       <!-- /.content -->
-    </div>
+      </div>
     <!-- /.content-wrapper -->
-    <?php include '../footer2.php'; ?>
+      <?php include '../footer2.php'; ?>
     <!-- Control Sidebar -->
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
-  </div>
+      <div class="control-sidebar-bg"></div>
+    </div>
   <!-- ./wrapper -->
 
   <?php include '../footer.php'; ?>
@@ -227,7 +224,8 @@ $hora       = date('h:i:s');
         ],
         "ajax": {
           "type": "POST",
-          "url": "http://200.1.1.197/SMPruebas/mTiempoExtra/tabla_tiempo.php",
+          "url": "tabla_tiempo.php",
+          //http://200.1.1.197/SMPruebas/mTiempoExtra/
           "dataSrc": "",
           "data": {
             idUsr: idUsr
@@ -272,7 +270,8 @@ $hora       = date('h:i:s');
         lenguage: 'es',
         //minimumResultsForSearch: Infinity
         ajax: {
-          url: "http://200.1.1.197/SMPruebas/mTiempoExtra/select_persona.php",
+          url: "select_persona.php",
+          //http://200.1.1.197/SMPruebas/mTiempoExtra/
           type: "post",
           dataType: 'json',
           delay: 250,
@@ -320,25 +319,27 @@ $hora       = date('h:i:s');
     $(document).ready(function() {
       $("#form_datos").validate({
         rules: {
-          id_persona: "required",
+          id_persona:   "required",
           departamento: "required",
-          sucursal: "required",
-          comentario: "required",
+          sucursal:     "required",
+          comentario:   "required",
           fecha_inicio: "required",
-          fecha_fin: "required",
-          motivo: "required",
-          otro: "required",
+          fecha_fin:    "required",
+          motivo:       "required",
+          otro:         "required",
+          accion:       "required",
 
         },
         messages: {
-          id_persona: "Campo requerido",
+          id_persona:   "Campo requerido",
           departamento: "Campo requerido",
-          sucursal: "Campo requerido",
-          comentario: "Campo Requerido",
+          sucursal:     "Campo requerido",
+          comentario:   "Campo Requerido",
           fecha_inicio: "Campo Requerido",
-          fecha_fin: "Campo Requerido",
-          motivo: "Campo Requerido",
-          otro: "Campo Requerido",
+          fecha_fin:    "Campo Requerido",
+          motivo:       "Campo Requerido",
+          otro:         "Campo Requerido",
+          accion:        "Campo Requerido",
         },
         errorElement: "em",
         errorPlacement: function(error, element) {
@@ -364,7 +365,8 @@ $hora       = date('h:i:s');
       });
     });
     function editar(id_registro) {
-      var url = 'http://200.1.1.197/SMPruebas/mTiempoExtra/consulta_datos_editar.php';
+      var url = 'consulta_datos_editar.php';
+      //http://200.1.1.197/SMPruebas/mTiempoExtra/
       $.ajax({
         url: url,
         type: "POST",
@@ -430,7 +432,8 @@ $hora       = date('h:i:s');
       var id_persona = $('#id_persona').val();
       var id_registro = $('#id_registro').val();
       if (id_persona != "") {
-        var url = 'http://200.1.1.197/SMPruebas/mTiempoExtra/llenar.php';
+        var url = 'llenar.php';
+        //http://200.1.1.197/SMPruebas/mTiempoExtra/
         $.ajax({
           url: url,
           type: "POST",

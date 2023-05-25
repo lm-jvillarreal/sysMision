@@ -3,6 +3,7 @@ include '../global_seguridad/verificar_sesion.php';
 
 $cadena_consulta = "SELECT DISTINCT(detalle_usuario.id_categoria), categorias_modulos.nombre FROM detalle_usuario INNER JOIN categorias_modulos ON detalle_usuario.id_categoria = categorias_modulos.id AND detalle_usuario.id_usuario = '$id_usuario' order by detalle_usuario.id_categoria ASC";
 $consulta_categorias = mysqli_query($conexion, $cadena_consulta);
+//echo $hora;
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,8 +45,7 @@ $consulta_categorias = mysqli_query($conexion, $cadena_consulta);
                 <!-- /.box-header -->
                 <div class="box-body">
                   <?php
-                    $cadena_modulos = "SELECT modulos.id, modulos.nombre, modulos.descripcion, modulos.nombre_carpeta, modulos.icono, modulos.tema FROM modulos INNER JOIN detalle_usuario ON modulos.id = detalle_usuario.id_modulo AND detalle_usuario.id_usuario = '$id_usuario' AND detalle_usuario.id_categoria = '$row_categorias[0]' AND modulos.activo = '1' ORDER BY  orden ASC";
-
+                    $cadena_modulos = "SELECT modulos.id, modulos.nombre, modulos.descripcion, modulos.nombre_carpeta, modulos.icono, modulos.tema FROM modulos INNER JOIN detalle_usuario ON modulos.id = detalle_usuario.id_modulo AND detalle_usuario.id_usuario = '$id_usuario' AND detalle_usuario.id_categoria = '$row_categorias[0]' AND modulos.activo = '1' ORDER BY  modulos.id ASC";
                     $consulta_modulos = mysqli_query($conexion, $cadena_modulos);
                     while ($row_modulos = mysqli_fetch_row($consulta_modulos)) {
                       ?>

@@ -1,11 +1,14 @@
 <?php
 include '../global_seguridad/verificar_sesion.php';
+$fecha_inicio = date("Y-m-01");
+$fecha_fin = date("Y-m-d");
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<?php include '../head.php'; ?>
+	<link href="https://cdn.datatables.net/fixedcolumns/3.2.4/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
 </head>
 
 <body class="hold-transition skin-red sidebar-mini">
@@ -42,6 +45,9 @@ include '../global_seguridad/verificar_sesion.php';
 											<option value="2">Arboledas</option>
 											<option value="3">Villegas</option>
 											<option value="4">Allende</option>
+											<option value="5">La Petaca</option>
+											<option value="6">Montemorelos</option>
+											<option value="99">CEDIS</option>
 										</select>
 									</div>
 								</div>
@@ -50,10 +56,15 @@ include '../global_seguridad/verificar_sesion.php';
 										<label for="concepto">*Concepto</label>
 										<select name="concepto" id="concepto" class="form-control">
 											<option value=""></option>
-											<option value="APORTACION ANIVERSARIO" selected="TRUE">Aportación Aniversario</option>
+											<option value="APORTACION ANIVERSARIO">Aportación Aniversario</option>
 											<option value="APORTACION POR DIA DEL NIÑO">Aportación Día del Niño</option>
 											<option value="PLAN COMERCIAL">Plan Comercial</option>
 											<option value="FONDOS">Fondos</option>
+											<option value="DESCUENTO POR BONIFICACION">Descuento por bonificación</option>
+											<option value="DESCUENTO LOGISTICO">Descuento Logístico</option>
+											<option value="DESCUENTO POR CEDIS">Descuento por CEDIS</option>
+											<option value="CORRECCION DE ENTRADAS">Corrección de entradas</option>
+											<option value="APERTURA DE MONTEMORELOS">Apertura Montemorelos</option>
 										</select>
 									</div>
 								</div>
@@ -99,39 +110,49 @@ include '../global_seguridad/verificar_sesion.php';
 						<h3 class="box-title">Control de Aportaciones | Lista de aportaciones</h3>
 					</div>
 					<div class="box-body">
+						<dsiv class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="fecha_inicio">*Fecha Inicial:</label>
+									<div class="input-group date form_date" data-date="<?php echo $fecha_inicio ?>" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicio" data-link-format="yyyy-mm-dd">
+										<input class="form-control" size="16" type="text" value="<?php echo $fecha_inicio ?>" id="fecha_inicio" name="fecha_inicio">
+										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="fecha_fin">*Fecha Final:</label>
+									<div class="input-group date form_date" data-date="<?php echo $fecha_fin ?>" data-date-format="yyyy-mm-dd" data-link-field="fecha_fin" data-link-format="yyyy-mm-dd">
+										<input class="form-control" size="16" type="text" value="<?php echo $fecha_fin ?>" id="fecha_fin" name="fecha_fin">
+										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+							</div>
+						</dsiv>
 						<div class="row">
 							<div id="totales"></div><br><br>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="table-responsive">
-									<table id="lista_solicitud" class="table table-striped table-bordered" cellspacing="0" width="100%">
+									<table id="lista_solicitud" class="table table-striped table-bordered" cellspacing="0" width="130%">
 										<thead>
 											<tr>
 												<th width='5%'>#</th>
 												<th>Descripcion</th>
-												<th width='10%'>Sucursal</th>
+												<th width='5%'>Sucursal</th>
 												<th>Proveedor</th>
 												<th width='5%'>Monto</th>
 												<th width='5%'>Impuesto</th>
-												<th width='20%'>Solicita</th>
+												<th width='15%'>Solicita</th>
+												<th width='15%'>Comentario</th>
 												<th width='5%'>Estatus</th>
-												<th width='15%'>Liberar</th>
+												<th width='7%'>Liberar</th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>
-												<th>#</th>
-												<th>Descripcion</th>
-												<th>Sucursal</th>
-												<th>Proveedor</th>
-												<th>Monto</th>
-												<th>Impuesto</th>
-												<th>Solicita</th>
-												<th>Estatus</th>
-												<th>Liberar</th>
-											</tr>
-										</tfoot>
 									</table>
 								</div>
 							</div>
@@ -168,8 +189,20 @@ include '../global_seguridad/verificar_sesion.php';
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/fixedcolumns/3.2.4/js/dataTables.fixedColumns.min.js"></script>
 	<!-- Page script -->
 	<script>
+		$('.form_date').datetimepicker({
+			language: 'es',
+			weekStart: 1,
+			todayBtn: 1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0
+		});
 		$('#sucursal').select2({
 			placeholder: 'Seleccione una opcion',
 			lenguage: 'es',
@@ -207,7 +240,7 @@ include '../global_seguridad/verificar_sesion.php';
 				cache: true
 			}
 		});
-		$("#btn-insertar").click(function() {	
+		$("#btn-insertar").click(function() {
 			var url = "insertar_solicitud.php";
 			var sucursal = $("#sucursal").val();
 			var concepto = $("#concepto").val();
@@ -216,7 +249,7 @@ include '../global_seguridad/verificar_sesion.php';
 			var impuesto = $("#impuesto").val();
 			var comentarios = $("#comentarios").val();
 
-			if(sucursal == "" || concepto=="" || proveedor=="" || valor=="" || impuesto=="" || comentarios==""){
+			if (sucursal == "" || concepto == "" || proveedor == "" || valor == "" || impuesto == "" || comentarios == "") {
 				swal("Existen campos vacíos que son requeridos", "Solicitud de Notas de Crédito", "error");
 			}
 			$.ajax({
@@ -227,23 +260,33 @@ include '../global_seguridad/verificar_sesion.php';
 				success: function(respuesta) {
 					alertify.success("Registro insertado correctamente");
 					cargar_tabla();
+					$("#form_datos")[0].reset();
+
 				},
 				error: function(xhr, status) {
 					alert("error");
 					//alert(xhr);
 				},
 			});
-			(":text").val();
 			return false;
 		});
 
 		function cargar_tabla() {
+			var fecha_inicio = $("#fecha_inicio").val();
+			var fecha_fin = $("#fecha_fin").val();
 			$('#lista_solicitud').dataTable().fnDestroy();
 			$('#lista_solicitud').DataTable({
 				'language': {
 					"url": "../plugins/DataTables/Spanish.json"
 				},
 				"paging": false,
+				fixedColumns: {
+					leftColumns: 2,
+					rightColumns: 2
+				},
+				"scrollX": true,
+				"scrollY": "300px",
+				"scrollCollapse": true,
 				"dom": 'Bfrtip',
 				buttons: [{
 						extend: 'pageLength',
@@ -253,6 +296,15 @@ include '../global_seguridad/verificar_sesion.php';
 					{
 						extend: 'excel',
 						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
 						className: 'btn btn-default',
 						title: 'Modulos-Lista',
 						exportOptions: {
@@ -274,7 +326,11 @@ include '../global_seguridad/verificar_sesion.php';
 				"ajax": {
 					"type": "POST",
 					"url": "tabla_nc.php",
-					"dataSrc": ""
+					"dataSrc": "",
+					"data": {
+						fecha_inicio: fecha_inicio,
+						fecha_fin: fecha_fin
+					}
 				},
 				"columns": [{
 						"data": "id"
@@ -298,6 +354,9 @@ include '../global_seguridad/verificar_sesion.php';
 						"data": "comprador"
 					},
 					{
+						"data": "comentario"
+					},
+					{
 						"data": "estatus"
 					},
 					{
@@ -312,32 +371,40 @@ include '../global_seguridad/verificar_sesion.php';
 
 		function asocia(id_formato) {
 			var url = "libera_nc.php";
-			var folio = $("#folio_" + id_formato).val();
-			$.ajax({
-				url: url,
-				type: "POST",
-				dateType: "html",
-				data: {
-					folio: folio,
-					id_formato: id_formato
-				},
-				success: function(respuesta) {
-					alertify.success("Nota de Crédito asociada correctamente");
-				},
-				error: function(xhr, status) {
-					alert("error");
-					//alert(xhr);
-				},
-			});
-			cargar_tabla();
-			return false;
+			swal({
+					title: "Folio de NC",
+					text: "Ingresa un folio de NC para asociar",
+					content: "input",
+				})
+				.then((value) => {
+					if (value == null || value == "") {
+						swal("Error", "Debes ingresar un folio de NC", "error");
+					} else {
+						$.ajax({
+							type: "POST",
+							url: url,
+							data: {
+								id_formato: id_formato,
+								folio: value
+							}, // Adjuntar los campos del formulario enviado.
+							success: function(respuesta) {
+								swal("Finalizado", "La NC ha sido asociada correctamente", "success");
+								cargar_tabla();
+							}
+						});
+					}
+
+				});
 		}
-		function eliminar(id_solicitud){
+
+		function eliminar(id_solicitud) {
 			var url = 'eliminar_solicitud.php';
 			$.ajax({
 				type: "POST",
 				url: url,
-				data: {id_solicitud: id_solicitud}, // Adjuntar los campos del formulario enviado.
+				data: {
+					id_solicitud: id_solicitud
+				}, // Adjuntar los campos del formulario enviado.
 				success: function(respuesta) {
 					alertify.success("La solicitud ha sido eliminada");
 				}
@@ -346,6 +413,20 @@ include '../global_seguridad/verificar_sesion.php';
 			cargar_tabla();
 			return false;
 		};
+		$("#fecha_inicio").change(function() {
+			if ($("#fecha_inicio").val() > $("#fecha_fin").val()) {
+				alertify.error("Rango de fechas inválido");
+			} else {
+				cargar_tabla();
+			}
+		});
+		$("#fecha_fin").change(function() {
+			if ($("#fecha_inicio").val() > $("#fecha_fin").val()) {
+				alertify.error("Rango de fechas inválido");
+			} else {
+				cargar_tabla();
+			}
+		})
 	</script>
 </body>
 

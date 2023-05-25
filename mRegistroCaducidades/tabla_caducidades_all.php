@@ -15,11 +15,12 @@ $cadena_caducidad = "SELECT c.codigo_articulo,
                             c.cantidad, 
                             c.lote,
                             c.sucursal,
-                            c.fecha
-                    FROM far_medicamentosCaducan AS c 
+                            c.fecha,
+                            c.id
+                    FROM far_medicamentosCaducan AS c
                     INNER JOIN sucursales as s 
                     ON c.sucursal = s.id 
-                    WHERE estatus = '1' AND sucursal = '4'".$filtro_registros_propios;
+                    WHERE (estatus = '1' OR estatus = '2') AND c.cantidad>0 and sucursal = '4'".$filtro_registros_propios;
 
 $consulta_caducidad = mysqli_query($conexion, $cadena_caducidad);
 $cuerpo ="";
@@ -42,7 +43,7 @@ while ($row_caducidad = mysqli_fetch_array($consulta_caducidad)) {
     $descripcion = $row_producto[3];
 
     $escape_descripcion = mysqli_real_escape_string($conexion, $row_caducidad[1]);
-    $traspaso = "<center><a href='#' data-id = '$row_caducidad[0]' data-suc = '$row_caducidad[6]' data-max = '$row_caducidad[4]' data-toggle = 'modal' data-target = '#modal-traspaso' class='btn btn-danger' target='blank'><i class='fa fa-refresh fa-lg' aria-hidden='true'></a></center>";
+    $traspaso = "<center><a href='#' data-id = '$row_caducidad[8]' data-suc = '$row_caducidad[6]' data-max = '$row_caducidad[4]' data-toggle = 'modal' data-target = '#modal-traspaso' class='btn btn-danger' target='blank'><i class='fa fa-refresh fa-lg' aria-hidden='true'></a></center>";
 	$renglon = "
 	{
 		\"codigo\": \"$row_caducidad[0]\",

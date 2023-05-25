@@ -34,7 +34,8 @@ $cadenaConsulta="SELECT
                   (SELECT 
                               spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 99, COM_ARTICULOS.ARTC_ARTICULO)
                             FROM 
-                              dual) CEDIS
+                              dual) CEDIS,
+                  TO_CHAR(COM_ARTICULOS.ARTD_ALTA,'DD/MM/YYYY')
                   FROM COM_ARTICULOS
                   INNER JOIN COM_FAMILIAS FAM ON FAM.FAMC_FAMILIA = COM_ARTICULOS.ARTC_FAMILIA
                   WHERE com_articulos.artn_estatus='1'";
@@ -47,6 +48,7 @@ while($rowExistencias = oci_fetch_array($st)){
     'familia'=>$rowExistencias[1],
     'articulo'=>$rowExistencias[2],
     'descripcion'=>$rowExistencias[3],
+    'alta'=>$rowExistencias[10],
     'do'=>$rowExistencias[4],
     'arb'=>$rowExistencias[5],
     'vill'=>$rowExistencias[6],

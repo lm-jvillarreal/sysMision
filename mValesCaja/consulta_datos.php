@@ -15,6 +15,8 @@ if($id_sede=='1'){
 	$conexion_central = $conexion_all;
 }elseif($id_sede=='5'){
   $conexion_central=$conexion_lp;
+}elseif($id_sede=='6'){
+  $conexion_central=$conexion_mm;
 }
 
 $cadena_consulta = "SELECT TICC_SUCURSAL, (SELECT USUC_NOMBRE FROM cfg_usuarios WHERE USUN_ID=t.ticc_cajero) CAJERO, TICN_VENTA, TICC_CAJERO FROM PVS_TICKETS T WHERE ticn_aaaammddventa='$prefijo' AND ticn_folio='$consecutivo' AND TICC_SUCURSAL='$id_sede'";

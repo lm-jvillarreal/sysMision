@@ -205,7 +205,7 @@ $consulta_principal  = "SELECT DISTINCT
 
 	// Redirect output to a client’s web browser (Excel2007)
 	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-	header('Content-Disposition: attachment;filename="rpt_analisis" '.$Msucursal.$fecha.' ".xlsx"');
+	header('Content-Disposition: attachment;filename="rpt_analisis" '.$fecha.' ".xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');

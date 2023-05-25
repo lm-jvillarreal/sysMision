@@ -17,8 +17,12 @@ if ($sucursal == 1) {
 	$suc = "Arboledas";
 }elseif($sucursal == 3){
 	$suc = "Villegas";
-}else{
+}elseif($sucursal == 4){
 	$suc = "Allende";
+}elseif($sucursal == 5){
+	$suc="Petaca";
+}elseif($sucursal == 99){
+	$suc="CEDIS";
 }
 
 $array = $_POST['array'];

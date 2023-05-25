@@ -48,6 +48,7 @@ include '../global_settings/conexion_oracle.php';
                       <option value="3">Villegas</option>
                       <option value="4">Allende</option>
                       <option value="5">Petaca</option>
+                      <option value="6">Montemorelos</option>
                     </select>
                   </div>
                 </div>

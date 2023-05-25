@@ -55,7 +55,8 @@ $fecha = date("Y-m-d");
 										<option value="3">Villegas</option>
 										<option value="4">Allende</option>
 										<option value="5">Petaca</option>
-                    <option value="99">CEDIS</option>
+										<option value="6">Montemorelos</option>
+                    					<option value="99">CEDIS</option>
 									</select>
 								</div>
 							</div>

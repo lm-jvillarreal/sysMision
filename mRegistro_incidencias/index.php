@@ -2,6 +2,8 @@
 include '../global_seguridad/verificar_sesion.php';
 date_default_timezone_set('America/Monterrey');
 $fecha_hoy = date("Y-m-d");
+$fecha_inicial = date("Y-m-01");
+
 $hora = date("h:i:s");
 ?>
 <!DOCTYPE html>
@@ -123,6 +125,28 @@ $hora = date("h:i:s");
 					</div>
 					<div class="box-body">
 						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="fecha_inicial">*Fecha inicial:</label>
+									<div class="input-group date form_date" data-date="<?php echo $fecha_inicial ?>" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicial" data-link-format="yyyy-mm-dd">
+										<input class="form-control" size="16" type="text" value="<?php echo $fecha_inicial ?>" id="fecha_inicial" name="fecha_inicial">
+										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="fecha_final">*Fecha final:</label>
+									<div class="input-group date form_date" data-date="<?php echo $fecha_hoy ?>" data-date-format="yyyy-mm-dd" data-link-field="fecha_final" data-link-format="yyyy-mm-dd">
+										<input class="form-control" size="16" type="text" value="<?php echo $fecha_hoy ?>" id="fecha_final" name="fecha_final">
+										<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
 							<div class="col-md-12">
 								<div class="table-responsive">
 									<table id="lista_movimientos" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -139,19 +163,6 @@ $hora = date("h:i:s");
 												<th width='20%'>Detalle</th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>
-												<th width='5%'>#</th>
-												<th width='5%'>Sucursal</th>
-												<th width='5%'>Momento</th>
-												<th>Descripcion</th>
-												<th width='10%'>Categoría</th>
-												<th width='10%'>Tipo</th>
-												<th width='10%'>Area</th>
-												<th width='10%'>Fecha</th>
-												<th width='20%'>Detalle</th>
-											</tr>
-										</tfoot>
 									</table>
 								</div>
 							</div>
@@ -303,6 +314,9 @@ $hora = date("h:i:s");
 				'language': {
 					"url": "../plugins/DataTables/Spanish.json"
 				},
+				"order": [
+					[0, "desc"]
+				],
 				"paging": false,
 				"dom": 'Bfrtip',
 				buttons: [{
@@ -343,7 +357,11 @@ $hora = date("h:i:s");
 				"ajax": {
 					"type": "POST",
 					"url": "tabla_incidencias.php",
-					"dataSrc": ""
+					"dataSrc": "",
+					"data": {
+						fi: fi,
+						ff: ff
+					}
 				},
 				"columns": [{
 						"data": "id"
@@ -376,6 +394,13 @@ $hora = date("h:i:s");
 			});
 		}
 		$("#btn-guardar").click(function() {
+			guardar("<?php echo $fecha_inicial ?>","<?php echo $fecha_hoy?>");
+		})
+		$(document).ready(function(e) {
+			cargar_tabla();
+		});
+
+		function guardar(fecha_inicio, fecha_fin) {
 			var url = "insertar_incidencia.php";
 			$.ajax({
 				url: url,
@@ -384,8 +409,10 @@ $hora = date("h:i:s");
 				data: $("#form-datos").serialize(),
 				success: function(respuesta) {
 					alertify.success("Incidencia registrada correctamente");
-					$(":text").val("");
-					$("#comentario").val("");
+					$("#form-datos")[0].reset();
+					$("#fecha_inicial").val(fecha_inicio);
+					$("#fecha_final").val(fecha_fin);
+					$("#fecha").val(fecha_fin);
 				},
 				error: function(xhr, status) {
 					alert("error");
@@ -394,10 +421,7 @@ $hora = date("h:i:s");
 			cargar_tabla();
 			return false;
 
-		})
-		$(document).ready(function(e) {
-			cargar_tabla();
-		});
+		}
 		$('#modal-video').on('show.bs.modal', function(e) {
 			var id = $(e.relatedTarget).data().id;
 			var url = "consulta_video.php"; // El script a dónde se realizará la petición.
@@ -415,6 +439,20 @@ $hora = date("h:i:s");
 		});
 		$('#modal-video').on('hidden.bs.modal', function(e) {
 			$('#contenedor').html("");
+		});
+		$("#fecha_inicial").change(function() {
+			if ($("#fecha_inicial").val() > $("#fecha_final").val()) {
+				alertify.error("rango de fechas inválido");
+			} else {
+				cargar_tabla();
+			}
+		});
+		$("#fecha_final").change(function() {
+			if ($("#fecha_inicial").val() > $("#fecha_final").val()) {
+				alertify.error("rango de fechas inválido");
+			} else {
+				cargar_tabla();
+			}
 		});
 	</script>
 </body>

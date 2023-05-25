@@ -1,4 +1,5 @@
 <?php
+$ip_address = $_SERVER['REMOTE_ADDR'];
 $conexion_central = oci_connect('INFOFIN', 'INFOFIN', '200.1.1.165/DIAZORDAZ',"AL32UTF8");
 //se crea la variable local
 date_default_timezone_set('America/Monterrey');
@@ -6,7 +7,7 @@ $fecha = date('d/m/Y');
 $fecha_resta_actual = date('Y-m-d');
 $hora = date('H:i:s');
 $p_codigo = $_POST['codigo_producto'];
-//$p_codigo = '250';
+//$p_codigo = '7506425612772';
 //se declara e inicializa la variable de la consulta
 $cadena_consulta = "SELECT artc_descripcion, prfn_precio_con_imp, prfn_precio_con_imp_y_desc, prfn_dias_restantes_oferta, prfn_ahorro_en_pesos, TO_CHAR(prfd_fin_vigencia,'dd/MM/YYYY'), open_clave_agrupacion FROM pvs_precios_finales_vw where artc_articulo = '$p_codigo'";
 $parametros_consulta = oci_parse($conexion_central, $cadena_consulta);
@@ -81,6 +82,8 @@ if ($cantidad_articulos==0) {
 								<label>Descuento:</label>
 								<br>
 								<label>Precio reg:</label>
+								<br>
+								<label>IP:</label>
 							</td>
 							<td width="25%" rowspan="2" align="right">
 								<label>'.$vigencia_oferta.'</label>
@@ -90,6 +93,8 @@ if ($cantidad_articulos==0) {
 								<label>$'.number_format($precio_venta - $oferta,2,'.',' ').'</label>
 								<br>
 								<label>$'.$precio_venta.'</label>
+								<br>
+								<label>'.$ip_address.'</label>
 							</td>
 						</tr>
 						<tr>

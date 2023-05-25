@@ -40,6 +40,8 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
         <li class="active"><a href="index_diestel.php"><i class="fa fa-bars"></i> <span>R. DATALOGIC</span></a></li>
         <li class="active"><a href="index_consulta.php"><i class="fa fa-bars"></i> <span>Consulta recargas</span></a></li>
         <li class="active"><a href="grafica.php"><i class="fa fa-bar-chart"></i> <span>Grafica Recargas</span></a></li>
+        <li class="active"><a href="indexInicioRpts.php"><i class="fa fa-bars"></i> <span>Inicio</span></a></li>
+
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones de navegaci&oacute;n</li>

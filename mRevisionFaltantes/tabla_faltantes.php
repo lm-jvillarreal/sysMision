@@ -27,7 +27,8 @@ while ($row_detalle = mysqli_fetch_array($consulta_detalle)) {
 	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 2, '$row_detalle[1]'), 
 	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 3, '$row_detalle[1]'), 
 	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 4, '$row_detalle[1]'),
-	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 5, '$row_detalle[1]')  
+	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 5, '$row_detalle[1]') ,
+	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 99, '$row_detalle[1]')   
 FROM 
 	dual";
 	$st = oci_parse($conexion_central, $cadena_existencia);
@@ -47,6 +48,7 @@ FROM
 		\"vill\": \"$row_existencia[2]\",
 		\"all\": \"$row_existencia[3]\",
 		\"pet\": \"$row_existencia[4]\",
+		\"cedis\": \"$row_existencia[5]\",
 		\"fecha_captura\": \"$row_detalle[4]\",
 		\"liberar\": \"$liberar\",
 		\"revision\": \"$revision\"

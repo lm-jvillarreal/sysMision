@@ -24,10 +24,10 @@ while ($row_modulos = mysqli_fetch_array($consulta_modulos)) {
 		\"id\": \"$row_modulos[0]\",
 		\"modulo\": \"$row_modulos[2]\",
 		\"solo_sucursal\": \"$chk_solo_sucursal\",
-	    \"registros_propios\": \"$chk_registros_propios\",
-	    \"solo_lectura\": \"$chk_solo_lectura\",
-	    \"acceso\": \"$acceso\"
-	  },";
+		\"registros_propios\": \"$chk_registros_propios\",
+		\"solo_lectura\": \"$chk_solo_lectura\",
+		\"acceso\": \"$acceso\"
+	},";
 	$cuerpo = $cuerpo.$renglon;
 }
 $cuerpo2 = trim($cuerpo, ',');

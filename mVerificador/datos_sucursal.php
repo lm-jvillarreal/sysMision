@@ -110,6 +110,7 @@
 										) + 1
 										AND (
 											INV_MOVIMIENTOS.MODC_TIPOMOV = '1ENPRM'
+											OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'RAPOS'
 											OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'AJUPOS'
 											OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'EAJINS'
 											OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'ECACSG'
@@ -130,6 +131,7 @@
 										)
 										AND (
 											INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = '1ENPRM'
+											OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'RAPOS'
 											OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'AJUPOS'
 											OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'EAJINS'
 											OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'ECACSG'
@@ -236,7 +238,7 @@
 									)
 									AND tik.TICC_SUCURSAL = '$almacen'
 									AND DETALLE.TICC_SUCURSAL = '$almacen'
-									AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
+									AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9' OR tik.ticn_tipomov='8')";
 
 		$st_ventas = oci_parse($conexion_central, $qry_ventas);
 		oci_execute($st_ventas);
@@ -326,6 +328,7 @@
 									) + 1
 									AND (
 										INV_MOVIMIENTOS.MODC_TIPOMOV = 'AJUNEG'
+											OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'RANEG'
 											OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'SACAJC'
 											OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'S_AJCP'
 											OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'SCACSG'
@@ -345,6 +348,7 @@
 									)
 									AND (
 										INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'AJUNEG'
+											OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'RANEG'
 											OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'SACAJC'
 											OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'S_AJCP'
 											OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'SCACSG'

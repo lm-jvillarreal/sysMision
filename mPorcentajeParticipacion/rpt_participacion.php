@@ -14,6 +14,7 @@ $cadena_consulta  = "SELECT ARTC_ARTICULO, ARTC_DESCRIPCION,
                       (SELECT NVL(SUM(ARTN_CANTIDAD),0) FROM PV_ARTICULOSTICKET WHERE ARTC_ARTICULO=A.ARTC_ARTICULO AND ticn_aaaammddventa>='$inicio' AND ticn_aaaammddventa<='$final' AND ticc_sucursal='3' AND NOT(ARTC_ARTICULOAFECTACION IS NULL)) VILL,
                       (SELECT NVL(SUM(ARTN_CANTIDAD),0) FROM PV_ARTICULOSTICKET WHERE ARTC_ARTICULO=A.ARTC_ARTICULO AND ticn_aaaammddventa>='$inicio' AND ticn_aaaammddventa<='$final' AND ticc_sucursal='4' AND NOT(ARTC_ARTICULOAFECTACION IS NULL)) ALLE,
                       (SELECT NVL(SUM(ARTN_CANTIDAD),0) FROM PV_ARTICULOSTICKET WHERE ARTC_ARTICULO=A.ARTC_ARTICULO AND ticn_aaaammddventa>='$inicio' AND ticn_aaaammddventa<='$final' AND ticc_sucursal='5' AND NOT(ARTC_ARTICULOAFECTACION IS NULL)) PET,
+                      (SELECT NVL(SUM(ARTN_CANTIDAD),0) FROM PV_ARTICULOSTICKET WHERE ARTC_ARTICULO=A.ARTC_ARTICULO AND ticn_aaaammddventa>='$inicio' AND ticn_aaaammddventa<='$final' AND ticc_sucursal='6' AND NOT(ARTC_ARTICULOAFECTACION IS NULL)) MMORELOS,
                       (SELECT NVL(SUM(ARTN_CANTIDAD),0) FROM PV_ARTICULOSTICKET WHERE ARTC_ARTICULO=A.ARTC_ARTICULO AND ticn_aaaammddventa>='$inicio' AND ticn_aaaammddventa<='$final') TOTAL
                       FROM COM_ARTICULOS A INNER JOIN COM_FAMILIAS familias ON FAMILIAS.FAMC_FAMILIA = ARTC_FAMILIA
                       WHERE A.ARTN_ESTATUS = 1 AND
@@ -59,19 +60,22 @@ oci_execute($consulta_principal);
 	            ->setCellValue('E1', 'VILL (Σ)')
               ->setCellValue('F1', 'ALL (Σ)')
               ->setCellValue('G1', 'PET (Σ)')
-              ->setCellValue('H1', 'TOTAL (Σ)')
-              ->setCellValue('I1', 'DO (%)')
-              ->setCellValue('J1', 'ARB (%)')
-              ->setCellValue('K1', 'VILL (%)')
-              ->setCellValue('L1', 'ALL (%)')
-              ->setCellValue('M1', 'PET (Σ)')
-              ->setCellValue('N1', 'TOTAL (%)');
+              ->setCellValue('H1', 'MMORELOS (Σ)')
+              ->setCellValue('I1', 'TOTAL (Σ)')
+              ->setCellValue('J1', 'DO (%)')
+              ->setCellValue('K1', 'ARB (%)')
+              ->setCellValue('L1', 'VILL (%)')
+              ->setCellValue('M1', 'ALL (%)')
+              ->setCellValue('N1', 'PET (%)')
+              ->setCellValue('O1', 'MMORELOS (%)')
+              ->setCellValue('P1', 'TOTAL (%)');
 
   $totalDO=0;
   $totalARB=0;
   $totalVILL=0;
   $totalALL=0;
   $totalPET=0;
+  $totalMMORELOS=0;
   $totalGeneral=0;
 
   
@@ -86,7 +90,8 @@ oci_execute($consulta_principal);
     $totalVILL=$totalVILL+$row_principal[4];
     $totalALL=$totalALL+$row_principal[5];
     $totalPET=$totalPET+$row_principal[6];
-    $totalGeneral=$totalGeneral+$row_principal[7];
+    $totalMMORELOS=$totalMMORELOS+$row_principal[7];
+    $totalGeneral=$totalGeneral+$row_principal[8];
 
     if($row_principal[7]=='0'){
       $pDO=0;
@@ -94,40 +99,47 @@ oci_execute($consulta_principal);
       $pVILL=0;
       $pALL=0;
       $pPET=0;
+      $pMMORELOS=0;
       $pTotal=0;
     }else{
       if($row_principal[2]=='0'){
         $pDO=0;
       }else{
-        $pDO=($row_principal[2]/$row_principal[7])*100;
+        $pDO=($row_principal[2]/$row_principal[8])*100;
       }
       if($row_principal[3]=='0'){
         $pARB=0;
       }else{
-        $pARB=($row_principal[3]/$row_principal[7])*100;
+        $pARB=($row_principal[3]/$row_principal[8])*100;
       }
       if($row_principal[4]=='0'){
         $pVILL=0;
       }else{
-        $pVILL=($row_principal[4]/$row_principal[7])*100;
+        $pVILL=($row_principal[4]/$row_principal[8])*100;
       }
       if($row_principal[5]=='0'){
         $pALL=0;
       }else{
-        $pALL=($row_principal[5]/$row_principal[7])*100;
+        $pALL=($row_principal[5]/$row_principal[8])*100;
       }
       if($row_principal[6]=='0'){
         $pPET=0;
       }else{
-        $pPET=($row_principal[6]/$row_principal[7])*100;
+        $pPET=($row_principal[6]/$row_principal[8])*100;
       }
-      $pTotal=($row_principal[7]/$row_principal[7])*100;
+      if($row_principal[7]=='0'){
+        $pMMORELOS=0;
+      }else{
+        $pMMORELOS=($row_principal[7]/$row_principal[8])*100;
+      }
+      $pTotal=($row_principal[8]/$row_principal[8])*100;
 
       $pDO = round($pDO,2).'%';
       $pARB = round($pARB,2).'%';
       $pVILL = round($pVILL,2).'%';
       $pALL = round($pALL,2).'%';
       $pPET= round($pPET,2).'%';
+      $pMMORELOS= round($pMMORELOS,2).'%';
       $pTotal = round($pTotal,2).'%';
     }
 
@@ -140,19 +152,22 @@ oci_execute($consulta_principal);
                 ->setCellValue('F'.$fila, $row_principal[5])
                 ->setCellValue('G'.$fila, $row_principal[6])
                 ->setCellValue('H'.$fila, $row_principal[7])
-                ->setCellValue('I'.$fila, $pDO)
-                ->setCellValue('J'.$fila, $pARB)
-                ->setCellValue('K'.$fila, $pVILL)
-                ->setCellValue('L'.$fila, $pALL)
-                ->setCellValue('M'.$fila, $pPET)
-                ->setCellValue('N'.$fila, $pTotal)
+                ->setCellValue('I'.$fila, $row_principal[8])
+                ->setCellValue('J'.$fila, $pDO)
+                ->setCellValue('K'.$fila, $pARB)
+                ->setCellValue('L'.$fila, $pVILL)
+                ->setCellValue('M'.$fila, $pALL)
+                ->setCellValue('N'.$fila, $pPET)
+                ->setCellValue('O'.$fila, $pMMORELOS)
+                ->setCellValue('P'.$fila, $pTotal)
                 ->setCellValue('A'.$fila2, 'TOTAL GENERAL')
                 ->setCellValue('C'.$fila2, $totalDO)
                 ->setCellValue('D'.$fila2, $totalARB)
                 ->setCellValue('E'.$fila2, $totalVILL)
                 ->setCellValue('F'.$fila2, $totalALL)
                 ->setCellValue('G'.$fila2, $totalPET)
-                ->setCellValue('H'.$fila2, $totalGeneral);
+                ->setCellValue('H'.$fila2, $totalMMORELOS)
+                ->setCellValue('I'.$fila2, $totalGeneral);
 
 
       $objPHPExcel->getActiveSheet()

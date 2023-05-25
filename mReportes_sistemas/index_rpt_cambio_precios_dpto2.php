@@ -43,6 +43,7 @@ include '../global_settings/conexion_oracle.php';
                     <option value="3">Villegas</option>
                     <option value="4">Allende</option>
                     <option value="5">Petaca</option>
+                    <option value="6">Montemorelos</option>
                   </select>
                 </div>
               </div>
@@ -158,31 +159,40 @@ include '../global_settings/conexion_oracle.php';
         "paging": false,
         "dom": 'Bfrtip',
         buttons: [{
-            extend: 'pageLength',
-            text: 'Registros',
-            className: 'btn btn-default'
-          },
-          {
-            extend: 'excel',
-            text: 'Exportar a Excel',
-            className: 'btn btn-default',
-            title: 'Modulos-Lista',
-            exportOptions: {
-              columns: ':visible'
-            }
-          },
-          {
-            extend: 'copy',
-            text: 'Copiar registros',
-            className: 'btn btn-default',
-            copyTitle: 'Ajouté au presse-papiers',
-            copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
-            copySuccess: {
-              _: '%d lignes copiées',
-              1: '1 ligne copiée'
-            }
-          },
-        ],
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					}
+				],
         "ajax": {
           "type": "POST",
           "url": "tabla_articulos.php",

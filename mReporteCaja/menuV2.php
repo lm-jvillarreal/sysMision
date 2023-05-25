@@ -35,7 +35,7 @@
     <li class="header">Opciones del módulo</li>
     <li class=""><a href="index.php"><i class="fa fa-exclamation"></i> <span>Reporte de Caja</span></a></li>
     <li class="active"><a href="lista_reportes.php"><i class="fa fa-list"></i> <span>Lista de Reportes</span></a></li>
-    <li class=""><a href="mantenimiento.php"><i class="fa fa-wrench"></i> <span>Mantenimiento de Caja</span></a></li>
+    <!-- <li class=""><a href="mantenimiento.php"><i class="fa fa-wrench"></i> <span>Mantenimiento de Caja</span></a></li> -->
   </ul>
   <ul class="sidebar-menu" data-widget="tree">
     <li class="header">Opciones de navegaci&oacute;n</li>

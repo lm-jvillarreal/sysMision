@@ -1,10 +1,9 @@
 <?php
-//Incluimos la conexión a la BD de InfoFIN
 // esto permite tener acceso desde otro servidor
-    header('Access-Control-Allow-Origin: *');
+    //header('Access-Control-Allow-Origin: *');
   // esto permite tener acceso desde otro servidor
 // include '../global_seguridad/verificar_sesion.php';
-include '../global_settings/conexion2.php';
+include '../global_settings/conexion.php';
 include '../global_settings/consulta_sqlsrvr.php';
 
 error_reporting(E_ALL ^ E_NOTICE);
@@ -20,16 +19,24 @@ $tipo = $_POST['tipo'];
 $sucursal = $_POST['sucursal'];
 $fecha_uno = $_POST['fecha_uno'];
 $fecha_dos = $_POST['fecha_dos'];
+$filtro="";
 
 if($sucursal == '1'){
-    $sucursal = 'DIAZ ORDAZ';
-  }else if($sucursal == '2'){
-    $sucursal = 'ARBOLEDAS';
-  }else if($sucursal == '3'){
-    $sucursal = 'VILLEGAS';
-  }else{
-    $sucursal = 'ALLENDE';
-  }
+    $filtro=" AND sucursal='DIAZ ORDAZ'";
+    }else if($sucursal == '2'){
+      $filtro=" AND sucursal='ARBOLEDAS'";
+    }else if($sucursal == '3'){
+      $filtro=" AND sucursal='VILLEGAS'";
+    }else if($sucursal == '4'){
+      $filtro=" AND sucursal='ALLENDE'";
+    }else if($sucursal == '5'){
+      $filtro="AND sucursal='PETACA'";
+    }else if($sucursal == '99'){
+      $filtro ="AND sucursal= 'CEDIS'";
+    }else{
+      $filtro="";
+    }
+
 
 	$cadena_consulta= "SELECT
 	id,
@@ -39,15 +46,17 @@ if($sucursal == '1'){
 	  (SELECT CONCAT(nombre,' ',ap_paterno,' ',ap_materno) FROM usuarios INNER JOIN personas ON personas.id = usuarios.		 id_persona WHERE usuarios.id = tiempo_extra.usuario),
 	  tiempo,
 	  comentario,
-	  date_format(fecha_inicio,'%d/%m/%Y'),
+	  date_format(fecha_inicio,'%d/%m/%Y') as Fecha,
+	  date_format(fecha,'%d/%m/%Y') as Fecha_Dos,
 	  folio,
-	  motivo
+	  motivo,
+	  hora_inicio,
+	  hora_final
 	  FROM
 	  tiempo_extra 
 	  WHERE
 	  activo = '1' 
-	  AND sucursal = '$sucursal'
-	  AND fecha_inicio >='$fecha_uno' and fecha_final <= '$fecha_dos'";	
+	  AND fecha >='$fecha_uno' and fecha <= '$fecha_dos'".$filtro;
 
 $consulta_detalle = mysqli_query($conexion, $cadena_consulta);
 
@@ -86,7 +95,10 @@ $consulta_detalle = mysqli_query($conexion, $cadena_consulta);
 				->setCellValue('E1', '')
 				->setCellValue('F1', 'Tiempo Generado')
 				->setCellValue('G1', 'Comentario')
-				->setCellValue('H1', 'Fecha');
+				->setCellValue('H1', 'Fecha')
+				->setCellValue('I1', 'Fecha Registro')
+				->setCellValue('J1', 'Hora Inicio')
+				->setCellValue('K1', 'Hora Final');
 
 	$fila = 2;
 	
@@ -102,13 +114,17 @@ $consulta_detalle = mysqli_query($conexion, $cadena_consulta);
 		//$objPHPExcel->getActiveSheet()->getStyle('P'.$fila)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE);
 		 $objPHPExcel->setActiveSheetIndex(0)
 	            ->setCellValue('A'.$fila, $row_principal[3])
-	            ->setCellValue('B'.$fila, $row_principal[9])
+	            ->setCellValue('B'.$fila, $row_principal[10])
 				->setCellValue('C'.$fila, $row_principal[2])
 				->setCellValue('D'.$fila, $row_principal[1])
 				->setCellValue('E'.$fila, $nombre_empleado)
 				->setCellValue('F'.$fila, $row_principal[5])
 				->setCellValue('G'.$fila, $row_principal[6])
-				->setCellValue('H'.$fila, $row_principal[7]);
+				->setCellValue('H'.$fila, $row_principal[7])
+				->setCellValue('I'.$fila, $row_principal[8])
+				->setCellValue('J'.$fila, $row_principal[11])
+				->setCellValue('K'.$fila, $row_principal[12]);
+				
 
         $objPHPExcel->getActiveSheet()
     		->getColumnDimension('A')
@@ -136,6 +152,22 @@ $consulta_detalle = mysqli_query($conexion, $cadena_consulta);
 			
 		$objPHPExcel->getActiveSheet()
     		->getColumnDimension('G')
+			->setAutoSize(true);
+
+		$objPHPExcel->getActiveSheet()
+    		->getColumnDimension('H')
+			->setAutoSize(true);
+
+		$objPHPExcel->getActiveSheet()
+    		->getColumnDimension('I')
+			->setAutoSize(true);
+
+		$objPHPExcel->getActiveSheet()
+    		->getColumnDimension('J')
+			->setAutoSize(true);
+
+		$objPHPExcel->getActiveSheet()
+    		->getColumnDimension('K')
 			->setAutoSize(true);
 			
 	$fila = $fila + 1;

@@ -11,7 +11,9 @@ $cadenaFolios="SELECT DISTINCT(folios.FOLIO),
 
 $folios=mysqli_query($conexion,$cadenaFolios);
 while($rowFolios=mysqli_fetch_array($folios)){
-  $ver = "<center><a href='#' data-folio = '$rowFolios[0]' data-toggle = 'modal' data-target = '#modal-detalle' class='btn btn-primary' target='blank'><i class='fa fa-search fa-lg' aria-hidden='true'></i></a></center>";
+  $ver = "<a href='#' data-folio = '$rowFolios[0]' data-toggle = 'modal' data-target = '#modal-detalle' class='btn btn-primary' target='blank'><i class='fa fa-search fa-lg' aria-hidden='true'></i></a>";
+  $eliminar="<a href='#' onclick='eliminar($rowFolios[0])' class='btn btn-danger'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a>";
+  $opciones="<center>".$ver."&nbsp;".$eliminar."</center>";
   array_push($datos,array(
     'folio'=>$rowFolios[0],
     'descripcion'=>$rowFolios[1],
@@ -19,7 +21,7 @@ while($rowFolios=mysqli_fetch_array($folios)){
     'fecha'=>$rowFolios[4],
     'sucursal'=>$rowFolios[2],
     'usuario'=>$rowFolios[5],
-    'opciones'=>$ver
+    'opciones'=>$opciones
   ));
 }
 echo utf8_encode(json_encode($datos));

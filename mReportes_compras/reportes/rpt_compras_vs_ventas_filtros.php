@@ -18,9 +18,6 @@ $familia = $_POST['familia'];
 $fecha_i=str_replace("-","",$fecha_inicio);
 $fecha_fin=str_replace("-","",$fecha_final);
 
-
-
-
 if ($folio == "") {
 	if ($codigo != "") {
 		$where = "WHERE DETALLE.ARTC_ARTICULO = '$codigo'";
@@ -178,7 +175,21 @@ if ($folio == "") {
 										)
 									FROM
 										dual
-								) AS ExistenciasPetaca
+								) AS ExistenciasPetaca,
+								(
+									SELECT
+										spin_articulos.fn_existencia_disponible_todos (
+											13,
+											NULL,
+											NULL,
+											1,
+											1,
+											6,
+											DETALLE.ARTC_ARTICULO
+										)
+									FROM
+										dual
+								) AS ExistenciasMontemorelos
 							FROM INV_RENGLONES_MOVIMIENTOS RENGLONES
 							INNER JOIN INV_ARTICULOS_DETALLE detalle ON detalle.ARTC_ARTICULO = RENGLONES.ARTC_ARTICULO
 							WHERE 
@@ -270,7 +281,14 @@ if ($folio == "") {
 							->setCellValue('AH1', 'Importe Venta Petaca')
 							->setCellValue('AI1', '%Vta vs compra Petaca')
 							->setCellValue('AJ1', '%Vta vs importe Petaca')
-							->setCellValue('AK1', 'Existencia Petaca');
+							->setCellValue('AK1', 'Existencia Petaca')
+							->setCellValue('AL1', 'Compra Montemorelos')
+							->setCellValue('AM1', 'Importe compra Montemorelos')
+							->setCellValue('AN1', 'Venta Montemorelos')
+							->setCellValue('AO1', 'Importe Venta Montemorelos')
+							->setCellValue('AP1', '%Vta vs compra Montemorelos')
+							->setCellValue('AQ1', '%Vta vs importe Montemorelos')
+							->setCellValue('AR1', 'Existencia Montemorelos');
 
 
 	$fila = 2;
@@ -427,45 +445,83 @@ if ($folio == "") {
 									R.ARTC_ARTICULO";
 		    $st_compras_ALL = oci_parse($conexion_central, $qry_compras_ALL);
 		    oci_execute($st_compras_ALL);
-				$row_compras_ALL = oci_fetch_row($st_compras_ALL);
-				
-				$qry_compras_LP = "SELECT
-									SUM (R.RMON_CANTSURTIDA),
-									SUM (
-										ROUND (R.RMON_COSTO_RENGLON_MB, 2)
-									)
-								FROM
-									INV_RENGLONES_MOVIMIENTOS R
-								INNER JOIN INV_MOVIMIENTOS MOV ON MOV.MODN_FOLIO = R.MODN_FOLIO
-								WHERE
-									(
-										R.MODC_TIPOMOV = 'ENTSOC'
-										OR R.MODC_TIPOMOV = 'ENTCOC'
-									)
-								AND (
-									MOV.MODC_TIPOMOV = 'ENTSOC'
-									OR MOV.MODC_TIPOMOV = 'ENTCOC'
+			$row_compras_ALL = oci_fetch_row($st_compras_ALL);
+			
+			$qry_compras_LP = "SELECT
+								SUM (R.RMON_CANTSURTIDA),
+								SUM (
+									ROUND (R.RMON_COSTO_RENGLON_MB, 2)
 								)
-								AND MOV.MOVD_FECHAAFECTACION >= TRUNC (
-									TO_DATE (
-										'$fecha_inicio',
-										'YYYY/MM/DD'
-									)
+							FROM
+								INV_RENGLONES_MOVIMIENTOS R
+							INNER JOIN INV_MOVIMIENTOS MOV ON MOV.MODN_FOLIO = R.MODN_FOLIO
+							WHERE
+								(
+									R.MODC_TIPOMOV = 'ENTSOC'
+									OR R.MODC_TIPOMOV = 'ENTCOC'
 								)
-								AND MOV.MOVD_FECHAAFECTACION < TRUNC (
-									TO_DATE (
-										'$fecha_final',
-										'YYYY/MM/DD'
-									)
-								) + 1
-								AND r.ALMN_ALMACEN = '5'
-								AND MOV.ALMN_ALMACEN = '5'
-								AND R.ARTC_ARTICULO = '$row_principal[0]'
-								ORDER BY
-									R.ARTC_ARTICULO";
+							AND (
+								MOV.MODC_TIPOMOV = 'ENTSOC'
+								OR MOV.MODC_TIPOMOV = 'ENTCOC'
+							)
+							AND MOV.MOVD_FECHAAFECTACION >= TRUNC (
+								TO_DATE (
+									'$fecha_inicio',
+									'YYYY/MM/DD'
+								)
+							)
+							AND MOV.MOVD_FECHAAFECTACION < TRUNC (
+								TO_DATE (
+									'$fecha_final',
+									'YYYY/MM/DD'
+								)
+							) + 1
+							AND r.ALMN_ALMACEN = '5'
+							AND MOV.ALMN_ALMACEN = '5'
+							AND R.ARTC_ARTICULO = '$row_principal[0]'
+							ORDER BY
+								R.ARTC_ARTICULO";
 		    $st_compras_LP = oci_parse($conexion_central, $qry_compras_LP);
 		    oci_execute($st_compras_LP);
 		    $row_compras_LP = oci_fetch_row($st_compras_LP);
+
+			$qry_compras_MM = "SELECT
+								SUM (R.RMON_CANTSURTIDA),
+								SUM (
+									ROUND (R.RMON_COSTO_RENGLON_MB, 2)
+								)
+							FROM
+								INV_RENGLONES_MOVIMIENTOS R
+							INNER JOIN INV_MOVIMIENTOS MOV ON MOV.MODN_FOLIO = R.MODN_FOLIO
+							WHERE
+								(
+									R.MODC_TIPOMOV = 'ENTSOC'
+									OR R.MODC_TIPOMOV = 'ENTCOC'
+								)
+							AND (
+								MOV.MODC_TIPOMOV = 'ENTSOC'
+								OR MOV.MODC_TIPOMOV = 'ENTCOC'
+							)
+							AND MOV.MOVD_FECHAAFECTACION >= TRUNC (
+								TO_DATE (
+									'$fecha_inicio',
+									'YYYY/MM/DD'
+								)
+							)
+							AND MOV.MOVD_FECHAAFECTACION < TRUNC (
+								TO_DATE (
+									'$fecha_final',
+									'YYYY/MM/DD'
+								)
+							) + 1
+							AND r.ALMN_ALMACEN = '6'
+							AND MOV.ALMN_ALMACEN = '6'
+							AND R.ARTC_ARTICULO = '$row_principal[0]'
+							ORDER BY
+								R.ARTC_ARTICULO";
+		    $st_compras_MM = oci_parse($conexion_central, $qry_compras_MM);
+		    oci_execute($st_compras_MM);
+		    $row_compras_MM = oci_fetch_row($st_compras_MM);
 
 	    	$qry_ventas_DO = "SELECT
 								    SUM (DETALLE.ARTN_CANTIDAD), SUM(ROUND(detalle.ARTN_CANTIDAD * detalle.ARTN_PRECIOVENTA,2))
@@ -536,6 +592,20 @@ if ($folio == "") {
 								AND TIK.TICC_SUCURSAL = '5'
 								AND DETALLE.TICC_SUCURSAL = '5'
 								AND TIK.TICN_ESTATUS = 3";
+			
+			$qry_ventas_MM = "SELECT
+								    SUM (DETALLE.ARTN_CANTIDAD), SUM(ROUND(detalle.ARTN_CANTIDAD * detalle.ARTN_PRECIOVENTA,2))
+								FROM
+								    PV_ARTICULOSTICKET detalle
+								INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
+								AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
+								WHERE
+								    DETALLE.ARTC_ARTICULO = '$row_principal[0]'
+								AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
+								AND '$fecha_fin'
+								AND TIK.TICC_SUCURSAL = '6'
+								AND DETALLE.TICC_SUCURSAL = '6'
+								AND TIK.TICN_ESTATUS = 3";
 
 			$st_ventas_DO = oci_parse($conexion_central, $qry_ventas_DO);
 			oci_execute($st_ventas_DO);
@@ -552,6 +622,9 @@ if ($folio == "") {
 			$st_ventas_LP = oci_parse($conexion_central, $qry_ventas_LP);
 			oci_execute($st_ventas_LP);
 			$row_ventas_LP = oci_fetch_row($st_ventas_LP);
+			$st_ventas_MM = oci_parse($conexion_central, $qry_ventas_MM);
+			oci_execute($st_ventas_MM);
+			$row_ventas_MM = oci_fetch_row($st_ventas_MM);
 ///////////////Diaz ordaz/////////////////////////////////
 		    if ($row_compras_DO[0] == "") {
 	    		$compras_do = "N/A";
@@ -596,7 +669,8 @@ if ($folio == "") {
 	    		$porc_imp_arb = "N/A";
 			}else{
 	    		$porc_cant_arb = $ventas_arb / $compras_arb;
-	    		$porc_imp_arb = $importe_ventas_do / $importe_compras_arb;
+					//$porc_imp_arb = $importe_ventas_do / $importe_compras_arb;
+					$porc_imp_arb="";
 			}
 //////////////////////Villegas////////////////////
 		    if ($row_compras_VIL[0] == "") {
@@ -667,6 +741,28 @@ if ($folio == "") {
 				$porc_cant_lp = $ventas_lp / $compras_lp;
 				$porc_imp_lp = $importe_ventas_lp / $importe_compras_lp;
 			}
+//////////////////MONTEMORELOS //////////////////
+			if ($row_compras_MM[0] == "") {
+				$compras_mm = "N/A";
+				$importe_compras_mm = "N/A";
+			}else{
+				$compras_mm = $row_compras_MM[0];
+				$importe_compras_mm = $row_compras_MM[1];
+			}
+			if ($row_ventas_MM[0] == "") {
+				$ventas_mm = "N/A";
+				$importe_ventas_mm = "N/A";
+			}else{
+				$ventas_mm = $row_ventas_MM[0];
+				$importe_ventas_mm = $row_ventas_MM[1];
+			}
+			if ($ventas_mm == "N/A" || $compras_mm == "N/A") {
+				$porc_cant_mm = "N/A";
+				$porc_imp_mm = "N/A";
+			}else{
+				$porc_cant_mm = $ventas_mm / $compras_mm;
+				$porc_imp_mm = $importe_ventas_mm / $importe_compras_mm;
+			}
 		 $objPHPExcel->setActiveSheetIndex(0)
 	            ->setCellValue('A'.$fila, $row_principal[0])
 	            ->setCellValue('B'.$fila, $row_principal[1])
@@ -699,14 +795,21 @@ if ($folio == "") {
                 ->setCellValue('AA'.$fila, $importe_ventas_all)
                 ->setCellValue('AB'.$fila, $porc_cant_all)//$row_ventas_ALL[0] / $row_compras_ALL[0])
                 ->setCellValue('AC'.$fila, $porc_imp_all)//$row_ventas_ALL[1] / $row_compras_ALL[1])
-								->setCellValue('AD'.$fila, $row_principal[5])//existencia allende
-								->setCellValue('AE'.$fila, $compras_lp)
+				->setCellValue('AD'.$fila, $row_principal[5])//existencia allende
+				->setCellValue('AE'.$fila, $compras_lp)
                 ->setCellValue('AF'.$fila, $importe_compras_lp)
                 ->setCellValue('AG'.$fila, $ventas_lp)
                 ->setCellValue('AH'.$fila, $importe_ventas_lp)
                 ->setCellValue('AI'.$fila, $porc_cant_lp)//$row_ventas_LP[0] / $row_compras_LP[0])
                 ->setCellValue('AJ'.$fila, $porc_imp_lp)//$row_ventas_LP[1] / $row_compras_LP[1])
-                ->setCellValue('AK'.$fila, $row_principal[6]);//existencia petaca
+                ->setCellValue('AK'.$fila, $row_principal[6])//existencia petaca
+				->setCellValue('AL'.$fila, $compras_mm)
+                ->setCellValue('AM'.$fila, $importe_compras_mm)
+                ->setCellValue('AN'.$fila, $ventas_mm)
+                ->setCellValue('AO'.$fila, $importe_ventas_mm)
+                ->setCellValue('AP'.$fila, $porc_cant_mm)//$row_ventas_LP[0] / $row_compras_LP[0])
+                ->setCellValue('AQ'.$fila, $porc_imp_mm)//$row_ventas_LP[1] / $row_compras_LP[1])
+                ->setCellValue('AR'.$fila, $row_principal[7]);
 
 
 	    $objPHPExcel->getActiveSheet()

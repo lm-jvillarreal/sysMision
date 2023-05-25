@@ -1,13 +1,15 @@
 <?php
 include '../global_seguridad/verificar_sesion.php';
 if ($id_sede == '1') {
-	$do = "active";
+	$do = " active";
 } elseif ($id_sede == '2') {
-	$arb = "active";
+	$arb = " active";
 } elseif ($id_sede == '3') {
-	$vill = "active";
+	$vill = " active";
 } elseif ($id_sede == '4') {
-	$all = "active";
+	$all = " active";
+}elseif ($id_sede == '5') {
+	$pet = " active";
 }
 ?>
 <!DOCTYPE html>
@@ -48,9 +50,10 @@ if ($id_sede == '1') {
 										<li class="<?php echo $arb; ?>"><a href="#2" data-toggle="tab">Arboledas</a></li>
 										<li class="<?php echo $vill; ?>"><a href="#3" data-toggle="tab">Villegas</a></li>
 										<li class="<?php echo $all; ?>"><a href="#4" data-toggle="tab">Allende</a></li>
+										<li class="<?php echo $pet; ?>"><a href="#5" data-toggle="tab">La Petaca</a></li>
 									</ul>
 									<div class="tab-content">
-										<div class="tab-pane active" id="1">
+										<div class="tab-pane <?php echo $do; ?>" id="1">
 											<div class="row">
 												<div class="col-md-12">
 													<div class="row">
@@ -91,7 +94,7 @@ if ($id_sede == '1') {
 												</div>
 											</div>
 										</div>
-										<div class="tab-pane" id="2">
+										<div class="tab-pane <?php echo $arb; ?>" id="2">
 											<div class="row">
 												<div class="col-md-12">
 													<br>
@@ -128,7 +131,7 @@ if ($id_sede == '1') {
 												</div>
 											</div>
 										</div>
-										<div class="tab-pane" id="3">
+										<div class="tab-pane <?php echo $vill; ?>" id="3">
 											<div class="row">
 												<div class="col-md-12">
 													<br>
@@ -165,12 +168,49 @@ if ($id_sede == '1') {
 												</div>
 											</div>
 										</div>
-										<div class="tab-pane" id="4">
+										<div class="tab-pane <?php echo $all; ?>" id="4">
 											<div class="row">
 												<div class="col-md-12">
 													<br>
 													<div class="table-responsive">
 														<table id='lista_caducidades_all' class='table table-striped table-bordered' cellspacing='0' width='100%'>
+															<thead>
+																<tr>
+																	<th width='10%'>Código</th>
+																	<th>Descripción</th>
+																	<th width='15%'>Depto</th>
+																	<th width='15%'>Fam.</th>
+																	<th width='5%'>Lote</th>
+																	<th width='10%'>Caducidad</th>
+																	<th width='10%'>Captura</th>
+																	<th width='5%'>Cant.</th>
+																	<th width='5%'></th>
+																</tr>
+															</thead>
+															<tfoot>
+																<tr>
+																	<th>Código</th>
+																	<th>Descripción</th>
+																	<th>Depto</th>
+																	<th>Fam.</th>
+																	<th>Lote</th>
+																	<th>Caducidad</th>
+																	<th>Captura</th>
+																	<th>Cant.</th>
+																	<th></th>
+																</tr>
+															</tfoot>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane<?php echo $pet; ?>" id="5">
+											<div class="row">
+												<div class="col-md-12">
+													<br>
+													<div class="table-responsive">
+														<table id='lista_caducidades_pet' class='table table-striped table-bordered' cellspacing='0' width='100%'>
 															<thead>
 																<tr>
 																	<th width='10%'>Código</th>
@@ -241,6 +281,7 @@ if ($id_sede == '1') {
 			cargar_tabla_arb();
 			cargar_tabla_vill();
 			cargar_tabla_all();
+			cargar_tabla_pet();
 		});
 
 		function cargar_tabla_do() {
@@ -608,6 +649,99 @@ if ($id_sede == '1') {
 				]
 			});
 			table_all.columns().every(function() {
+				var that = this;
+				$('input', this.header()).on('keyup change', function() {
+					if (that.search() !== this.value) {
+						that
+							.search(this.value)
+							.draw();
+					}
+				});
+			});
+		}
+		function cargar_tabla_pet() {
+			$('#lista_caducidades_pet thead th').each(function() {
+				var title = $(this).text();
+				$(this).html('<input type="text" placeholder="' + title + '" style="width:100%" />');
+			});
+			$('#lista_caducidades_pet').dataTable().fnDestroy();
+			var table_pet = $('#lista_caducidades_pet').DataTable({
+				'language': {
+					"url": "../plugins/DataTables/Spanish.json"
+				},
+				"paging": false,
+				"dom": 'Bfrtip',
+				buttons: [{
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'FaltantesLista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'FaltantesLista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					}
+				],
+				"ajax": {
+					"type": "POST",
+					"url": "tabla_caducidades_pet.php",
+					"dataSrc": "",
+					"data": ""
+				},
+				"columns": [{
+						"data": "codigo"
+					},
+					{
+						"data": "descripcion"
+					},
+					{
+						"data": "depto"
+					},
+					{
+						"data": "familia"
+					},
+					{
+						"data": "lote"
+					},
+					{
+						"data": "caducidad"
+					},
+					{
+						"data": "captura"
+					},
+					{
+						"data": "cantidad"
+					},
+					{
+						"data": "traspaso"
+					}
+				]
+			});
+			table_pet.columns().every(function() {
 				var that = this;
 				$('input', this.header()).on('keyup change', function() {
 					if (that.search() !== this.value) {

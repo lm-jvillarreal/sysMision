@@ -1,4 +1,5 @@
 <?php
+$ip_address = $_SERVER['REMOTE_ADDR'];
 $conexion_central = oci_connect('INFOFIN', 'INFOFIN', '200.1.5.100/PETACA',"AL32UTF8");
 //se crea la variable local
 date_default_timezone_set('America/Monterrey');
@@ -81,6 +82,8 @@ if ($cantidad_articulos==0) {
 								<label>Descuento:</label>
 								<br>
 								<label>Precio reg:</label>
+								<br>
+								<label>IP:</label>
 							</td>
 							<td width="25%" rowspan="2" align="right">
 								<label>'.$vigencia_oferta.'</label>
@@ -90,6 +93,8 @@ if ($cantidad_articulos==0) {
 								<label>$'.number_format($precio_venta - $oferta,2,'.',' ').'</label>
 								<br>
 								<label>$'.$precio_venta.'</label>
+								<br>
+								<label>'.$ip_address.'</label>
 							</td>
 						</tr>
 						<tr>

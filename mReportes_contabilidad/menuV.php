@@ -30,6 +30,7 @@
         <li class="active"><a href="index_rpt_comprobantes_cheques.php"><i class="fa fa-bars"></i> <span>R. Comprobantes-Cheques</span></a></li>
         <li class="active"><a href="index_rpt_comprobantes_transferencias.php"><i class="fa fa-bars"></i> <span>R. Comprobantes-Transferencias</span></a></li>
         <li class="active"><a href="index_rpt_creditos.php"><i class="fa fa-bars"></i> <span>R. Creditos</span></a></li>
+        <li class="active"><a href="indexInicioRpts.php"><i class="fa fa-bars"></i> <span>Inicio</span></a></li>
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones de navegaci&oacute;n</li>

@@ -125,7 +125,7 @@ while ($row_gastos = oci_fetch_array($st)) {
     $arb = "<span>$row_gastos[3]</span><input type='hidden' class='form-control' name='c_arb[]' value='$row_gastos[3]' readonly size='5'>";
     $vil = "<span>$row_gastos[4]</span><input type='hidden' class='form-control' name='c_vil[]' value='$row_gastos[4]' readonly size='5'>";
     $all = "<span>$row_gastos[5]</span><input type='hidden' class='form-control' name='c_all[]' value='$row_gastos[5]' readonly size='5'>";
-    $pet = "<span>$row_gastos[6]</span><input type='hidden' class='form-control' name='c_all[]' value='$row_gastos[6]' readonly size='5'>";
+    $pet = "<span>$row_gastos[6]</span><input type='hidden' class='form-control' name='c_petaca[]' value='$row_gastos[6]' readonly size='5'>";
     $total = $row_gastos[2] + $row_gastos[3] + $row_gastos[4] + $row_gastos[5] + $row_gastos[6];
     $total_i = "<a class='btn btn-warning btn-sm' onclick='copiar($numero)'>$total</a><input type='hidden' id='total$numero' class='form-control' name='c_total[]' value='$total' readonly size='5'>";
     $dif = "<span id='dif$numero'>0</span><input type='hidden' id='dif1$numero' class='form-control' name='c_diff[]' value='0' readonly size='5'>";

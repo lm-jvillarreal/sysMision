@@ -4,6 +4,7 @@ $conexion_arb = oci_connect('INFOFIN', 'INFOFIN', '200.1.3.55/ARBOLEDAS',"AL32UT
 $conexion_vill = oci_connect('INFOFIN', 'INFOFIN', '200.1.2.230/VILLEGAS',"AL32UTF8");
 $conexion_all = oci_connect('INFOFIN', 'INFOFIN', '200.1.4.100/ALLENDE',"AL32UTF8");
 $conexion_lp = oci_connect('INFOFIN', 'INFOFIN', '200.1.5.100/PETACA',"AL32UTF8");
+$conexion_mm = oci_connect('INFOFIN', 'INFOFIN', '172.16.18.100/MONTEMORELOS',"AL32UTF8");
 
 date_default_timezone_set('America/Monterrey');
 $fecha = date('d/m/Y');
@@ -29,8 +30,16 @@ switch($sucursal){
   case 'Misión Petaca':
     $conexion_central=$conexion_lp;
   break;
+  case 'Misión Montemorelos':
+    $conexion_central=$conexion_mm;
+  break;
 }
 
+
+$cadenaExiste="SELECT ARTN_BAJA WHERE PVS_ARTICULOS WHERE ARTC_ARTICULO='$p_codigo'";
+$consultaExistencia=oci_parse($conexion_central, $cadenaExiste);
+oci_execute($consultaExistencia);
+$rowExistencia=oci_fetch_row($consultaExistencia);
 //$p_codigo='10';
 $datos_articulo=array();
 $cadena_consulta = "SELECT artc_descripcion, 
@@ -47,7 +56,7 @@ $row = oci_fetch_row($parametros_consulta);
 
 $cantidad_articulos = oci_num_rows($parametros_consulta);
 
-if ($cantidad_articulos==0) {
+if ($rowExistencia[0]=='1' || $cantidad_articulos==0) {
   $existe='NO';
   $artc_descripcion='';
   $artc_precioVenta='';

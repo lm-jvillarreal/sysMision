@@ -47,7 +47,7 @@ if( isset($_POST["action"]) ){
 			}
 		}
 	}
-	echo $cadena_importar;
+	echo "ok";
  }else{
  	echo "invalido";
  }

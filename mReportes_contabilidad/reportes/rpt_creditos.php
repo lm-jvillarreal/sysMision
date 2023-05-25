@@ -19,32 +19,36 @@ if ($sucursal == 1) {
 	$suc = "Arboledas";
 }elseif($sucursal == 3){
 	$suc = "Villegas";
-}else{
+}elseif($sucursal==4){
 	$suc = "Allende";
+}elseif($sucursal==5){
+	$suc="Petaca";
+}elseif($sucursal==6){
+	$suc="Montemorelos";
 }
 
 
 
 
 $consulta_principal  = "SELECT
-												PV_TICKETS.TICN_AAAAMMDDVENTA,
-												PV_TICKETS.TICN_FOLIO,
-												PV_TICKETS.TICC_CAJERO,
-												TICC_CLIENTE,
-												PV_TICKETS.TICN_VENTA,
-												CFG_CLIENTES.CLIC_NOMBRE,
-												CTB_USUARIO.USUC_NOMBRE,
-												pv_tickets.ticn_ajuste AS AJUSTE, 
-												(SELECT NVL(SUM(imtn_montoimpuesto),0) FROM pv_impticket WHERE ticn_aaaammddventa=PV_TICKETS.TICN_AAAAMMDDVENTA AND ticn_folio=PV_TICKETS.TICN_FOLIO AND TICC_SUCURSAL='$sucursal') AS IMPUESTO
-											FROM
-												PV_TICKETS
-											INNER JOIN CXC_DOCUMENTOS ON CXC_DOCUMENTOS.CLIC_CLIENTE = PV_TICKETS.TICC_CLIENTE
-											AND PV_TICKETS.TICN_REFERENCIACXC = CXC_DOCUMENTOS.DOCN_REFERENCIA
-											INNER JOIN CFG_CLIENTES ON CFG_CLIENTES.CLIC_CLIENTE = PV_TICKETS.TICC_CLIENTE
-											INNER JOIN CTB_USUARIO ON CTB_USUARIO.USUS_USUARIO = PV_TICKETS.TICC_CAJERO
-											WHERE
-												TICN_AAAAMMDDVENTA BETWEEN '$fecha_i' AND '$fecha_f'
-											AND TICC_SUCURSAL = '$sucursal'";
+							PV_TICKETS.TICN_AAAAMMDDVENTA,
+							PV_TICKETS.TICN_FOLIO,
+							PV_TICKETS.TICC_CAJERO,
+							TICC_CLIENTE,
+							PV_TICKETS.TICN_VENTA,
+							CFG_CLIENTES.CLIC_NOMBRE,
+							CTB_USUARIO.USUC_NOMBRE,
+							pv_tickets.ticn_ajuste AS AJUSTE, 
+							(SELECT NVL(SUM(imtn_montoimpuesto),0) FROM pv_impticket WHERE ticn_aaaammddventa=PV_TICKETS.TICN_AAAAMMDDVENTA AND ticn_folio=PV_TICKETS.TICN_FOLIO AND TICC_SUCURSAL='$sucursal') AS IMPUESTO
+						FROM
+							PV_TICKETS
+						INNER JOIN CXC_DOCUMENTOS ON CXC_DOCUMENTOS.CLIC_CLIENTE = PV_TICKETS.TICC_CLIENTE
+						AND PV_TICKETS.TICN_REFERENCIACXC = CXC_DOCUMENTOS.DOCN_REFERENCIA
+						INNER JOIN CFG_CLIENTES ON CFG_CLIENTES.CLIC_CLIENTE = PV_TICKETS.TICC_CLIENTE
+						INNER JOIN CTB_USUARIO ON CTB_USUARIO.USUS_USUARIO = PV_TICKETS.TICC_CAJERO
+						WHERE
+							TICN_AAAAMMDDVENTA BETWEEN '$fecha_i' AND '$fecha_f'
+						AND TICC_SUCURSAL = '$sucursal'";
 							// echo "$consulta_principal";
 
 	$stmt = oci_parse($conexion_central, $consulta_principal);

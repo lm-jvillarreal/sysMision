@@ -21,7 +21,7 @@ include '../global_settings/conexion.php';
  $cuerpo = "";
  
 while ($row_turnos = mysqli_fetch_array($consulta_turnos)) {
-	$imprimir= "<button onclick='reimpresion($row_turnos[2],$row_turnos[3]);' type='button' class='btn btn-warning text-center'>Imprimir</button>";
+	$imprimir= "<button onclick='reimpresion($row_turnos[3],$row_turnos[4]);' type='button' class='btn btn-warning text-center'>Imprimir</button>";
 	$renglon = "
 	{
 		\"id\": \"$row_turnos[0]\",

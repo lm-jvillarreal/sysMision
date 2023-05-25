@@ -20,7 +20,7 @@ $cadena_caducidad = "SELECT c.codigo_articulo,
                     FROM far_medicamentosCaducan AS c 
                     INNER JOIN sucursales as s 
                     ON c.sucursal = s.id 
-                    WHERE estatus = '1' AND sucursal = '1'".$filtro_registros_propios;
+                    WHERE (estatus = '1' OR estatus = '2') AND c.cantidad>0 and sucursal = '1'".$filtro_registros_propios;
 
 $consulta_caducidad = mysqli_query($conexion, $cadena_caducidad);
 $cuerpo ="";

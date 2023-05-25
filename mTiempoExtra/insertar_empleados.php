@@ -14,7 +14,6 @@
   $hora_final   = $_POST['fecha_fin'];
   $firma        = $_POST['firma'];
   
-
   $fecha_inicio = substr($hora_inicio, 0, 10);
   $fecha_final  = substr($hora_final,  0, 10);
   $hora_inicio  = substr($hora_inicio, 11,5);

@@ -173,59 +173,65 @@ include '../global_seguridad/verificar_sesion.php';
 		$("#codigo").keypress(function(e) { //Función que se desencadena al presionar enter
 			var code = (e.keyCode ? e.keyCode : e.which);
 			if (code == 13) {
-				var url = "consulta_articulos.php"; // El script a dónde se realizará la petición.
-				var codigo = $("#codigo").val();
-				$.ajax({
-					type: "POST",
-					url: url,
-					data: {
-						codigo: codigo
-					}, // Adjuntar los campos del formulario enviado.
-					success: function(respuesta) {
-						if (respuesta == "no_existe") {
-							alertify.error("El artículo no existe");
-							$("#codigo").val("");
-							$("#codigo").focus();
-							$("#btn-guardar").attr("disabled",true);
-						} else {
-							var array = eval(respuesta);
-							$('#descripcion').val(array[0]);
-							$("#precio_venta").val(array[1]);
-							$("#oferta").val(array[2]);
-							$("#btn-guardar").removeAttr("disabled");
+				if ($("#codigo").val() == "") {
+				} else {
+					var url = "consulta_articulos.php"; // El script a dónde se realizará la petición.
+					var codigo = $("#codigo").val();
+					$.ajax({
+						type: "POST",
+						url: url,
+						data: {
+							codigo: codigo
+						}, // Adjuntar los campos del formulario enviado.
+						success: function(respuesta) {
+							if (respuesta == "no_existe") {
+								alertify.error("El artículo no existe");
+								$("#codigo").val("");
+								$("#codigo").focus();
+								$("#btn-guardar").attr("disabled", true);
+							} else {
+								var array = eval(respuesta);
+								$('#descripcion').val(array[0]);
+								$("#precio_venta").val(array[1]);
+								$("#oferta").val(array[2]);
+								$("#btn-guardar").removeAttr("disabled");
+							}
 						}
-					}
-				});
+					});
+				}
 				return false;
 			}
 		});
 		$("#btn-guardar").click(function() {
-			var url = "insertar_caducidad.php";
-			var codigo = $("#codigo").val();
-			var descripcion = $("#descripcion").val();
-			var caducidad = $("#fecha_caducidad").val();
-			var cantidad = $("#cantidad").val();
-			var precio_venta = $("#precio_venta").val();
-			var oferta = $("#oferta").val();
-			var lote = $("#lote").val();
-			$.ajax({
-				url: url,
-				type: "POST",
-				dateType: "html",
-				data: {
-					codigo: codigo,
-					descripcion: descripcion,
-					caducidad: caducidad,
-					cantidad: cantidad,
-					precio_venta: precio_venta,
-					oferta: oferta,
-					lote: lote
-				},
-				success: function(respuesta) {
-					$(":text").val("");
-					alertify.success("Registro insertado correctamente");
-					$("#codigo").focus();
-				},
+			if($("#codigo").val()=="" || $("#descripcion").val()=="" || $("#fecha_caducidad").val()=="" || $("#cantidad").val()=="" || $("#lote").val()==""){
+				alertify.error("Existen campos vacíos");
+			}else{
+				var url = "insertar_caducidad.php";
+				var codigo = $("#codigo").val();
+				var descripcion = $("#descripcion").val();
+				var caducidad = $("#fecha_caducidad").val();
+				var cantidad = $("#cantidad").val();
+				var precio_venta = $("#precio_venta").val();
+				var oferta = $("#oferta").val();
+				var lote = $("#lote").val();
+				$.ajax({
+					url: url,
+					type: "POST",
+					dateType: "html",
+					data: {
+						codigo: codigo,
+						descripcion: descripcion,
+						caducidad: caducidad,
+						cantidad: cantidad,
+						precio_venta: precio_venta,
+						oferta: oferta,
+						lote: lote
+					},
+					success: function(respuesta) {
+						$(":text").val("");
+						alertify.success("Registro insertado correctamente");
+						$("#codigo").focus();
+					},
 				error: function(xhr, status) {
 					alert("error");
 					//alert(xhr);
@@ -233,6 +239,7 @@ include '../global_seguridad/verificar_sesion.php';
 			})
 			cargar_tabla();
 			return false;
+		}
 		});
 
 		function cargar_tabla() {

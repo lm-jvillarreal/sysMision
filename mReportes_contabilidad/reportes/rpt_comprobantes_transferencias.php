@@ -14,24 +14,25 @@ $fecha_final = $_POST['fecha_final'];
 
 
 $consulta_principal  = "SELECT
-							TRANSFERENCIAS.POLC_INDICE,
-							TO_CHAR (
-								TRANSFERENCIAS.PTRD_FECHA,
-								'YYYY/MM/DD'
-							),
-							TRANSFERENCIAS.PTRN_MONTO AS MONTO,
-							TRANSFERENCIAS.PTRC_RFC AS RFC,
-							TRIM (TRANSFERENCIAS.POLC_INDICE) AS POLIZA,
-							TRANSFERENCIAS.PTRC_BENEF
-						FROM
-							CTB_POLIZAS_TRANFERENCIAS TRANSFERENCIAS
-						WHERE
-							TRANSFERENCIAS.PTRD_FECHA >= TRUNC (
-								TO_DATE ('$fecha_inicio', 'YYYY/MM/DD')
-							)
-						AND TRANSFERENCIAS.PTRD_FECHA < TRUNC (
-							TO_DATE ('$fecha_final', 'YYYY/MM/DD')
-						) + 1";
+												TRANSFERENCIAS.POLC_INDICE,
+												TO_CHAR (
+													TRANSFERENCIAS.PTRD_FECHA,
+													'YYYY/MM/DD'
+												),
+												TRANSFERENCIAS.PTRN_MONTO AS MONTO,
+												TRANSFERENCIAS.PTRC_RFC AS RFC,
+												TRIM (TRANSFERENCIAS.POLC_INDICE) AS POLIZA,
+												TRIM(TRANSFERENCIAS.PTRC_BENEF),
+												(SELECT soli_numch FROM ban_solpag WHERE solc_indice=TRANSFERENCIAS.polc_indice)
+											FROM
+												CTB_POLIZAS_TRANFERENCIAS TRANSFERENCIAS
+											WHERE
+												TRANSFERENCIAS.PTRD_FECHA >= TRUNC (
+													TO_DATE ('$fecha_inicio', 'YYYY/MM/DD')
+												)
+											AND TRANSFERENCIAS.PTRD_FECHA < TRUNC (
+												TO_DATE ('$fecha_final', 'YYYY/MM/DD')
+											) + 1";
 
 							//echo "$consulta_principal";
 
@@ -75,16 +76,17 @@ $consulta_principal  = "SELECT
 	            ->setCellValue('B1', 'Fecha')
 	            ->setCellValue('C1', 'Monto')
 	            ->setCellValue('D1', 'RFC')
-	            ->setCellValue('E1', 'Benefic')
+	            ->setCellValue('E1', 'Beneficiario')
 	            ->setCellValue('F1', 'UUID del comprobante')
-	            ->setCellValue('G1', 'UUID del complemento');
+	            ->setCellValue('G1', 'UUID del complemento')
+							->setCellValue('H1', 'Transferencia');
 
 
 	$fila = 2;
 	while($row_principal = oci_fetch_row($stmt))
 	{
-		$fiscal = "SELECT D_D.DOCC_UUID_CFDI 
- 					FROM CTB_POLIZAS_DOCTOS CPD 
+		$fiscal = " SELECT D_D.DOCC_UUID_CFDI 
+					FROM CTB_POLIZAS_DOCTOS CPD 
 					INNER JOIN CFG_DOCUMENTOS_DIGITALES D_D ON CPD.DOCN_ID = D_D.DOCN_ID 
 					WHERE POLC_INDICE = '$row_principal[4]' 
 					AND d_d.docn_monto IS NOT NULL
@@ -102,13 +104,14 @@ $consulta_principal  = "SELECT
 		oci_execute($st_fiscal2);
 		$row_fiscal2 = oci_fetch_row($st_fiscal2);
 		 $objPHPExcel->setActiveSheetIndex(0)
-	            ->setCellValue('A'.$fila, $row_principal[0])
-	            ->setCellValue('B'.$fila, $row_principal[1])	            
-	            ->setCellValue('C'.$fila, $row_principal[2])
-	            ->setCellValue('D'.$fila, $row_principal[3])
-	            ->setCellValue('E'.$fila, $row_principal[5])
-	            ->setCellValue('F'.$fila, $row_fiscal[0])
-	            ->setCellValue('G'. $fila, $row_fiscal2[0]);
+								->setCellValue('A'.$fila, $row_principal[0])
+								->setCellValue('B'.$fila, $row_principal[1])	            
+								->setCellValue('C'.$fila, $row_principal[2])
+								->setCellValue('D'.$fila, $row_principal[3])
+								->setCellValue('E'.$fila, $row_principal[5])
+								->setCellValue('F'.$fila, $row_fiscal[0])
+								->setCellValue('G'. $fila, $row_fiscal2[0])
+								->setCellValue('H'.$fila, $row_principal[6]);
 
 
 	    $objPHPExcel->getActiveSheet()
@@ -119,7 +122,7 @@ $consulta_principal  = "SELECT
     		->getColumnDimension('B')
     		->setAutoSize(false);
 
-$objPHPExcel->getActiveSheet()
+			$objPHPExcel->getActiveSheet()
     		->getColumnDimension('C')
     		->setAutoSize(false);
 
@@ -135,20 +138,22 @@ $objPHPExcel->getActiveSheet()
     		->getColumnDimension('F')
     		->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
+      $objPHPExcel->getActiveSheet()
         ->getColumnDimension('G')
         ->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
+      $objPHPExcel->getActiveSheet()
         ->getColumnDimension('H')
         ->setAutoSize(true);
         
-                $objPHPExcel->getActiveSheet()
+      $objPHPExcel->getActiveSheet()
         ->getColumnDimension('I')
         ->setAutoSize(true);
-                $objPHPExcel->getActiveSheet()
+      
+				$objPHPExcel->getActiveSheet()
         ->getColumnDimension('J')
-        ->setAutoSize(true);    
+        ->setAutoSize(true);
+
 	$fila = $fila + 1;
 	}
 	//Rename worksheet

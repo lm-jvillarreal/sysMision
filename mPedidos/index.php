@@ -1,7 +1,7 @@
 <?php
 include '../global_seguridad/verificar_sesion.php';
-include '../global_settings/conexion_supsys.php';
-$perfil = $_SESSION["sysAdMision_perfil"];
+//include '../global_settings/conexion_supsys.php';
+
 //Fecha y hora actual
 date_default_timezone_set('America/Monterrey');
 $fecha=date('Y-m-d', mktime(0, 0, 0, date('m'),date('d')-1,date('Y'))); 

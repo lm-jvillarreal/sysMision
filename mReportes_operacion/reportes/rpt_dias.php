@@ -30,48 +30,52 @@ if ($proveedor == "") {
 	$where = " WHERE (INV_ARTICULOS_DETALLE.ARTC_ARTICULO = '$arra[0]'".$or.")";
 
 	$consulta_principal  = "SELECT DISTINCT
-						INV_ARTICULOS_DETALLE.ARTC_ARTICULO AS Codigo,
-						INV_ARTICULOS_DETALLE.ARTC_DESCRIPCION,
-						INV_ARTICULOS_DETALLE.ARTN_ULTIMOPRECIO,
-						familias.FAMC_DESCRIPCION AS Familia,
-						(SELECT PROC_CVEPROVEEDOR FROM COM_ARTICULOSLISTAPRECIOS WHERE INV_ARTICULOS_DETALLE.ARTC_ARTICULO = COM_ARTICULOSLISTAPRECIOS.ARTC_ARTICULO AND ROWNUM = 1),
-						(SELECT COM_FAMILIAS.FAMC_DESCRIPCION FROM COM_FAMILIAS WHERE COM_FAMILIAS.FAMC_FAMILIA = familias.FAMC_FAMILIAPADRE ) AS Departamento,
-						(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '1', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Existencia, 	
-						(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '2', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Arboledas,
-						(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '3', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Villegas,
-						(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '4', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Allende,
-						ROUND( INV_ARTICULOS_DETALLE.ARTN_COSTO_PROMEDIO, 2),
-						(SELECT AREN_CANTIDAD FROM INV_ARTICULOS_EMPAQUE WHERE ARTC_ARTICULO = INV_ARTICULOS_DETALLE.ARTC_ARTICULO AND ROWNUM = 1),
-						(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '5', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Petaca,
-						(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '99', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS CEDIS
-					FROM
-						INV_ARTICULOS_DETALLE
-					INNER JOIN COM_FAMILIAS familias ON familias.FAMC_FAMILIA = INV_ARTICULOS_DETALLE.ARTC_FAMILIA".$where."
-					ORDER BY INV_ARTICULOS_DETALLE.ARTC_ARTICULO";
+								INV_ARTICULOS_DETALLE.ARTC_ARTICULO AS Codigo,
+								INV_ARTICULOS_DETALLE.ARTC_DESCRIPCION,
+								INV_ARTICULOS_DETALLE.ARTN_ULTIMOPRECIO,
+								familias.FAMC_DESCRIPCION AS Familia,
+								(SELECT PROC_CVEPROVEEDOR FROM COM_ARTICULOSLISTAPRECIOS WHERE INV_ARTICULOS_DETALLE.ARTC_ARTICULO = COM_ARTICULOSLISTAPRECIOS.ARTC_ARTICULO AND ROWNUM = 1),
+								(SELECT COM_FAMILIAS.FAMC_DESCRIPCION FROM COM_FAMILIAS WHERE COM_FAMILIAS.FAMC_FAMILIA = familias.FAMC_FAMILIAPADRE ) AS Departamento,
+								(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '1', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Existencia, 	
+								(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '2', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Arboledas,
+								(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '3', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Villegas,
+								(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '4', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Allende,
+								ROUND( INV_ARTICULOS_DETALLE.ARTN_COSTO_PROMEDIO, 2),
+								(SELECT AREN_CANTIDAD FROM INV_ARTICULOS_EMPAQUE WHERE ARTC_ARTICULO = INV_ARTICULOS_DETALLE.ARTC_ARTICULO AND ROWNUM = 1),
+								(SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '5', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS Petaca,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '99', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS CEDIS,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '6', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS MMorelos,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '203', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS CEDISROPA
+							FROM
+								INV_ARTICULOS_DETALLE
+							INNER JOIN COM_FAMILIAS familias ON familias.FAMC_FAMILIA = INV_ARTICULOS_DETALLE.ARTC_FAMILIA".$where."
+							ORDER BY INV_ARTICULOS_DETALLE.ARTC_ARTICULO";
 }else{
-		$consulta_principal = "SELECT DISTINCT
-							INV_ARTICULOS_DETALLE.ARTC_ARTICULO AS Codigo,
-							INV_ARTICULOS_DETALLE.ARTC_DESCRIPCION,
-							INV_ARTICULOS_DETALLE.ARTN_ULTIMOPRECIO,
-							familias.FAMC_DESCRIPCION AS Familia,
-							LISTA.PROC_CVEPROVEEDOR,
-							(SELECT COM_FAMILIAS.FAMC_DESCRIPCION FROM COM_FAMILIAS WHERE COM_FAMILIAS.FAMC_FAMILIA = familias.FAMC_FAMILIAPADRE) AS Departamento,
-							(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '1', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Existencia,
-							(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '2', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Arboledas,
-							(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '3', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Villegas,
-							(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '4', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Allende,
-							ROUND (INV_ARTICULOS_DETALLE.ARTN_COSTO_PROMEDIO, 2),
-							(SELECT AREN_CANTIDAD FROM INV_ARTICULOS_EMPAQUE WHERE ARTC_ARTICULO = INV_ARTICULOS_DETALLE.ARTC_ARTICULO AND ROWNUM = 1),
-							(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '5', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Petaca,
-							(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '99', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS CEDIS
-						FROM
-							INV_ARTICULOS_DETALLE
-						INNER JOIN COM_FAMILIAS familias ON familias.FAMC_FAMILIA = INV_ARTICULOS_DETALLE.ARTC_FAMILIA
-						INNER JOIN COM_ARTICULOSLISTAPRECIOS LISTA ON LISTA.ARTC_ARTICULO = INV_ARTICULOS_DETALLE.ARTC_ARTICULO
-						WHERE
-							LISTA.PROC_CVEPROVEEDOR = '$proveedor'
-						ORDER BY
-							INV_ARTICULOS_DETALLE.ARTC_ARTICULO";
+	$consulta_principal = "SELECT DISTINCT
+								INV_ARTICULOS_DETALLE.ARTC_ARTICULO AS Codigo,
+								INV_ARTICULOS_DETALLE.ARTC_DESCRIPCION,
+								INV_ARTICULOS_DETALLE.ARTN_ULTIMOPRECIO,
+								familias.FAMC_DESCRIPCION AS Familia,
+								LISTA.PROC_CVEPROVEEDOR,
+								(SELECT COM_FAMILIAS.FAMC_DESCRIPCION FROM COM_FAMILIAS WHERE COM_FAMILIAS.FAMC_FAMILIA = familias.FAMC_FAMILIAPADRE) AS Departamento,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '1', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Existencia,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '2', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Arboledas,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '3', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Villegas,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '4', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Allende,
+								ROUND (INV_ARTICULOS_DETALLE.ARTN_COSTO_PROMEDIO, 2),
+								(SELECT AREN_CANTIDAD FROM INV_ARTICULOS_EMPAQUE WHERE ARTC_ARTICULO = INV_ARTICULOS_DETALLE.ARTC_ARTICULO AND ROWNUM = 1),
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '5', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS Petaca,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '99', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS CEDIS,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '6', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS MMorelos,
+								(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, '203', INV_ARTICULOS_DETALLE.ARTC_ARTICULO) FROM dual) AS CEDISROPA
+							FROM
+								INV_ARTICULOS_DETALLE
+							INNER JOIN COM_FAMILIAS familias ON familias.FAMC_FAMILIA = INV_ARTICULOS_DETALLE.ARTC_FAMILIA
+							INNER JOIN COM_ARTICULOSLISTAPRECIOS LISTA ON LISTA.ARTC_ARTICULO = INV_ARTICULOS_DETALLE.ARTC_ARTICULO
+							WHERE
+								LISTA.PROC_CVEPROVEEDOR = '$proveedor'
+							ORDER BY
+								INV_ARTICULOS_DETALLE.ARTC_ARTICULO";
 }
 
 	$stmt = oci_parse($conexion_central, $consulta_principal);
@@ -101,13 +105,14 @@ if ($proveedor == "") {
     }
 
 	// // Set document properties
-	$objPHPExcel->getProperties()->setCreator("Sebastian Villarreal")
-							->setLastModifiedBy("La Misión Supermercados")
-							->setTitle("Reporte General de las Devoluciónes")
-							->setSubject("Analisis")
-							->setDescription("Reporte de analisis")
-							->setKeywords("office PHPExcel php")
-							->setCategory("Reportes");
+	$objPHPExcel->getProperties()
+					->setCreator("Josue Villarreal")
+					->setLastModifiedBy("La Misión Supermercados")
+					->setTitle("Reporte General de desplazamiento")
+					->setSubject("Analisis")
+					->setDescription("Reporte de analisis")
+					->setKeywords("office PHPExcel php")
+					->setCategory("Reportes");
 
 
 	// Add some data
@@ -117,61 +122,69 @@ if ($proveedor == "") {
 	            ->setCellValue('C1', 'Departamento')
 	            ->setCellValue('D1', 'Familia')
 	            ->setCellValue('E1', 'Ult. Costo')
-							->setCellValue('F1', 'U. Emp.')
-							->setCellValue('G1', 'Vtas. DO')
-							->setCellValue('H1', 'Pendientes DO')
-							->setCellValue('I1', 'Teo DO')
-							->setCellValue('J1', 'Teo DO Cajas')
-							->setCellValue('K1', 'Falt. DO')
-							->setCellValue('L1', 'Falt. Caj. DO')
-							->setCellValue('M1', 'Dias Inv. DO')
-							->setCellValue('N1', 'Vtas. ARB')
-							->setCellValue('O1', 'Pendientes ARB')
-							->setCellValue('P1', 'Teo. ARB')
-							->setCellValue('Q1', 'Teo. ARB Cajas')
-							->setCellValue('R1', 'Falt. ARB')
-							->setCellValue('S1', 'Falt. Caj. ARB')
-							->setCellValue('T1', 'Dias Inv. Arb')
-							->setCellValue('U1', 'Vtas. VILL')
-							->setCellValue('V1', 'Pendientes VILL')
-							->setCellValue('W1', 'Teo. VILL')
-							->setCellValue('X1', 'Teo. VILL Cajas')
-							->setCellValue('Y1', 'Falt. VILL')
-							->setCellValue('Z1', 'Falt. Caj. VILL')
-							->setCellValue('AA1', 'Dias Inv. VILL')
-							->setCellValue('AB1', 'Vtas. ALL')
-							->setCellValue('AC1', 'Pendientes ALL')
-							->setCellValue('AD1', 'Teo. ALL')
-							->setCellValue('AE1', 'Teo. ALL Cajas')
-							->setCellValue('AF1', 'Falt. ALL')
-							->setCellValue('AG1', 'Falt. Caj. ALL')
-							->setCellValue('AH1', 'Dias Inv. All')
-							->setCellValue('AI1', 'Vtas. Petaca')
-							->setCellValue('AJ1', 'Pendientes Petaca')
-							->setCellValue('AK1', 'Teo. Petaca')
-							->setCellValue('AL1', 'Teo. Petaca Cajas')
-							->setCellValue('AM1', 'Falt. Petaca')
-							->setCellValue('AN1', 'Falt. Caj. Petaca')
-							->setCellValue('AO1', 'Dias Inv. Petaca')
-							->setCellValue('AP1', 'Teo Cedis');
+				->setCellValue('F1', 'U. Emp.')
+				->setCellValue('G1', 'Vtas. DO')
+				->setCellValue('H1', 'Pendientes DO')
+				->setCellValue('I1', 'Teo DO')
+				->setCellValue('J1', 'Teo DO Cajas')
+				->setCellValue('K1', 'Falt. DO')
+				->setCellValue('L1', 'Falt. Caj. DO')
+				->setCellValue('M1', 'Dias Inv. DO')
+				->setCellValue('N1', 'Vtas. ARB')
+				->setCellValue('O1', 'Pendientes ARB')
+				->setCellValue('P1', 'Teo. ARB')
+				->setCellValue('Q1', 'Teo. ARB Cajas')
+				->setCellValue('R1', 'Falt. ARB')
+				->setCellValue('S1', 'Falt. Caj. ARB')
+				->setCellValue('T1', 'Dias Inv. Arb')
+				->setCellValue('U1', 'Vtas. VILL')
+				->setCellValue('V1', 'Pendientes VILL')
+				->setCellValue('W1', 'Teo. VILL')
+				->setCellValue('X1', 'Teo. VILL Cajas')
+				->setCellValue('Y1', 'Falt. VILL')
+				->setCellValue('Z1', 'Falt. Caj. VILL')
+				->setCellValue('AA1', 'Dias Inv. VILL')
+				->setCellValue('AB1', 'Vtas. ALL')
+				->setCellValue('AC1', 'Pendientes ALL')
+				->setCellValue('AD1', 'Teo. ALL')
+				->setCellValue('AE1', 'Teo. ALL Cajas')
+				->setCellValue('AF1', 'Falt. ALL')
+				->setCellValue('AG1', 'Falt. Caj. ALL')
+				->setCellValue('AH1', 'Dias Inv. All')
+				->setCellValue('AI1', 'Vtas. Petaca')
+				->setCellValue('AJ1', 'Pendientes Petaca')
+				->setCellValue('AK1', 'Teo. Petaca')
+				->setCellValue('AL1', 'Teo. Petaca Cajas')
+				->setCellValue('AM1', 'Falt. Petaca')
+				->setCellValue('AN1', 'Falt. Caj. Petaca')
+				->setCellValue('AO1', 'Dias Inv. Petaca')
+				->setCellValue('AP1', 'Vtas. Montemorelos')
+				->setCellValue('AQ1', 'Pendientes Montemorelos')
+				->setCellValue('AR1', 'Teo. Montemorelos')
+				->setCellValue('AS1', 'Teo. Montemorelos Cajas')
+				->setCellValue('AT1', 'Falt. Montemorelos')
+				->setCellValue('AU1', 'Falt. Caj. Montemorelos')
+				->setCellValue('AV1', 'Dias Inv. Montemorelos')
+				->setCellValue('AW1', 'Teo Cedis')
+				->setCellValue('AX1', 'Teo Cedis Ropa');
 
 	function dev_venta($cadena_conexion,$almn_almacen,$artc_articulo,$fecha_a, $fecha_b){
 		$qry_devolucion_venta = "SELECT NVL(SUM(DETALLE.ARTN_CANTIDAD),'0')
-															FROM
-																	PV_ARTICULOSTICKET detalle
-															INNER JOIN PV_TICKETS tik ON CONCAT(TIK.TICN_AAAAMMDDVENTA,TIK.TICN_FOLIO) = CONCAT(DETALLE.TICN_AAAAMMDDVENTA,DETALLE.TICN_FOLIO)
-															AND tik.TICC_SUCURSAL=detalle.ticc_sucursal
-															WHERE
-																	DETALLE.ARTC_ARTICULO = '$artc_articulo'
-															AND TIK.ticn_aaaammddventa BETWEEN '$fecha_a'
-															AND '$fecha_b'
-															AND (
-																	TIK.TICN_ESTATUS = 2
-																	OR TIK.TICN_ESTATUS = 3
-															)
-															AND tik.TICC_SUCURSAL = '$almn_almacen'
-															AND DETALLE.TICC_SUCURSAL = '$almn_almacen'
-															AND tik.ticn_tipomov='-1'";
+									FROM
+											PV_ARTICULOSTICKET detalle
+									INNER JOIN PV_TICKETS tik ON CONCAT(TIK.TICN_AAAAMMDDVENTA,TIK.TICN_FOLIO) = CONCAT(DETALLE.TICN_AAAAMMDDVENTA,DETALLE.TICN_FOLIO)
+									AND tik.TICC_SUCURSAL=detalle.ticc_sucursal
+									WHERE
+											DETALLE.ARTC_ARTICULO = '$artc_articulo'
+									AND TIK.ticn_aaaammddventa BETWEEN '$fecha_a'
+									AND '$fecha_b'
+									AND (
+											TIK.TICN_ESTATUS = 2
+											OR TIK.TICN_ESTATUS = 3
+									)
+									AND tik.TICC_SUCURSAL = '$almn_almacen'
+									AND DETALLE.TICC_SUCURSAL = '$almn_almacen'
+									AND tik.ticn_tipomov='-1'";
 		$st_dev_venta = oci_parse($cadena_conexion, $qry_devolucion_venta);
 		oci_execute($st_dev_venta);
 		$row_dev_venta = oci_fetch_row($st_dev_venta);
@@ -183,27 +196,27 @@ if ($proveedor == "") {
 	while($row_principal = oci_fetch_row($stmt))
 	{
 		$objPHPExcel->setActiveSheetIndex(0)
-								->setCellValue('A'.$fila, $row_principal[0])
-								->setCellValue('B'.$fila, $row_principal[1])
-								->setCellValue('C'.$fila, $row_principal[5])
-								->setCellValue('D'.$fila, $row_principal[3])
-								->setCellValue('E'.$fila, $row_principal[2])
-								->setCellValue('F'.$fila, $row_principal[11]);
+					->setCellValue('A'.$fila, $row_principal[0])
+					->setCellValue('B'.$fila, $row_principal[1])
+					->setCellValue('C'.$fila, $row_principal[5])
+					->setCellValue('D'.$fila, $row_principal[3])
+					->setCellValue('E'.$fila, $row_principal[2])
+					->setCellValue('F'.$fila, $row_principal[11]);
 
 		$smermas = "SELECT
-									SUM (DETALLE.ARTN_CANTIDAD)
-								FROM
-									PV_ARTICULOSTICKET detalle
-								INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
-								AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
-								WHERE
-									DETALLE.ARTC_ARTICULO = '$row_principal[0]'
-								AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
-								AND '$fecha_fin'
-								AND TIK.TICC_SUCURSAL = '1'
-								AND DETALLE.TICC_SUCURSAL = '1'
-								AND TIK.TICN_ESTATUS = 3
-								AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
+						SUM (DETALLE.ARTN_CANTIDAD)
+					FROM
+						PV_ARTICULOSTICKET detalle
+					INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
+					AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
+					WHERE
+						DETALLE.ARTC_ARTICULO = '$row_principal[0]'
+					AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
+					AND '$fecha_fin'
+					AND TIK.TICC_SUCURSAL = '1'
+					AND DETALLE.TICC_SUCURSAL = '1'
+					AND TIK.TICN_ESTATUS = 3
+					AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
 
 		$stat2 = oci_parse($conexion_central, $smermas);
 		oci_execute($stat2);
@@ -224,7 +237,7 @@ if ($proveedor == "") {
 			$dias_inventario = "";
 		}else{
 			$dias_inventario = $row_principal[6]/($row_merma[0]/$dias);//existencias/(ventas/dias)
-      $dias_inventario = ROUND($dias_inventario);
+      		$dias_inventario = ROUND($dias_inventario);
 		}
 		//$dev_do=dev_venta($conexion_central,'1',$row_principal[0],$fecha_i,$fecha_fin);
 		//$dev_arb=dev_venta($conexion_central,'2',$row_principal[0],$fecha_i,$fecha_fin);
@@ -233,25 +246,25 @@ if ($proveedor == "") {
 		//$dev_pet=dev_venta($conexion_central,'5',$row_principal[0],$fecha_i,$fecha_fin);
 
 		$objPHPExcel->setActiveSheetIndex(0)
-								->setCellValue('G'.$fila, $row_merma[0])
-								->setCellValue('I'.$fila, $row_principal[6])
-								->setCellValue('K'.$fila, $faltante)
-								->setCellValue('M'.$fila, $dias_inventario);
+					->setCellValue('G'.$fila, $row_merma[0])
+					->setCellValue('I'.$fila, $row_principal[6])
+					->setCellValue('K'.$fila, $faltante)
+					->setCellValue('M'.$fila, $dias_inventario);
 
 		$v_arb = "SELECT
-							SUM (DETALLE.ARTN_CANTIDAD)
-							FROM
-								PV_ARTICULOSTICKET detalle
-							INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
-							AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
-							WHERE
-								DETALLE.ARTC_ARTICULO = '$row_principal[0]'
-							AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
-							AND '$fecha_fin'
-							AND TIK.TICC_SUCURSAL = '2'
-							AND DETALLE.TICC_SUCURSAL = '2'
-							AND TIK.TICN_ESTATUS = 3
-							AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
+					SUM (DETALLE.ARTN_CANTIDAD)
+					FROM
+						PV_ARTICULOSTICKET detalle
+					INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
+					AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
+					WHERE
+						DETALLE.ARTC_ARTICULO = '$row_principal[0]'
+					AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
+					AND '$fecha_fin'
+					AND TIK.TICC_SUCURSAL = '2'
+					AND DETALLE.TICC_SUCURSAL = '2'
+					AND TIK.TICN_ESTATUS = 3
+					AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
 		$st_v_arb = oci_parse($conexion_central, $v_arb);
 		oci_execute($st_v_arb);
 
@@ -271,22 +284,22 @@ if ($proveedor == "") {
 			$dias_inventario_arb = "";
 		}else{
 			$dias_inventario_arb = $row_principal[7]/($row_v_arb[0]/$dias);//existencias/(ventas/dias)
-      $dias_inventario_arb = ROUND($dias_inventario_arb);
+      		$dias_inventario_arb = ROUND($dias_inventario_arb);
 		}
 
 		$v_vill = "SELECT
-									SUM (DETALLE.ARTN_CANTIDAD)
-								FROM
-								PV_ARTICULOSTICKET detalle
-								INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
-								AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
-								WHERE
-									DETALLE.ARTC_ARTICULO = '$row_principal[0]'
-								AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
-								AND '$fecha_fin'
-								AND TIK.TICC_SUCURSAL = '3'
-								AND DETALLE.TICC_SUCURSAL = '3'
-								AND TIK.TICN_ESTATUS = 3
+						SUM (DETALLE.ARTN_CANTIDAD)
+					FROM
+					PV_ARTICULOSTICKET detalle
+					INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
+					AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
+					WHERE
+						DETALLE.ARTC_ARTICULO = '$row_principal[0]'
+					AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
+					AND '$fecha_fin'
+					AND TIK.TICC_SUCURSAL = '3'
+					AND DETALLE.TICC_SUCURSAL = '3'
+					AND TIK.TICN_ESTATUS = 3
 								AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
 		$st_v_vill = oci_parse($conexion_central, $v_vill);
 		oci_execute($st_v_vill);
@@ -307,23 +320,23 @@ if ($proveedor == "") {
 			$dias_inventario_vill = "";
 		}else{
 			$dias_inventario_vill = $row_principal[8]/($row_v_vill[0]/$dias);//existencias/(ventas/dias)
-      $dias_inventario_vill = ROUND($dias_inventario_vill);
+      		$dias_inventario_vill = ROUND($dias_inventario_vill);
 		}
 
 		$v_all = "SELECT
-								SUM (DETALLE.ARTN_CANTIDAD)
-							FROM
-							PV_ARTICULOSTICKET detalle
-							INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
-							AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
-							WHERE
-								DETALLE.ARTC_ARTICULO = '$row_principal[0]'
-							AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
-							AND '$fecha_fin'
-							AND TIK.TICC_SUCURSAL = '4'
-							AND DETALLE.TICC_SUCURSAL = '4'
-							AND TIK.TICN_ESTATUS = 3
-							AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
+						SUM (DETALLE.ARTN_CANTIDAD)
+					FROM
+					PV_ARTICULOSTICKET detalle
+					INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
+					AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
+					WHERE
+						DETALLE.ARTC_ARTICULO = '$row_principal[0]'
+					AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
+					AND '$fecha_fin'
+					AND TIK.TICC_SUCURSAL = '4'
+					AND DETALLE.TICC_SUCURSAL = '4'
+					AND TIK.TICN_ESTATUS = 3
+					AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
 		$st_v_all = oci_parse($conexion_central, $v_all);
 		oci_execute($st_v_all);
 
@@ -344,24 +357,24 @@ if ($proveedor == "") {
 			$dias_inventario_all = "";
 		}else{
 			$dias_inventario_all = $row_principal[9]/($row_v_all[0]/$dias);//existencias/(ventas/dias)
-      $dias_inventario_all = ROUND($dias_inventario_all);
+      		$dias_inventario_all = ROUND($dias_inventario_all);
 		}
 
 
 		$v_petaca = "SELECT
-									SUM (DETALLE.ARTN_CANTIDAD)
-								FROM
-								PV_ARTICULOSTICKET detalle
-								INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
-								AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
-								WHERE
-									DETALLE.ARTC_ARTICULO = '$row_principal[0]'
-								AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
-								AND '$fecha_fin'
-								AND TIK.TICC_SUCURSAL = '5'
-								AND DETALLE.TICC_SUCURSAL = '5'
-								AND TIK.TICN_ESTATUS = 3
-								AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
+						SUM (DETALLE.ARTN_CANTIDAD)
+					FROM
+					PV_ARTICULOSTICKET detalle
+					INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
+					AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
+					WHERE
+						DETALLE.ARTC_ARTICULO = '$row_principal[0]'
+					AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
+					AND '$fecha_fin'
+					AND TIK.TICC_SUCURSAL = '5'
+					AND DETALLE.TICC_SUCURSAL = '5'
+					AND TIK.TICN_ESTATUS = 3
+					AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
 		$st_v_petaca = oci_parse($conexion_central, $v_petaca);
 		oci_execute($st_v_petaca);
 		$row_v_petaca = oci_fetch_row($st_v_petaca);
@@ -381,7 +394,43 @@ if ($proveedor == "") {
 			$dias_inventario_petaca = "";
 		}else{
 			$dias_inventario_petaca = $row_principal[12]/($row_v_petaca[0]/$dias);//existencias/(ventas/dias)
-      $dias_inventario_petaca = ROUND($dias_inventario_petaca);
+      		$dias_inventario_petaca = ROUND($dias_inventario_petaca);
+		}
+
+		$v_mm = "SELECT
+						SUM (DETALLE.ARTN_CANTIDAD)
+					FROM
+					PV_ARTICULOSTICKET detalle
+					INNER JOIN PV_TICKETS tik ON TIK.TICN_AAAAMMDDVENTA = DETALLE.TICN_AAAAMMDDVENTA
+					AND TIK.TICN_FOLIO = DETALLE.TICN_FOLIO
+					WHERE
+						DETALLE.ARTC_ARTICULO = '$row_principal[0]'
+					AND TIK.ticn_aaaammddventa BETWEEN '$fecha_i'
+					AND '$fecha_fin'
+					AND TIK.TICC_SUCURSAL = '6'
+					AND DETALLE.TICC_SUCURSAL = '6'
+					AND TIK.TICN_ESTATUS = 3
+					AND (tik.ticn_tipomov='1' OR tik.ticn_tipomov='9')";
+		$st_v_mm = oci_parse($conexion_central, $v_mm);
+		oci_execute($st_v_mm);
+		$row_v_mm = oci_fetch_row($st_v_mm);
+
+		$faltante_mm = $row_v_mm[0] - $row_principal[14]; //faltante = ventas - existencias
+		if($faltante_mm == 0 || $row_principal[11]==""){
+			$fue_mm = 0;
+		}elseif($faltante < 0){
+			$faltante_ue=($faltante_mm * -1)/$row_principal[11];
+			$fue_mm = ceil($faltante_ue);
+			$fue_mm = $fue_all * -1;
+		}else{
+			$faltante_ue=($faltante_mm)/$row_principal[11];
+			$fue_mm = ceil($faltante_ue);
+		}
+		if (empty($row_v_mm[0])) {
+			$dias_inventario_mm = "";
+		}else{
+			$dias_inventario_mm = $row_principal[14]/($row_v_mm[0]/$dias);//existencias/(ventas/dias)
+      		$dias_inventario_mm = ROUND($dias_inventario_mm);
 		}
 
 		$teoDo = $row_principal[6];
@@ -389,6 +438,7 @@ if ($proveedor == "") {
 		$teoVill = $row_principal[8];
 		$teoAll = $row_principal[9];
 		$teoPet = $row_principal[12];
+		$teoMm = $row_principal[14];
 
 		if($teoDo == 0 || $row_principal[11]==""){
 			$tueDo = 0;
@@ -420,6 +470,13 @@ if ($proveedor == "") {
 		}else{
 			$tuePet  = $teoPet/$row_principal[11];
 			$tuePet = round($tuePet,2);
+		}
+
+		if($teoMm == 0 || $row_principal[11]==""){
+			$tueMm = 0;
+		}else{
+			$tueMm  = $teoPet/$row_principal[11];
+			$tueMm = round($tueMm,2);
 		}
 		//MOVIMIENTOS PENDIENTES
 		$cadenaPendientesDO="SELECT NVL(sum(rm.rmon_cantidad),0) FROM INV_MOVIMIENTOS m
@@ -491,80 +548,102 @@ if ($proveedor == "") {
 		$st_pendientesPET=oci_parse($conexion_central,$cadenaPendientesPET);
 		oci_execute($st_pendientesPET);
 		$row_PendientesPET = oci_fetch_row($st_pendientesPET);
+
+		$cadenaPendientesMM="SELECT NVL(sum(rm.rmon_cantidad),0) FROM INV_MOVIMIENTOS m
+												INNER JOIN inv_renglones_movimientos rm ON rm.almn_almacen = m.almn_almacen 
+												and m.modc_tipomov = rm.modc_tipomov 
+												AND m.modn_folio = rm.modn_folio
+												WHERE  m.modc_tipomov='SALXVE'
+												AND rm.artc_articulo = '$row_principal[0]'
+												AND m.movn_estatus = '2'
+												AND m.ALMN_ALMACEN = '6'
+												AND m.movd_fechaelaboracion >= TRUNC(TO_DATE('$fecha_inicio', 'YYYY/MM/DD')) 
+												AND m.movd_fechaelaboracion <= TRUNC(TO_DATE('$fecha_final', 'YYYY/MM/DD')) +1";
+		$st_pendientesMM=oci_parse($conexion_central,$cadenaPendientesMM);
+		oci_execute($st_pendientesMM);
+		$row_PendientesMM = oci_fetch_row($st_pendientesMM);
 		//
 		$objPHPExcel->setActiveSheetIndex(0)
-								->setCellValue('H'.$fila, $row_PendientesDO[0])
-								->setCellValue('J'.$fila, $tueDo)
-								->setCellValue('L'.$fila, $fue_do)
-								->setCellValue('N'.$fila, $row_v_arb[0])
-								->setCellValue('O'.$fila, $row_PendientesARB[0])
-								->setCellValue('P'.$fila, $row_principal[7])
-								->setCellValue('Q'.$fila, $tueArb)
-								->setCellValue('R'.$fila, $faltante_arb)
-								->setCellValue('S'.$fila, $fue_arb)
-								->setCellValue('T'.$fila, $dias_inventario_arb)
-								->setCellValue('U'.$fila, $row_v_vill[0])
-								->setCellValue('V'.$fila, $row_PendientesVILL[0])
-								->setCellValue('W'.$fila, $row_principal[8])
-								->setCellValue('X'.$fila, $tueVill)
-								->setCellValue('Y'.$fila, $faltante_vill)
-								->setCellValue('Z'.$fila, $fue_vill)
-								->setCellValue('AA'.$fila, $dias_inventario_vill)
-								->setCellValue('AB'.$fila, $row_v_all[0])
-								->setCellValue('AC'.$fila, $row_PendientesALL[0])
-								->setCellValue('AD'.$fila, $row_principal[9])
-								->setCellValue('AE'.$fila, $tueAll)
-								->setCellValue('AF'.$fila, $faltante_all)
-								->setCellValue('AG'.$fila, $fue_all)
-								->setCellValue('AH'.$fila, $dias_inventario_all)
-								->setCellValue('AI'.$fila, $row_v_petaca[0])
-								->setCellValue('AJ'.$fila, $row_PendientesPET[0])
-								->setCellValue('AK'.$fila, $row_principal[12])
-								->setCellValue('AL'.$fila, $tuePet)
-								->setCellValue('AM'.$fila, $faltante_petaca)
-								->setCellValue('AN'.$fila, $fue_petaca)
-								->setCellValue('AO'.$fila, $dias_inventario_petaca)
-								->setCellValue('AP'.$fila, $row_principal[13]);
+					->setCellValue('H'.$fila, $row_PendientesDO[0])
+					->setCellValue('J'.$fila, $tueDo)
+					->setCellValue('L'.$fila, $fue_do)
+					->setCellValue('N'.$fila, $row_v_arb[0])
+					->setCellValue('O'.$fila, $row_PendientesARB[0])
+					->setCellValue('P'.$fila, $row_principal[7])
+					->setCellValue('Q'.$fila, $tueArb)
+					->setCellValue('R'.$fila, $faltante_arb)
+					->setCellValue('S'.$fila, $fue_arb)
+					->setCellValue('T'.$fila, $dias_inventario_arb)
+					->setCellValue('U'.$fila, $row_v_vill[0])
+					->setCellValue('V'.$fila, $row_PendientesVILL[0])
+					->setCellValue('W'.$fila, $row_principal[8])
+					->setCellValue('X'.$fila, $tueVill)
+					->setCellValue('Y'.$fila, $faltante_vill)
+					->setCellValue('Z'.$fila, $fue_vill)
+					->setCellValue('AA'.$fila, $dias_inventario_vill)
+					->setCellValue('AB'.$fila, $row_v_all[0])
+					->setCellValue('AC'.$fila, $row_PendientesALL[0])
+					->setCellValue('AD'.$fila, $row_principal[9])
+					->setCellValue('AE'.$fila, $tueAll)
+					->setCellValue('AF'.$fila, $faltante_all)
+					->setCellValue('AG'.$fila, $fue_all)
+					->setCellValue('AH'.$fila, $dias_inventario_all)
+					->setCellValue('AI'.$fila, $row_v_petaca[0])
+					->setCellValue('AJ'.$fila, $row_PendientesPET[0])
+					->setCellValue('AK'.$fila, $row_principal[12])
+					->setCellValue('AL'.$fila, $tuePet)
+					->setCellValue('AM'.$fila, $faltante_petaca)
+					->setCellValue('AN'.$fila, $fue_petaca)
+					->setCellValue('AO'.$fila, $dias_inventario_petaca)
+					->setCellValue('AP'.$fila, $row_v_mm[0])
+					->setCellValue('AQ'.$fila, $row_PendientesMM[0])
+					->setCellValue('AR'.$fila, $row_principal[14])
+					->setCellValue('AS'.$fila, $tueMm)
+					->setCellValue('AT'.$fila, $faltante_mm)
+					->setCellValue('AU'.$fila, $fue_mm)
+					->setCellValue('AV'.$fila, $dias_inventario_mm)
+					->setCellValue('AW'.$fila, $row_principal[13])
+					->setCellValue('AX'.$fila, $row_principal[15]);
 
 		$objPHPExcel->getActiveSheet()
-								->getColumnDimension('A')
-								->setAutoSize(true);
+					->getColumnDimension('A')
+					->setAutoSize(true);
 
 		$objPHPExcel->getActiveSheet()
-								->getColumnDimension('B')
-								->setAutoSize(false);
+					->getColumnDimension('B')
+					->setAutoSize(false);
 
 		$objPHPExcel->getActiveSheet()
-								->getColumnDimension('C')
-								->setAutoSize(false);
+					->getColumnDimension('C')
+					->setAutoSize(false);
 
 	// $objPHPExcel->getActiveSheet()
 	// 	->getColumnDimension('D')
 	// 	->setAutoSize(true);
 
 		$objPHPExcel->getActiveSheet()
-								->getColumnDimension('E')
-								->setAutoSize(true);
+					->getColumnDimension('E')
+					->setAutoSize(true);
 
 		$objPHPExcel->getActiveSheet()
-								->getColumnDimension('F')
-								->setAutoSize(true);
+					->getColumnDimension('F')
+					->setAutoSize(true);
 
 		$objPHPExcel->getActiveSheet()
-								->getColumnDimension('G')
-								->setAutoSize(true);
+					->getColumnDimension('G')
+					->setAutoSize(true);
 
 		$objPHPExcel->getActiveSheet()
-								->getColumnDimension('H')
-								->setAutoSize(true);
+					->getColumnDimension('H')
+					->setAutoSize(true);
 
 		$objPHPExcel->getActiveSheet()
-								->getColumnDimension('I')
-								->setAutoSize(true);
+					->getColumnDimension('I')
+					->setAutoSize(true);
         
 		$objPHPExcel->getActiveSheet()
-								->getColumnDimension('J')
-								->setAutoSize(true);
+					->getColumnDimension('J')
+					->setAutoSize(true);
 
 		$fila = $fila + 1;
 	}
@@ -583,6 +662,8 @@ if ($proveedor == "") {
 		$c_u = $objPHPExcel->getActiveSheet()->getCell('AH' . $fila)->getCalculatedValue();
 		$C_AL= $objPHPExcel->getActiveSheet()->getCell('AM' . $fila)->getCalculatedValue();
 		$C_AN= $objPHPExcel->getActiveSheet()->getCell('AO' . $fila)->getCalculatedValue();
+		$c_at = $objPHPExcel->getActiveSheet()->getCell('AT' . $fila)->getCalculatedValue();
+		$c_av = $objPHPExcel->getActiveSheet()->getCell('AV' . $fila)->getCalculatedValue();
 	
 		if ($c_k > 0) {
 			cellColor('K'.$fila, 'F28A8C');
@@ -613,6 +694,12 @@ if ($proveedor == "") {
 		}
 		if($C_AN<10){
 			cellColor('AO'.$fila, 'F28A8C');
+		}
+		if($c_at>0){
+			cellColor('AT'.$fila, 'F28A8C');
+		}
+		if($c_av<10){
+			cellColor('AV'.$fila, 'F28A8C');
 		}
 		$fila = $fila +1;
 	}

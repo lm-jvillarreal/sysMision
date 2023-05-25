@@ -2,8 +2,12 @@
 include '../global_seguridad/verificar_sesion.php';
 
 date_default_timezone_set('America/Monterrey');
-$fecha=date("Y-m-d"); 
+$fecha=date("Y-m-d");
+$fechaInicio=date("Y-m-01");
 $hora=date ("H:i:s");
+
+$fi=$_POST['fi'];
+$ff=$_POST['ff'];
 
 $cadena_incidencias = "SELECT  inc.id, 
                         suc.nombre, 
@@ -20,6 +24,8 @@ $cadena_incidencias = "SELECT  inc.id,
                         INNER JOIN categorias_vidvig as cat ON inc.id_categoria = cat.id
                         INNER JOIN incidencias_vidvig as tipo ON inc.tipo_incidencia = tipo.id
                         INNER JOIN departamentos as deptos ON inc.id_area = deptos.id
+                        WHERE (inc.fecha_incidencia>='$fi'
+                        AND inc.fecha_incidencia<='$ff')
                         ORDER BY inc.id DESC";
 
 $consulta_incidencias = mysqli_query($conexion, $cadena_incidencias);

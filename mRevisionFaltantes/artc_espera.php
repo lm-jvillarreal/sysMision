@@ -34,7 +34,7 @@ include '../global_seguridad/verificar_sesion.php';
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table id="lista_codigos" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <table id="lista_codigos" class="table table-striped table-bordered" cellspacing="0" width="110%">
                     <thead>
                       <tr>
                         <th width="5%">#</th>
@@ -45,24 +45,12 @@ include '../global_seguridad/verificar_sesion.php';
                         <th width="5%">ARB</th>
                         <th width="5%">VILL</th>
                         <th width="5%">ALL</th>
+                        <th width="5%">PET</th>
+                        <th width="5%">CDS</th>
                         <th width="5%">Estatus</th>
                         <th width="5%"></th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Código</th>
-                        <th>Descripción</th>
-                        <th>Sucursal</th>
-                        <th>DO</th>
-                        <th>ARB</th>
-                        <th>VILL</th>
-                        <th>ALL</th>
-                        <th>Estatus</th>
-                        <th></th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
@@ -180,6 +168,12 @@ include '../global_seguridad/verificar_sesion.php';
           },
           {
             "data": "all"
+          },
+          {
+            "data": "pet"
+          },
+          {
+            "data": "cedis"
           },
           {
             "data": "liberar"

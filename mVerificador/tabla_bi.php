@@ -36,6 +36,7 @@ $cadena = "SELECT
                 ) + 1
                 AND (
                     INV_MOVIMIENTOS.MODC_TIPOMOV = 'AJUNEG'
+                    OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'RANEG'
                     OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'SACAJC'
                     OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'S_AJCP'
                     OR INV_MOVIMIENTOS.MODC_TIPOMOV = 'SCACSG'
@@ -55,6 +56,7 @@ $cadena = "SELECT
                 )
                 AND (
                     INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'AJUNEG'
+                    OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'RANEG'
                     OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'SACAJC'
                     OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'S_AJCP'
                     OR INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV = 'SCACSG'
@@ -78,7 +80,7 @@ $cadena = "SELECT
     $st = oci_parse($conexion_central, $cadena);
     oci_execute($st);
 
-
+//echo $cadena;
 $cuerpo ="";
 
 while ($row_gastos = oci_fetch_array($st)) {

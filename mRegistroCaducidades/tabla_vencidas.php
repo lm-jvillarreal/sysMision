@@ -25,7 +25,7 @@ $cadena_caducidad = "SELECT c.codigo_articulo,
                     INNER JOIN sucursales as s 
                     ON c.sucursal = s.id
                     INNER JOIN usuarios as u ON c.usuario = u.id
-                    WHERE (estatus = '1' OR estatus = '2') AND c.fecha_caducidad < '$fecha'".$filtro_registros_propios.$filtro_soloSucural;
+                    WHERE c.cantidad>0 AND (estatus = '1' OR estatus = '2') AND c.fecha_caducidad < '$fecha'".$filtro_registros_propios.$filtro_soloSucural;
 
 $consulta_caducidad = mysqli_query($conexion, $cadena_caducidad);
 $cuerpo ="";
@@ -49,20 +49,6 @@ while ($row_caducidad = mysqli_fetch_array($consulta_caducidad)) {
 
     $escape_descripcion = mysqli_real_escape_string($conexion, $row_caducidad[1]);
 
-    $cadena_ventas = "SELECT SUM(INV_RENGLONES_MOVIMIENTOS.RMON_CANTSURTIDA)
-    FROM INV_MOVIMIENTOS INNER JOIN INV_RENGLONES_MOVIMIENTOS
-    ON INV_MOVIMIENTOS.MODN_FOLIO = INV_RENGLONES_MOVIMIENTOS.MODN_FOLIO
-    AND INV_MOVIMIENTOS.ALMN_ALMACEN = INV_RENGLONES_MOVIMIENTOS.ALMN_ALMACEN
-    AND INV_MOVIMIENTOS.MODC_TIPOMOV = INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV
-    WHERE (inv_movimientos.modc_tipomov = 'SALXVE')
-    AND INV_MOVIMIENTOS.MOVD_FECHAAFECTACION >= TRUNC(TO_DATE('$row_caducidad[9]','YYYY-MM-DD'))
-    AND INV_MOVIMIENTOS.MOVD_FECHAAFECTACION <= TRUNC(TO_DATE('$fecha', 'YYYY-MM-DD'))
-    AND INV_MOVIMIENTOS.ALMN_ALMACEN = '$row_caducidad[8]'
-    AND INV_RENGLONES_MOVIMIENTOS.ARTC_ARTICULO = '$row_caducidad[0]'";
-    $st_ventas = oci_parse($conexion_central, $cadena_ventas);
-    oci_execute($st_ventas);
-    $row_ventas = oci_fetch_row($st_ventas);
-    $inicial = $row_caducidad[4]-$row_ventas[0];
     $link_precios = "<center><a href='#' data-codigo = '$row_caducidad[0]' data-suc = '$row_caducidad[8]' data-fecha = '$row_caducidad[11]' data-toggle = 'modal' data-target = '#modal-movimientos' class='btn btn-danger' target='blank'>$row_caducidad[0]</a></center>";
 	$renglon = "
 	{
@@ -74,8 +60,8 @@ while ($row_caducidad = mysqli_fetch_array($consulta_caducidad)) {
         \"lote\": \"$row_caducidad[5]\",
         \"caducidad\": \"$row_caducidad[3]\",
         \"cantidad\": \"$row_caducidad[4]\",
-        \"ventas\": \"$row_ventas[0]\",
-        \"resto\": \"$inicial\",
+        \"ventas\": \"\",
+        \"resto\": \"\",
         \"usuario\": \"$row_caducidad[10]\"
 	},";
 	$cuerpo = $cuerpo.$renglon;

@@ -39,24 +39,33 @@
 
     $status = "<center><small class='label label-lg bg-$color'>$texto</small></center>";
 
-    $renglon = "
-      {
-      \"#\": \"$numero\",
-      \"Caja\": \"$row[1]\",
-      \"Equipo\": \"$row[2]\",
-      \"Fallo\": \"$row[3]\",
-      \"Status\": \"$status\",
-      \"Editar\": \"$boton_editar\",
-      \"Eliminar\": \"$boton_eliminar\"
-      },";
-    $cuerpo = $cuerpo.$renglon;
+    array_push($datos, array(
+      '#'=>$numero,
+      'Caja'=>$row[1],
+      'Fallo'=>$row[3],
+      'Status'=>$status,
+      'Editar'=>$boton_editar,
+      'Eliminar'=>$boton_eliminar
+    ));
+    // $renglon = "
+    //   {
+    //   \"#\": \"$numero\",
+    //   \"Caja\": \"$row[1]\",
+    //   \"Equipo\": \"$row[2]\",
+    //   \"Fallo\": \"$row[3]\",
+    //   \"Status\": \"$status\",
+    //   \"Editar\": \"$boton_editar\",
+    //   \"Eliminar\": \"$boton_eliminar\"
+    //   },";
+    // $cuerpo = $cuerpo.$renglon;
     $numero ++;
   }
-  $cuerpo2 = trim($cuerpo,','); ///Quitarle la coma
-  $tabla = "
-    ["
-    .$cuerpo2.
-    "]
-    ";
-  echo $tabla;
+  // $cuerpo2 = trim($cuerpo,','); ///Quitarle la coma
+  // $tabla = "
+  //   ["
+  //   .$cuerpo2.
+  //   "]
+  //   ";
+  // echo $tabla;
+  echo utf8_encode(json_encode($datos));
 ?>

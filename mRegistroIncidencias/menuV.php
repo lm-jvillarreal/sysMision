@@ -34,13 +34,11 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones del módulo</li>
       
-        <li class="active"><a href="index.php"><i class="fa fa-bars"></i> <span>Registro de Incidencias</span></a></li>
-        <li class="active"><a href="lista_autorizados.php"><i class="fa fa-bars"></i> <span>Incidencias Autorizadas</span></a></li>
-        <li class="active"><a href="../mAutorizacionIncidencias/index.php"><i class="fa fa-bars"></i> <span>Incidencias Pendientes</span></a></li>
-        <li class="active"><a href="lista_rechazados.php"><i class="fa fa-bars"></i> <span>Incidencias Rechazadas</span></a></li>
-        <li class="active"><a href="registros.php"><i class="fa fa-bars"></i> <span>Incidencias</span></a></li>
-        
-
+        <li class="active"><a href="index.php"><i class="fa fa-pencil"></i> <span>Registro de Incidencias</span></a></li>
+        <li class="active"><a href="lista_autorizados.php"><i class="fa fa-laptop"></i> <span>Monitoreo de Incidencias</span></a></li>
+        <li class="active"><a href="registros.php"><i class="fa fa-book"></i> <span>Bitácora de Incidencias</span></a></li>
+        <li class="active"><a href="widgets.php"><i class="fa fa-line-chart"></i> <span>Gráficos</span></a></li>
+      
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones de navegaci&oacute;n</li>

@@ -1,10 +1,10 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
-    //require_once('conexion/conexion.php');
 $importe = 0;
 $iva     = 0;
 $ieps    = 0;
 include '../global_settings/conexion_oracle.php';
+
     //$id = $_GET['id'];  
     $sql = "SELECT
                 ROCN_RENGLON,
@@ -259,6 +259,15 @@ $pdf->output('orden_compra_pdf/OC - '.$orden.'.pdf', 'F');
 //============================================================+
 
 include '../global_settings/conexion.php';
+
+$cadenaDatos="SELECT CFG_USR, CFG_DMN, CFG_AUTH FROM CFG_COMPRAS";
+$consultaAuth=mysqli_query($conexion,$cadenaDatos);
+$rowAuth=mysqli_fetch_array($consultaAuth);
+
+$cfg_usr=$rowAuth[0];
+$cfg_dmn=$rowAuth[1];
+$cfg_auth=$rowAuth[2];
+
 $cadena_proveedor = "SELECT correo_vendedor, proveedor FROM proveedores WHERE numero_proveedor = '$cve_prov'";
 $consulta_proveedor = mysqli_query($conexion, $cadena_proveedor);
 $row_proveedor = mysqli_fetch_array($consulta_proveedor);
@@ -281,7 +290,7 @@ $mail->SMTPDebug = 0;
 //Set the hostname of the mail server
 $mail->Host = 'mail.lamisionsuper.com';
 //Set the SMTP port number - likely to be 25, 465 or 587
-$mail->Port = 2525;
+$mail->Port = 587;
 //Whether to use SMTP authentication
 $mail->SMTPAuth = True;
 
@@ -296,9 +305,9 @@ $mail->SMTPOptions = array(
 );
 $mail->CharSet = 'UTF-8';
 //Username to use for SMTP authentication
-$mail->Username = 'compras@lamisionsuper.com';
+$mail->Username = $cfg_usr.'@'.$cfg_dmn;
 //Password to use for SMTP authentication
-$mail->Password = 'GEX356qQ!';
+$mail->Password = $cfg_auth;
 //Set who the message is to be sent from
 $mail->setFrom($correo_persona, $nombre_persona);
 //Set an alternative reply-to address

@@ -7,11 +7,6 @@ include '../global_seguridad/verificar_sesion.php';
 <head>
   <?php include '../head.php'; ?>
 </head>
-<style>
-  #modal_articulos {
-    width: 80% !important;
-  }
-</style>
 
 <body class="hold-transition skin-red sidebar-mini">
   <div class="wrapper">
@@ -31,137 +26,53 @@ include '../global_seguridad/verificar_sesion.php';
       <!-- Content Header (Page header) -->
       <!-- Main content -->
       <section class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="box box-danger">
-              <div class="box-header">
-                <h3 class="box-title">Control de Pedidos | Pedidos a surtir</h3>
-              </div>
-              <div class="box-body">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="table-responsive">
-                      <table id="lista_pedidos" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
-                          <th width='5%'>Folio</th>
-                          <th>Cliente</th>
-                          <th width='10%'>Teléfono</th>
-                          <th>Dirección</th>
-                          <th width='10%'>Tipo</th>
-                          <th width='10%'>Asignado a</th>
-                          <th width='5%'>Estatus</th>
-                          <th width='5%'></th>
-                        </thead>
-                      </table>
-                    </div>
+        <div class="box box-danger">
+          <div class="box-header">
+            <h3 class="box-title">Control de Pedidos | Pedidos a surtir</h3>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="fecha_entrega">*Fecha inicial</label>
+                  <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicial" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" value="<?php echo $fecha; ?>" readonly id="fecha_inicial" name="fecha_inicial">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                   </div>
                 </div>
               </div>
-              <div class="box-footer">
-                <div class="row">
-                  <div class="col-md-6 text-left">
-                    <button class="btn btn-danger" id="btn-detalle">Agregar artículos</button>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="fecha_entrega">*Fecha final</label>
+                  <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_final" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" value="<?php echo $fecha; ?>" readonly id="fecha_final" name="fecha_final">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-9">
-            <div class="box box-danger">
-              <div class="box-header">
-                <h3 class="box-title">Control de Pedidos | Detalle del pedido</h3>
-              </div>
-              <div class="box-body">
-                <div class="row">
-                  <div class="col-md-3">
-                    <input type="text" name="folio" id="folio" class="form-control" readonly="true">
-                    <input type="hidden" name="txtSubtotal" id="txtSubtotal">
-                    <input type="hidden" name="txtImpuestos" id="txtImpuestos">
-                    <input type="hidden" name="txtTotal" id="txtTotal">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="table-responsive">
-                      <table id="tabla_resumen" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
-                          <th width='5%'>Codigo</th>
-                          <th>Descripcion</th>
-                          <th width='5%'>U.M.</th>
-                          <th width='5%'>Cantidad</th>
-                          <th width='5%'>Surtido</th>
-                          <th width='5%'></th>
-                        </thead>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button id="btnFiltrar" class="btn btn-danger">Filtrar datos</button>
               </div>
             </div>
-          </div>
-          <div class="col-md-3">
-            <div class="box box-danger">
-              <div class="box-header">
-                <h3 class="box-title">Control de Pedidos | Totales</h3>
-              </div>
-              <div class="box-body">
-                <div class="col-md-12">
-                  <div class="info-box bg-aqua" style='display: none'>
-                    <span class="info-box-icon"><i class="ion ion-social-usd-outline"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">SUBTOTAL</span>
-                      <span class="info-box-number">
-                        <div id="SUBTOTAL">$0.00</div>
-                      </span>
-
-                      <div class="progress">
-                        <div class="progress-bar" id=""></div>
-                      </div>
-                      <span class="progress-description">
-                      </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                  </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table id="lista_pedidos" class="table table-striped table-bordered" cellspacing="0" width="100%" style='font-size:small;'>
+                    <thead>
+                      <th width='5%'>#</th>
+                      <th>Cliente</th>
+                      <th width='9%'>Tel.</th>
+                      <th>Dirección</th>
+                      <th width='8%'>Pago</th>
+                      <th width='5%'></th>
+                      <th width='15%'></th>
+                    </thead>
+                  </table>
                 </div>
-                <div class="col-md-12">
-                  <div class="info-box bg-aqua" style='display: none'>
-                    <span class="info-box-icon"><i class="ion ion-social-usd-outline"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">IMPUESTOS</span>
-                      <span class="info-box-number">
-                        <div id="IMPUESTOS">$0.00</div>
-                      </span>
-                      <div class="progress">
-                        <div class="progress-bar" id=""></div>
-                      </div>
-                      <span class="progress-description">
-                      </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="info-box bg-green">
-                    <span class="info-box-icon"><i class="ion ion-social-usd-outline"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">TOTAL</span>
-                      <span class="info-box-number">
-                        <div id="TOTAL">$0.00</div>
-                      </span>
-                      <div class="progress">
-                        <div class="progress-bar" id=""></div>
-                      </div>
-                      <span class="progress-description">
-                      </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                  </div>
-                </div>
-              </div>
-              <div class="box-footer text-right">
-                <button class="btn btn-success" id="btn-finalizar">Finalizar Pedido</button>
               </div>
             </div>
           </div>
@@ -170,7 +81,8 @@ include '../global_seguridad/verificar_sesion.php';
       </section>
       <!-- /.content -->
     </div>
-    <?php include 'modal_detalle.php'; ?>
+    <?php include 'modal_historial.php'; ?>
+    <?php include 'modal_ticket.php'; ?>
     <!-- /.content-wrapper -->
     <?php include '../footer2.php'; ?>
 
@@ -186,11 +98,42 @@ include '../global_seguridad/verificar_sesion.php';
   <?php include '../footer.php'; ?>
   <!-- Page script -->
   <script>
+    $('.form_date').datetimepicker({
+      language: 'es',
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 2,
+      minView: 2,
+      forceParse: 0
+    });
     $(document).ready(function() {
       tabla_pedidos();
     });
+    $('#metodo_pago').select2({
+      width: '100%',
+      dropdownParent: $("#modal-ticket"),
+      placeholder: 'Seleccione una opcion',
+      lenguage: 'es',
+    });
+    $('#modal-historial').on('show.bs.modal', function(e) {
+      var folio = $(e.relatedTarget).data().folio;
+      $("#folio").val(folio);
+      tabla_pedido();
+    });
+    $('#modal-ticket').on('show.bs.modal', function(e) {
+      var folio = $(e.relatedTarget).data().folio;
+      $("#folioPedido").val(folio);
+      $("#folio_ticket").val("");
+      $("#folio_ticket").focus();
+      $("#total_ticket").val("");
+      $("#cantidad_boletos").val("");
+    });
 
     function tabla_pedidos() {
+      var fecha_inicial = $("#fecha_inicial").val();
+      var fecha_final = $("#fecha_final").val();
       $('#lista_pedidos').dataTable().fnDestroy();
       $('#lista_pedidos').DataTable({
         'language': {
@@ -206,7 +149,8 @@ include '../global_seguridad/verificar_sesion.php';
           "url": "tabla_historial.php",
           "dataSrc": "",
           "data": {
-
+            fecha_inicial: fecha_inicial,
+            fecha_final: fecha_final
           },
         },
         "columns": [{
@@ -225,9 +169,6 @@ include '../global_seguridad/verificar_sesion.php';
             "data": "tipo_pedido"
           },
           {
-            "data": "surtidor"
-          },
-          {
             "data": "estatus"
           },
           {
@@ -237,46 +178,28 @@ include '../global_seguridad/verificar_sesion.php';
       });
     };
 
-    function tabla_articulos() {
-      var descripcion = $("#descripcion").val();
-      $('#lista_articulos').dataTable().fnDestroy();
-      $('#lista_articulos').DataTable({
+    function tabla_pedido() {
+      var folio_pedido = $("#folio").val();
+      $('#lista_detalleResumen').dataTable().fnDestroy();
+      $('#lista_detalleResumen').DataTable({
         'language': {
           "url": "../plugins/DataTables/Spanish.json"
         },
         "paging": false,
         "dom": 'Bfrtip',
-        "order": [
-          [3, "desc"]
-        ],
         "ajax": {
           "type": "POST",
-          "url": "tabla_articulos.php",
+          "url": "tabla_pedido.php",
           "dataSrc": "",
           "data": {
-            descripcion: descripcion
+            folio_pedido: folio_pedido
           },
         },
         "columns": [{
-            "data": "consecutivo"
-          },
-          {
-            "data": "codigo"
-          },
-          {
-            "data": "descripcion"
-          },
-          {
-            "data": "exist"
-          },
-          {
-            "data": "um"
-          },
-          {
             "data": "cantidad"
           },
           {
-            "data": "precio_venta"
+            "data": "descripcion"
           },
           {
             "data": "opciones"
@@ -284,72 +207,60 @@ include '../global_seguridad/verificar_sesion.php';
         ]
       });
     };
-
-    $("#descripcion").keypress(function(e) { //Función que se desencadena al presionar enter
+    $("#descripcion_modal").keypress(function(e) { //Función que se desencadena al presionar enter
       var code = (e.keyCode ? e.keyCode : e.which);
       if (code == 13) {
-        if ($("#descripcion").val() == "") {
+        if ($("#folio").val() == "" || $("#modal_cantidad").val() == "" || $("#descripcion_modal").val() == "") {
 
         } else {
-          tabla_articulos();
+          agregar();
+          $("#cantidad").val("");
+          $("#descripcion").val("");
+          $("#cantidad").focus();
         }
       }
     });
 
-    function tabla_resumen(folio) {
-      $("#folio").val(folio);
-      $('#tabla_resumen').dataTable().fnDestroy();
-      $('#tabla_resumen').DataTable({
-        'language': {
-          "url": "../plugins/DataTables/Spanish.json"
-        },
-        "paging": false,
-        "dom": 'Bfrtip',
-        "ajax": {
-          "type": "POST",
-          "url": "tabla_modalResumen.php",
-          "dataSrc": "",
-          "data": {
-            folio: folio
-          },
-        },
-        "columns": [{
-            "data": "codigo",
-            "width": "5%"
-          },
-          {
-            "data": "descripcion"
-          },
-          {
-            "data": "um",
-            "width": "5%"
-          },
-          {
-            "data": "cantidad",
-            "width": "5%"
-          },
-          {
-            "data": "surtido",
-            "width": "5%"
-          },
-          {
-            "data": "opciones",
-            "width": "5%"
+    $("#folio_ticket").keypress(function(e) { //Función que se desencadena al presionar enter
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 13) {
+        var url = "consulta_ticket.php"; // El script a dónde se realizará la petición.
+        var folio = $("#folio_ticket").val();
+        var prefijo = folio.substr(0, 8);
+        var consecutivo = folio.substr(8);
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: {
+            prefijo: prefijo,
+            consecutivo: consecutivo,
+            folio: folio,
+          }, // Adjuntar los campos del formulario enviado.
+          success: function(respuesta) {
+            if (respuesta == "no_existe") {
+              swal("Verifica!", "El folio de ticket que intentas ingresar no fue encontrado en el sistema.", "error");
+              $("#folio_ticket").val("");
+              $("#folio_ticket").focus();
+              $("#total_ticket").val("");
+              $("#cantidad_boletos").val("");
+            } else {
+              var array = eval(respuesta);
+              $("#total_ticket").val(array[0]);
+              $("#cantidad_boletos").val(array[1]);
+            }
           }
-        ]
-      });
-      totales();
-    };
-    $("#btn-detalle").click(function() {
-      $("#modal-articulos").modal("show");
+        });
+        return false;
+      }
     });
 
-    function agregar(articulo, consecutivo) {
+    function agregar() {
       var pedido = $("#folio").val();
       if (pedido == "") {
         alertify.error("No hay un pedido iniciado");
       } else {
-        var cantidad = $("#cantidad_" + consecutivo).val();
+        var cantidad = $("#modal_cantidad").val();
+        var articulo = $("#descripcion_modal").val();
         var url = 'insertar_renglon.php';
         $.ajax({
           type: "POST",
@@ -361,8 +272,10 @@ include '../global_seguridad/verificar_sesion.php';
           },
           success: function(respuesta) {
             alertify.success("Artículo agregado correctamente");
-            tabla_resumen(pedido);
-            totales();
+            tabla_pedido();
+            $("#modal_cantidad").val("");
+            $("#descripcion_modal").val("");
+            $("#modal_cantidad").focus();
           }
         });
       }
@@ -370,7 +283,6 @@ include '../global_seguridad/verificar_sesion.php';
     }
 
     function eliminar_renglon(id) {
-      var folio = $("#folio").val();
       var url = 'eliminar_renglon.php';
       $.ajax({
         type: "POST",
@@ -379,15 +291,60 @@ include '../global_seguridad/verificar_sesion.php';
           id: id,
         },
         success: function(respuesta) {
-          tabla_resumen(folio);
+          tabla_pedido();
+          totales();
         }
       });
       return false;
     }
 
-    function totales() {
-      var pedido = $("#folio").val();
-      var url = 'totales.php';
+    function finalizar() {
+      var url = 'finaliza_pedido.php';
+      var folio_ticket = $("#folio_ticket").val();
+      var prefijo = folio_ticket.substr(0, 8);
+      var consecutivo = folio_ticket.substr(8);
+      var id_pedido = $("#folioPedido").val();
+      var total_ticket = $("#total_ticket").val();
+      var metodo_pago = $("#metodo_pago").val();
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+          folio_ticket: folio_ticket,
+          prefijo: prefijo,
+          consecutivo: consecutivo,
+          id_pedido: id_pedido,
+          total_ticket: total_ticket,
+          metodo_pago: metodo_pago
+        },
+        success: function(respuesta) {
+          if (respuesta == "vacio") {
+            alertify.error("Debes ingresar un número de operación");
+          } else if (respuesta == "no_existe") {
+            alertify.error("El número de operación no fue encontrado en el sistema");
+          } else if (respuesta == "ok") {
+            alertify.success("El pedido ha sido finalizado correctamente");
+            tabla_pedidos();
+            $('#modal-ticket').modal('toggle');
+            var tab = window.open('ticket_pdf.php?flp=' + id_pedido, '_blank');
+            if (tab) {
+              tab.focus(); //ir a la pestaña
+            } else {
+              alertify.error('Pestañas bloqueadas, activa las ventanas emergentes (Popups)');
+            }
+          }
+        }
+      });
+    }
+    $("#btnFinaliza").click(function() {
+      finalizar();
+    });
+    $("#btnFiltrar").click(function() {
+      tabla_pedidos();
+    });
+
+    function ver_pdf(pedido) {
+      var url = 'validar_surtidor.php';
       $.ajax({
         type: "POST",
         url: url,
@@ -395,54 +352,52 @@ include '../global_seguridad/verificar_sesion.php';
           pedido: pedido,
         },
         success: function(respuesta) {
-          var array = eval(respuesta);
-          $("#SUBTOTAL").html(array[0]);
-          $("#txtSubtotal").val(array[0]);
-          $("#IMPUESTOS").html(array[1]);
-          $("#txtImpuestos").val(array[1]);
-          $("#TOTAL").html(array[2]);
-          $("#txtTotal").val(array[3]);
+          if (respuesta == "NO") {
+            var url = "insertar_surtidor.php";
+            swal("Ingresar surtidor", {
+                content: {
+                  element: "input",
+                  attributes: {
+                    placeholder: "nombre del surtidor",
+                    type: "text",
+                  },
+                },
+              })
+              .then((value) => {
+                var surtidor = value;
+                $.ajax({
+                  type: "POST",
+                  url: url,
+                  data: {
+                    surtidor: surtidor,
+                    pedido: pedido
+                  },
+                  success: function(respuesta) {
+                    if (respuesta == "vacio") {
+
+                    } else {
+                      var tab = window.open('pedido_pdf.php?flp=' + pedido, '_blank');
+                      if (tab) {
+                        tab.focus(); //ir a la pestaña
+                      } else {
+                        alertify.error('Pestañas bloqueadas, activa las ventanas emergentes (Popups)');
+                      }
+                    }
+                  }
+                });
+              });
+          } else {
+            var tab = window.open('pedido_pdf.php?flp=' + pedido, '_blank');
+            if (tab) {
+              tab.focus(); //ir a la pestaña
+            } else {
+              alertify.error('Pestañas bloqueadas, activa las ventanas emergentes (Popups)');
+            }
+          }
         }
       });
       return false;
     }
-    $("#btn-finalizar").click(function() {
-      var pedido = $("#folio").val();
-      var total = $("#txtTotal").val();
-      //alert(total);
-      var url = 'finalizar_pedido.php';
-      if (pedido == "") {
-        alertify.error("No existe un folio iniciado");
-      } else {
-        swal("Cantidad para liquidar", {
-            content: "input",
-          })
-          .then((value) => {
-            var cantidad = value;
-            $.ajax({
-              type: "POST",
-              url: url,
-              data: {
-                pedido: pedido,
-                total: total,
-                cantidad: cantidad
-              },
-              success: function(respuesta) {
-                if (respuesta == "menor") {
-                  swal("Hay un problema", "La cantidad para liquidar es menor al total del pedido", "error");
-                } else {
-                  swal("Finalizado", "El pedido #" + respuesta + " ha sido finalizado con éxito", "success");
-                  $("#form_datos")[0].reset();
-                  $("#folio_pedido").val("");
-                  tabla_pedido();
-                  totales();
-                }
-              }
-            });
-
-          });
-      }
-    })
   </script>
 </body>
 

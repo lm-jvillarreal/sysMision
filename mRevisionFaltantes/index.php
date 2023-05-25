@@ -37,7 +37,7 @@ if($dia_semana != "Sunday"  && $dia_semana != 'Monday'){
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table id="lista_codigos" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <table id="lista_codigos" class="table table-striped table-bordered" cellspacing="0" width="110%">
                     <thead>
                       <tr>
                         <th width="5%">#</th>
@@ -49,27 +49,12 @@ if($dia_semana != "Sunday"  && $dia_semana != 'Monday'){
                         <th width="5%">VILL</th>
                         <th width="5%">ALL</th>
                         <th width="5%">PET</th>
+                        <th width="5%">CDS</th>
                         <th width="5%">Fecha</th>
                         <th width="5%">Revisado</th>
                         <th width="5%">Enviar</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Código</th>
-                        <th>Descripción</th>
-                        <th>Sucursal</th>
-                        <th>DO</th>
-                        <th>ARB</th>
-                        <th>VILL</th>
-                        <th>ALL</th>
-                        <th>PET</th>
-                        <th>Fecha</th>
-                        <th>Revisado</th>
-                        <th>Enviar</th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
@@ -183,6 +168,9 @@ if($dia_semana != "Sunday"  && $dia_semana != 'Monday'){
           },
           {
             "data": "pet"
+          },
+          {
+            "data": "cedis"
           },
           {
             "data": "fecha_captura"

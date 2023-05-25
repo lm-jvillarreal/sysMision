@@ -204,7 +204,13 @@ $fecha_fin = date("Y-m-d");
         "paging": false,
         "searching": true,
         "dom": 'Bfrtip',
-        buttons: [{
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+          {
             extend: 'excel',
             text: 'Exportar a Excel',
             className: 'btn btn-default',
@@ -213,6 +219,15 @@ $fecha_fin = date("Y-m-d");
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',

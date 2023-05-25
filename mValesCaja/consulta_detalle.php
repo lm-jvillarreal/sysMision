@@ -17,6 +17,8 @@ if($id_sede=='1'){
 	$conexion_central = $conexion_all;
 }elseif($id_sede=='5'){
   $conexion_central=$conexion_lp;
+}elseif($id_sede=='6'){
+  $conexion_central=$conexion_mm;
 }
 
 $cadena_consulta = "SELECT 

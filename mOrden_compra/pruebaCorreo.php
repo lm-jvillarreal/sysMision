@@ -3,6 +3,16 @@ require '../plugins/PHPMailer-master/src/PHPMailer.php';
 require '../plugins/PHPMailer-master/src/SMTP.php';
 require '../plugins/PHPMailer-master/src/Exception.php';
 
+include '../global_settings/conexion.php';
+
+$cadenaDatos="SELECT CFG_USR, CFG_DMN, CFG_AUTH FROM CFG_COMPRAS";
+$consultaAuth=mysqli_query($conexion,$cadenaDatos);
+$rowAuth=mysqli_fetch_array($consultaAuth);
+
+$cfg_usr=$rowAuth[0];
+$cfg_dmn=$rowAuth[1];
+$cfg_auth=$rowAuth[2];
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -16,13 +26,13 @@ $mail->isSMTP();
 // 2 = client and server messages
 $mail->SMTPDebug = 2;
 //Set the hostname of the mail server
-$mail->Host = 'mail.lamisionsuper.com';
+$mail->Host = 'smtp.gmail.com';
 //Set the SMTP port number - likely to be 25, 465 or 587
-$mail->Port = 2525;
+$mail->Port = 465;
 //Whether to use SMTP authentication
 $mail->SMTPAuth = True;
 
-$mail->SMTPSecure = False;
+$mail->SMTPSecure = True;
 
 $mail->SMTPOptions = array(
     'ssl' => array(
@@ -33,37 +43,35 @@ $mail->SMTPOptions = array(
 );
 $mail->CharSet = 'UTF-8';
 //Username to use for SMTP authentication
-$mail->Username = 'jvillarreal@lamisionsuper.com';
+$mail->Username = "sistemabt@utl.edu.mx";
 //Password to use for SMTP authentication
-$mail->Password = 'GEX356qQ!';
+$mail->Password = "ABC1238F47";
 //Set who the message is to be sent from
-$mail->setFrom('jvillarreal@lamisionsuper.com', 'jvillarreal@lamisionsuper.com');
+$mail->setFrom('sistemabt@utl.edu.mx', 'sistemabt@utl.edu.mx');
 //Set an alternative reply-to address
 //$mail->addReplyTo($correo_persona, $nombre_persona);
 //Set who the message is to be sent to
-//$mail->addAddress($row_proveedor[0], $row_proveedor[1]);
+$mail->addAddress('gustavo.platas@tibs.com.mx', "Gustavo Platas");
 //$mail->addCC($correo_persona);
-$mail->AddBCC ('jvillarreal@lamisionsuper.com');
+//$mail->AddBCC ('aarizob@gmail.com');
 
 //Set the subject line
-$mail->Subject = 'La Mision Supermercados '.$sucursal.' | OC-. '.$orden;
+$mail->Subject = 'Este es un correo de prueba';
 //Read an HTML message body from an external file, convert referenced images to embedded,
 //convert HTML into a basic plain-text alternative body
 $ruta = 'http://200.1.1.178/sysMision/mOrden_compra/1.png';
-$mensaje = 'Envío Orden de Compra Folio <strong>'.$orden.'</strong> para la sucursal <strong>'.$sucursal.'</strong>.
-            <br>Favor de respetar las cantidades y precios pactados en esta orden de compra.
-            <br>Se solicita su apoyo para realizar una factura por cada orden de compra recibida.
-            <br>Favor de confirmar de recibido.';
+$mensaje = 'Hola';
 $mail->msgHTML($mensaje);
 //Replace the plain text body with one created manually
 //$mail->AltBody = 'Estoy al pendiente de todos tus movimientos, puedo apropiarme de tu identidad';
 //Attach an image file
 //$mail->addAttachment('pdfEjemplo/firmas_correo/1.png');
-$mail->addAttachment('orden_compra_pdf/OC - '.$orden.'.pdf');
+//$mail->addAttachment('orden_compra_pdf/OC - '.$orden.'.pdf');
 //send the message, check for errors
 if (!$mail->send()) {
     echo 'Mailer Error: ' . $mail->ErrorInfo;
 } else {
     echo 'ok';
 }
+//echo $cfg_usr.'@'.$cfg_dmn;
 ?>

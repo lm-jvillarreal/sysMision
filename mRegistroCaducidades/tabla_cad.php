@@ -67,6 +67,6 @@ $tabla = "
 .$cuerpo2.
 "]
 ";
-//echo $cadena_cartas;
+//echo $cadena_caducidad;
 echo $tabla;
 ?>

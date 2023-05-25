@@ -35,6 +35,7 @@
                     <th width="3%">VILL</th>
                     <th width="3%">ALL</th>
                     <th width="3%">LP</th>
+                    <th width="3%">MM</th>
                     <th width="3%">CEDIS</th>
                     <th width="3%">Total</th>
                     <th width="3%">Depto</th>

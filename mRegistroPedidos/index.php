@@ -7,11 +7,6 @@ include '../global_seguridad/verificar_sesion.php';
 <head>
   <?php include '../head.php'; ?>
 </head>
-<style>
-  #modal_articulos {
-    width: 80% !important;
-  }
-</style>
 
 <body class="hold-transition skin-red sidebar-mini">
   <div class="wrapper">
@@ -43,7 +38,7 @@ include '../global_seguridad/verificar_sesion.php';
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="nombre">*Nombre</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control">
+                        <input type="text" name="nombre" id="nombre" class="form-control" required="true">
                       </div>
                     </div>
                     <div class="col-md-3">
@@ -53,17 +48,17 @@ include '../global_seguridad/verificar_sesion.php';
                           <div class="input-group-addon">
                             <i class="fa fa-phone"></i>
                           </div>
-                          <input type="text" name="telefono" id="telefono" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                          <input type="text" name="telefono" id="telefono" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask required>
                         </div>
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label for="tipo_pedido">*Tipo pedido</label>
-                        <select name="tipo_pedido" id="tipo_pedido" class="form-control">
+                        <label for="metodo_pago">*Método pago</label>
+                        <select name="metodo_pago" id="metodo_pago" class="form-control">
                           <option value=""></option>
-                          <option value="DOMICILIO">Domicilio</option>
-                          <option value="TIENDA">En Tienda</option>
+                          <option value="EFECTIVO">Efectivo</option>
+                          <option value="ELECTRONICO">Electrónico</option>
                         </select>
                       </div>
                     </div>
@@ -79,42 +74,49 @@ include '../global_seguridad/verificar_sesion.php';
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label for="colonia">*Colonia</label>
-                        <input type="text" name="colonia" id="colonia" class="form-control">
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label for="calle">*Calle</label>
-                        <input type="text" name="calle" id="calle" class="form-control">
+                        <input type="text" name="colonia" id="colonia" class="form-control" required>
                       </div>
                     </div>
                     <div class="col-md-2">
                       <div class="form-group">
+                        <label for="calle">*Calle</label>
+                        <input type="text" name="calle" id="calle" class="form-control" required>
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <div class="form-group">
                         <label for="numero">*Número</label>
-                        <input type="text" name="numero_casa" id="numero_casa" class="form-control">
+                        <input type="number" name="numero_casa" id="numero_casa" class="form-control" required>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="entre_calles">*Entre calles:</label>
+                        <input type="text" name="entre_calles" id="entre_calles" class="form-control" required>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="referencia">*Referencia:</label>
+                        <input type="text" name="referencia" id="referencia" class="form-control" required>
                       </div>
                     </div>
                   </div>
                 </form>
               </div>
               <div class="box-footer">
-                <div class="row">
-                  <div class="col-md-6 text-left">
-                    <button class="btn btn-danger" id="btn-detalle">Agregar artículos</button>
-                  </div>
-                  <div class="col-md-6 text-right">
-                    <button class="btn btn-warning" id="btn-iniciar">Iniciar Pedido</button>
-                  </div>
+                <div class="text-right">
+                  <button class="btn btn-warning" id="btn-iniciar">Iniciar Pedido</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-12">
             <div class="box box-danger">
               <div class="box-header">
                 <h3 class="box-title">Control de Pedidos | Detalle</h3>
@@ -125,9 +127,20 @@ include '../global_seguridad/verificar_sesion.php';
                     <div class="form-group">
                       <label for="folio_pedido">*Folio</label>
                       <input type="text" name="folio_pedido" id="folio_pedido" class="form-control" readonly="true">
-                      <input type="hidden" name="txtSubtotal" id="txtSubtotal">
-                      <input type="hidden" name="txtImpuestos" id="txtImpuestos">
-                      <input type="hidden" name="txtTotal" id="txtTotal">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="cantidad">Cantidad:</label>
+                      <input type="number" id="cantidad" name="cantidad" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="descripcion">*Descripción</label>
+                      <input type="text" id="descripcion" name="descripcion" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -136,12 +149,8 @@ include '../global_seguridad/verificar_sesion.php';
                     <div class="table-responsive">
                       <table id="lista_pedido" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
-                          <th width='15%'>Código</th>
                           <th>Descripción</th>
-                          <th width='10%'>U.M.</th>
-                          <th width='10%'>C.U.</th>
-                          <th width='10%'>Cantidad</th>
-                          <th width='10%'>Total</th>
+                          <th width='30%'>Cantidad</th>
                           <th width='5%'></th>
                         </thead>
                       </table>
@@ -149,69 +158,15 @@ include '../global_seguridad/verificar_sesion.php';
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="box box-danger">
-              <div class="box-header">
-                <h3 class="box-title">Control de Pedidos | Totales</h3>
-              </div>
-              <div class="box-body">
-                <div class="col-md-12">
-                  <div class="info-box bg-aqua" style='display: none'>
-                    <span class="info-box-icon"><i class="ion ion-social-usd-outline"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">SUBTOTAL</span>
-                      <span class="info-box-number">
-                        <div id="SUBTOTAL">$0.00</div>
-                      </span>
-
-                      <div class="progress">
-                        <div class="progress-bar" id=""></div>
-                      </div>
-                      <span class="progress-description">
-                      </span>
-                    </div>
-                    <!-- /.info-box-content -->
+              <div class="box-footer">
+                <div class="row">
+                  <div class="col-md-6">
+                    <button class="btn btn-danger" id="btn-cancelar">Cancelar Pedido</button>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <button class="btn btn-success" id="btn-finalizar">Finalizar Pedido</button>
                   </div>
                 </div>
-                <div class="col-md-12">
-                  <div class="info-box bg-aqua" style='display: none'>
-                    <span class="info-box-icon"><i class="ion ion-social-usd-outline"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">IMPUESTOS</span>
-                      <span class="info-box-number">
-                        <div id="IMPUESTOS">$0.00</div>
-                      </span>
-                      <div class="progress">
-                        <div class="progress-bar" id=""></div>
-                      </div>
-                      <span class="progress-description">
-                      </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="info-box bg-green">
-                    <span class="info-box-icon"><i class="ion ion-social-usd-outline"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">TOTAL</span>
-                      <span class="info-box-number">
-                        <div id="TOTAL">$0.00</div>
-                      </span>
-                      <div class="progress">
-                        <div class="progress-bar" id=""></div>
-                      </div>
-                      <span class="progress-description">
-                      </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                  </div>
-                </div>
-              </div>
-              <div class="box-footer text-right">
-                <button class="btn btn-success" id="btn-finalizar">Finalizar Pedido</button>
               </div>
             </div>
           </div>
@@ -220,7 +175,6 @@ include '../global_seguridad/verificar_sesion.php';
       </section>
       <!-- /.content -->
     </div>
-    <?php include 'modal_detalle.php'; ?>
     <!-- /.content-wrapper -->
     <?php include '../footer2.php'; ?>
 
@@ -250,7 +204,7 @@ include '../global_seguridad/verificar_sesion.php';
       minView: 2,
       forceParse: 0
     });
-    $("#tipo_pedido").select2({
+    $("#metodo_pago").select2({
       placeholder: 'Seleccione una opcion',
       lenguage: 'es',
       minimumResultsForSearch: Infinity
@@ -258,65 +212,21 @@ include '../global_seguridad/verificar_sesion.php';
 
     $("#btn-iniciar").click(function() {
       var url = "iniciar_pedido.php";
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: $("#form_datos").serialize(),
-        success: function(respuesta) {
-          $("#folio_pedido").val(respuesta);
-          $("#btn-iniciar").attr("disabled", true);
-        }
-      });
+      if ($("#nombre").val() == "" || $("#telefono").val() == "" || $("#metodo_pago").val() == "" || $("#fecha_entrega").val() == "" || $("#colonia").val() == "" || $("#calle").val() == "" || $("#numero_casa").val() == "" || $("#entre_calles").val() == "" || $("#referencia").val() == "") {
+        alertify.error("Favor de rellenar todos los campos");
+      } else {
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: $("#form_datos").serialize(),
+          success: function(respuesta) {
+            $("#folio_pedido").val(respuesta);
+            $("#btn-iniciar").attr("disabled", true);
+          }
+        });
+      }
       return false;
     });
-
-    function tabla_articulos() {
-      var descripcion = $("#descripcion").val();
-      $('#lista_articulos').dataTable().fnDestroy();
-      $('#lista_articulos').DataTable({
-        'language': {
-          "url": "../plugins/DataTables/Spanish.json"
-        },
-        "paging": false,
-        "dom": 'Bfrtip',
-        "order": [
-          [3, "desc"]
-        ],
-        "ajax": {
-          "type": "POST",
-          "url": "tabla_articulos.php",
-          "dataSrc": "",
-          "data": {
-            descripcion: descripcion
-          },
-        },
-        "columns": [{
-            "data": "consecutivo"
-          },
-          {
-            "data": "codigo"
-          },
-          {
-            "data": "descripcion"
-          },
-          {
-            "data": "exist"
-          },
-          {
-            "data": "um"
-          },
-          {
-            "data": "cantidad"
-          },
-          {
-            "data": "precio_venta"
-          },
-          {
-            "data": "opciones"
-          }
-        ]
-      });
-    };
 
     function tabla_pedido() {
       var folio_pedido = $("#folio_pedido").val();
@@ -336,22 +246,10 @@ include '../global_seguridad/verificar_sesion.php';
           },
         },
         "columns": [{
-            "data": "codigo"
-          },
-          {
             "data": "descripcion"
           },
           {
-            "data": "um"
-          },
-          {
-            "data": "costo_unitario"
-          },
-          {
             "data": "cantidad"
-          },
-          {
-            "data": "total"
           },
           {
             "data": "opciones"
@@ -362,23 +260,24 @@ include '../global_seguridad/verificar_sesion.php';
     $("#descripcion").keypress(function(e) { //Función que se desencadena al presionar enter
       var code = (e.keyCode ? e.keyCode : e.which);
       if (code == 13) {
-        if ($("#descripcion").val() == "") {
+        if ($("#folio_pedido").val() == "" || $("#cantidad").val() == "" || $("#descripcion").val() == "") {
 
         } else {
-          tabla_articulos();
+          agregar();
+          $("#cantidad").val("");
+          $("#descripcion").val("");
+          $("#cantidad").focus();
         }
       }
     });
-    $("#btn-detalle").click(function() {
-      $("#modal-articulos").modal("show");
-    });
 
-    function agregar(articulo, consecutivo) {
+    function agregar() {
       var pedido = $("#folio_pedido").val();
       if (pedido == "") {
         alertify.error("No hay un pedido iniciado");
       } else {
-        var cantidad = $("#cantidad_" + consecutivo).val();
+        var cantidad = $("#cantidad").val();
+        var articulo = $("#descripcion").val();
         var url = 'insertar_renglon.php';
         $.ajax({
           type: "POST",
@@ -391,32 +290,10 @@ include '../global_seguridad/verificar_sesion.php';
           success: function(respuesta) {
             alertify.success("Artículo agregado correctamente");
             tabla_pedido();
-            totales();
+            $("#btn-iniciar").removeAttr("disabled");
           }
         });
       }
-      return false;
-    }
-
-    function totales() {
-      var pedido = $("#folio_pedido").val();
-      var url = 'totales.php';
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: {
-          pedido: pedido,
-        },
-        success: function(respuesta) {
-          var array = eval(respuesta);
-          $("#SUBTOTAL").html(array[0]);
-          $("#txtSubtotal").val(array[0]);
-          $("#IMPUESTOS").html(array[1]);
-          $("#txtImpuestos").val(array[1]);
-          $("#TOTAL").html(array[2]);
-          $("#txtTotal").val(array[3]);
-        }
-      });
       return false;
     }
 
@@ -435,43 +312,50 @@ include '../global_seguridad/verificar_sesion.php';
       });
       return false;
     }
-
     $("#btn-finalizar").click(function() {
-      var pedido = $("#folio_pedido").val();
-      var total = $("#txtTotal").val();
-      //alert(total);
-      var url = 'finalizar_pedido.php';
-      if (pedido == "") {
-        alertify.error("No existe un folio iniciado");
+      var folio_pedido = $("#folio_pedido").val();
+      if (folio_pedido == "") {
+        alertify.error("No existe un pedido iniciado");
       } else {
-        swal("Cantidad para liquidar", {
-            content: "input",
-          })
-          .then((value) => {
-            var cantidad = value;
-            $.ajax({
-              type: "POST",
-              url: url,
-              data: {
-                pedido: pedido,
-                total: total,
-                cantidad: cantidad
-              },
-              success: function(respuesta) {
-                if (respuesta == "menor") {
-                  swal("Hay un problema", "La cantidad para liquidar es menor al total del pedido", "error");
-                } else {
-                  swal("Finalizado", "El pedido #" + respuesta + " ha sido finalizado con éxito", "success");
-                  $("#form_datos")[0].reset();
-                  $("#folio_pedido").val("");
-                  tabla_pedido();
-                  totales();
-                }
-              }
-            });
-
-          });
+        var url = "finalizar_pedido.php";
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: {
+            folio_pedido: folio_pedido
+          },
+          success: function(respuesta) {
+            $("#form_datos")[0].reset();
+            $("#folio_pedido").val("");
+            var tab = window.open('pedido_pdf.php?flp=' + folio_pedido, '_blank');
+            if (tab) {
+              tab.focus(); //ir a la pestaña
+            } else {
+              alertify.error('Pestañas bloqueadas, activa las ventanas emergentes (Popups)');
+            }
+            tabla_pedido();
+          }
+        });
+        return false;
       }
+    });
+    $("#btn-cancelar").click(function() {
+      var folio_pedido = $("#folio_pedido").val();
+      var url = "cancelar_pedido.php";
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+          folio_pedido: folio_pedido
+        },
+        success: function(respuesta) {
+          $("#form_datos")[0].reset();
+          $("#folio_pedido").val("");
+          tabla_pedido();
+          alertify.success("Pedido cancelado");
+        }
+      });
+      return false;
     })
   </script>
 </body>

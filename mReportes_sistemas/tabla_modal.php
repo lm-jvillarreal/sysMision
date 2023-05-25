@@ -1,6 +1,6 @@
 <?php 
 include '../global_settings/conexion_oracle.php';
-include '../global_settings/conexion_supsys.php';
+include '../global_settings/conexion.php';
 
 $id_referencia = $_POST['id_referencia'];
 

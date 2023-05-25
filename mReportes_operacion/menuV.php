@@ -46,7 +46,7 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
         <li class="active"><a href="index_rpt_ventas_res.php"><i class="fa fa-bars"></i> <span>R. Ventas Restaurante</span></a></li>
         <li class="active"><a href="index_rpt_cortes.php"><i class="fa fa-bars"></i> <span>R. Faltantes p/Cajero</span></a></li>
         <li class="active"><a href="index_rpt_cancelaciones.php"><i class="fa fa-bars"></i> <span>R. Cancelaciones p/cajero</span></a></li>
-
+        <li class="active"><a href="indexInicioReporteOperaciones.php"><i class="fa fa-bars"></i> <span>Inicio</span></a></li>
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones de navegaci&oacute;n</li>

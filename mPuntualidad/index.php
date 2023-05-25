@@ -3,120 +3,114 @@
  ?>
 <!DOCTYPE html>
 <html>
-<head>
-  <?php include '../head.php'; ?>
-</head>
-<body class="hold-transition skin-red sidebar-mini">
-<div class="wrapper">
-  <header class="main-header">
-    <?php include '../header.php'; ?>
-  </header>
+  <head>
+    <?php include '../head.php'; ?>
+  </head>
+  <body class="hold-transition skin-red sidebar-mini">
+    <div class="wrapper">
+      <header class="main-header">
+        <?php include '../header.php'; ?>
+      </header>
   <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
+    <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <?php include 'menuV.php'; ?>
+      <?php include 'menuV.php'; ?>
     <!-- /.sidebar -->
-  </aside>
+    </aside>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+    <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <!-- Main content -->
-    <section class="content">
-        <div class="box box-danger">
-          <div class="box-header">
-            <h3 class="box-title">Registro de Incidencias</h3>
-          </div>
-          <div class="box-body">
-            <form method="POST" id="form_datos">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="id_persona">*Nombre</label>
-                  <input type="hidden" name="id_registro" id="id_registro">
-                  <select name="id_persona" id="id_persona" class="form-control select2" onchange="llenar()">
-                  <option value=""></option>
-                </select>
+      <section class="content">
+        <form method="POST" id="form_datos">
+          <div class="box box-danger">
+            <div class="box-header">
+              <h3 class="box-title">Registro de Incidencias</h3>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="id_persona">*Nombre</label>
+                    <input type="hidden" name="id_registro" id="id_registro">
+                    <select name="id_persona" id="id_persona" class="form-control select2" onchange="llenar()">
+                      <option value=""></option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="departamento">*Departamento</label>
-                  <input type="text" name="departamento" id="departamento" class="form-control" readonly>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="departamento">*Departamento</label>
+                    <input type="text" name="departamento" id="departamento" class="form-control" readonly>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-3">
-	              	<div class="form-group">
-	              		<label for="sucursal">*Sucursal</label>
-	              		<input type="text" name="sucursal" id="sucursal" class="form-control" readonly>
-	              	</div>
+                <div class="col-md-3">
+	                <div class="form-group">
+	              	  <label for="sucursal">*Sucursal</label>
+	              	  <input type="text" name="sucursal" id="sucursal" class="form-control" readonly>
+	                </div>
 	              </div>
                 <div class="col-md-3">
-                <div class="form-group">
-                  <label for="categoria">*Categoría</label>
-                  <select name="categoria" id="categoria" class="form-control select2">
-                  <option value=""></option>
-                </select>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="incidencia">*Incidencia</label>
-                    <select name="incidencia" id="incidencia" class="form-control select2" onchange="ocultar(this.value)">
+                  <div class="form-group">
+                    <label for="categoria">*Categoría</label>
+                    <select name="categoria" id="categoria" class="form-control select2" style="width: 230px ">
+                      <option value=""></option>
                     </select>
+                  </div>
                 </div>
-              </div>
-              <div>
-              <div id="contenedor" style="display:none;">
-                <div class="col-md-3">
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="incidencia">*Incidencia</label>
+                      <select name="incidencia" id="incidencia" class="form-control select2" onchange="ocultar(this.value)">
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <div id="contenedor" style="display:none;">
+                      <div class="col-md-3">
+                      <!-- style="display: none" -->
+                        <div class="form-group">
+                          <label for="fecha_inicio">*Fecha de inicio:</label>
+                          <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd"      data-link-field="fecha_inicio" data-link-format="yyyy-mm-dd" >
+                            <input  class="form-control" size="16" type="text" value="" readonly id="fecha_inicio" name="fecha_inicio" >
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" ></span></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3" >
                 <!-- style="display: none" -->
-                  <div class="form-group">
-                    <label for="fecha_inicio">*Fecha de inicio:</label>
-                    <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicio" data-link-format="yyyy-mm-dd" >
-                      <input  class="form-control" size="16" type="text" value="" readonly id="fecha_inicio" name="fecha_inicio" >
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" ></span></span>
+                        <div class="form-group">
+                          <label for="fecha_final">*Fecha final:</label>
+                          <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_final" data-link-format="yyyy-mm-dd">
+                            <input class="form-control" size="16" type="text" value="" readonly id="fecha_final" name="fecha_final">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+		              <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="comentario">*Comentario</label>
+                      <input type="text" name="comentario" id="comentario" class="form-control" placeholder="Agregue un comentario...">
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3" >
-                <!-- style="display: none" -->
-                  <div class="form-group">
-                    <label for="fecha_final">*Fecha final:</label>
-                    <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_final" data-link-format="yyyy-mm-dd">
-                      <input class="form-control" size="16" type="text" value="" readonly id="fecha_final" name="fecha_final">
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
-                  </div>
+                <div class="box-footer text-right">
+                  <button type="submit" class="btn btn-warning" id="guardar">Guardar</button>
                 </div>
               </div>
-              </div>
-              <!-- <div class="col-md-3">
-                <div class="form-group">
-                  <label for="accion">*Acción</label>
-                  <select name="accion" id="accion" class="form-control select2">
-                  </select>
-                </div>
-              </div> -->
-		          <div class="col-md-3">
-                <div class="form-group">
-                  <label for="comentario">*Comentario</label>
-                  <input type="text" name="comentario" id="comentario" class="form-control" placeholder="Agregue un comentario...">
-                </div>
-              </div>
-          </div>
-           <div class="box-footer text-right">
-            <button type="submit" class="btn btn-warning" id="guardar">Guardar</button>
-          </div>
+            </div>
           </form>
-        </div>
-        </div>
         <div class="box box-danger">
           <div class="box-header">
             <h3 class="box-title">Lista de Incidencias</h3>
           </div>
           <div class="box-body">
-          
             <div class="row">
              <div class="col-md-12">
                 <div class="table-responsive">
@@ -153,9 +147,9 @@
           </div>
         </div>
       <!-- /.row -->
-    </section>
+      </section>
     <!-- /.content -->
-  </div>
+    </div>
   <!-- /.content-wrapper -->
  <?php include '../footer2.php'; ?>
 

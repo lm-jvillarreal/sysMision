@@ -26,11 +26,11 @@ include '../global_seguridad/verificar_sesion.php';
       <!-- Content Header (Page header) -->
       <!-- Main content -->
       <section class="content">
-        <form action="" method="POST" id="form-proveedores">
-          <div class="box box-danger">
-            <div class="box-header">
-              <h3 class="box-title">Proveedores | Registro</h3>
-            </div>
+        <div class="box box-danger">
+          <div class="box-header">
+            <h3 class="box-title">Proveedores | Registro</h3>
+          </div>
+          <form action="" method="POST" id="form-proveedores">
             <div class="box-body">
               <div class="row">
                 <div class="col-md-2">
@@ -46,13 +46,19 @@ include '../global_seguridad/verificar_sesion.php';
                     <input type="text" name="nombre_proveedor" id="nombre_proveedor" class="form-control" readonly="true">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                  <label for="tipo_proveedor">*Tipo proveedor:</label>
+                  <select name="tipo_proveedor" id="tipo_proveedor" class="form-control">
+                    <option value=""></option>
+                  </select>
+                </div>
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="correo_prov">*Correo Electrónico</label>
                     <input type="text" name="correo_prov" id="correo_prov" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="id_comprador">*Comprador</label>
                     <select name="id_comprador" id="id_comprador" class="form-control">
@@ -61,12 +67,32 @@ include '../global_seguridad/verificar_sesion.php';
                   </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="dificultad">*Dificultad</label>
+                    <select name="dificultad" id="dificultad" class="form-control">
+                      <option value=""></option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="box-footer text-right">
-              <button class="btn btn-warning" id="btn-guardar">Guardar Registro</button>
-            </div>
+          </form>
+          <div class="box-footer text-right">
+            <button class="btn btn-warning" id="btn-guardar">Guardar Registro</button>
           </div>
-        </form>
+        </div>
         <div class="box box-danger">
           <div class="box-header">
             <h3 class="box-title">Proveedores | Lista</h3>
@@ -80,10 +106,12 @@ include '../global_seguridad/verificar_sesion.php';
                       <th width="5%">#</th>
                       <th width="10%">Clave</th>
                       <th>Proveedor</th>
-                      <th width="30%">Correo electrónico</th>
-                      <th width='20%'>Comprador</th>
-                      <th width='10%'>CEDIS</th>
-                      <th width='10%'>ESCARG</th>
+                      <th width="15%">Correo</th>
+                      <th width='15%'>Tipo</th>
+                      <th width='15%'>Comprador</th>
+                      <th width='5%'>CEDIS</th>
+                      <th width='5%'>ESCARG</th>
+                      <th width='5%'></th>
                     </thead>
                     <tbody></tbody>
                   </table>
@@ -118,6 +146,28 @@ include '../global_seguridad/verificar_sesion.php';
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
   <!-- Page script -->
   <script>
+    $('#tipo_proveedor').select2({
+      placeholder: 'Seleccione una opcion',
+      lenguage: 'es',
+      //minimumResultsForSearch: Infinity
+      ajax: {
+        url: "consulta_tipo_proveedor.php",
+        type: "post",
+        dataType: 'json',
+        delay: 250,
+        data: function(params) {
+          return {
+            searchTerm: params.term // search term
+          };
+        },
+        processResults: function(response) {
+          return {
+            results: response
+          };
+        },
+        cache: true
+      }
+    });
     $('#id_comprador').select2({
       placeholder: 'Seleccione una opcion',
       lenguage: 'es',
@@ -139,7 +189,12 @@ include '../global_seguridad/verificar_sesion.php';
         },
         cache: true
       }
-    })
+    });
+    $("#dificultad").select2({
+      placeholder: "Seleccione una opción",
+      lenguage: "es",
+      minimumResultForSearch: Infinity
+    });
     $("#clave_proveedor").keypress(function(e) { //Función que se desencadena al presionar enter
       var code = (e.keyCode ? e.keyCode : e.which);
       if (code == 13) {
@@ -230,6 +285,9 @@ include '../global_seguridad/verificar_sesion.php';
             "data": "correo"
           },
           {
+            "data": "tipo"
+          },
+          {
             "data": "comprador"
           },
           {
@@ -237,6 +295,9 @@ include '../global_seguridad/verificar_sesion.php';
           },
           {
             "data": "escarg"
+          },
+          {
+            "data": "eliminar"
           }
         ]
       });
@@ -272,62 +333,43 @@ include '../global_seguridad/verificar_sesion.php';
               text: array[5]
             }
           });
+          $("#tipo_proveedor").select2("trigger", "select", {
+            data: {
+              id: array[6],
+              text: array[7]
+            }
+          });
+          $("#dificultad").select2("trigger", "select", {
+            data: {
+              id: array[8],
+              text: array[8]
+            }
+          });
         }
       });
     };
-    $.validator.setDefaults({
-      submitHandler: function() {
-        var url = "insertar_proveedor.php"; // El script a dónde se realizará la petición.
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: $("#form-proveedores").serialize(), // Adjuntar los campos del formulario enviado.
-          success: function(respuesta) {
-            if (respuesta == "ok") {
-              alertify.success("El registro ha sido manipulado correctamente");
-            }
-            $(":text").val(''); //Limpiar los campos tipo Text
+    $("#btn-guardar").click(function() {
+      var url = "insertar_proveedor.php"; // El script a dónde se realizará la petición.
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: $("#form-proveedores").serialize(), // Adjuntar los campos del formulario enviado.
+        success: function(respuesta) {
+          if (respuesta == "ok") {
+            alertify.success("El registro ha sido manipulado correctamente");
+          }else if(respuesta=="repetido"){
+            alertify.error("El registro ya existe");
           }
-        });
-        // Evitar ejecutar el submit del formulario.
-        //cargar_tabla();
-        return false;
-      }
+          $(":text").val(''); //Limpiar los campos tipo Text
+        }
+      });
+      // Evitar ejecutar el submit del formulario.
+      //cargar_tabla();
+      return false;
     });
     $(document).ready(function() {
       $("#clave_proveedor").focus();
       cargar_tabla();
-      $("#form-proveedores").validate({
-        rules: {
-          clave_proveedor: "required",
-          nombre_proveedor: "required"
-        },
-        messages: {
-          clave_proveedor: "Campo requerido",
-          nombre_proveedor: "Campo requerido"
-        },
-        errorElement: "em",
-        errorPlacement: function(error, element) {
-          // Add the `help-block` class to the error element
-          error.addClass("help-block");
-
-          if (element.prop("type") === "checkbox") {
-            error.insertAfter(element.parent("label"));
-          } else {
-            error.insertAfter(element);
-          }
-        },
-        highlight: function(element, errorClass, validClass) {
-          $(element).parents(".col-md-2").addClass("has-error").removeClass("has-success");
-          $(element).parents(".col-md-4").addClass("has-error").removeClass("has-success");
-          $(element).parents(".col-md-6").addClass("has-error").removeClass("has-success");
-        },
-        unhighlight: function(element, errorClass, validClass) {
-          $(element).parents(".col-md-2").addClass("has-success").removeClass("has-error");
-          $(element).parents(".col-md-4").addClass("has-success").removeClass("has-error");
-          $(element).parents(".col-md-6").addClass("has-success").removeClass("has-error");
-        }
-      });
     });
 
     function cambiar(id_registro) {
@@ -339,13 +381,14 @@ include '../global_seguridad/verificar_sesion.php';
           id_registro: id_registro
         },
         success: function(respuesta) {
-          if(respuesta=="ok"){
+          if (respuesta == "ok") {
             alertify.success("El registro ha sido modificado correctamente");
           }
         }
       });
       return false;
     }
+
     function escarg(id_registro) {
       var url = "escarg_proveedor.php";
       $.ajax({
@@ -355,8 +398,24 @@ include '../global_seguridad/verificar_sesion.php';
           id_registro: id_registro
         },
         success: function(respuesta) {
-          if(respuesta=="ok"){
+          if (respuesta == "ok") {
             alertify.success("El registro ha sido modificado correctamente");
+          }
+        }
+      });
+      return false;
+    }
+    function eliminar(id_registro){
+      var url = "eliminar_proveedor.php";
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+          id_registro: id_registro
+        },
+        success: function(respuesta) {
+          if (respuesta == "ok") {
+            alertify.success("El registro ha sido eliminado correctamente");
           }
         }
       });

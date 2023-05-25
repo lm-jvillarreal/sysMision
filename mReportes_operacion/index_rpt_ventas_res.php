@@ -111,6 +111,7 @@ $hora = date('H:i:s');
                         <th>VILL</th>
                         <th>ALL</th>
                         <th>PET</th>
+                        <th>MMORELOS</th>
                         <th>Total</th>
                       </tr>
                     </thead>
@@ -121,6 +122,7 @@ $hora = date('H:i:s');
                         <th>VILL</th>
                         <th>ALL</th>
                         <th>PET</th>
+                        <th>MMORELOS</th>
                         <th>Total</th>
                       </tr>
                     </tfoot>
@@ -243,6 +245,9 @@ $hora = date('H:i:s');
           },
           {
             "data": "pet"
+          },
+          {
+            "data": "mm"
           },
           {
             "data": "total"

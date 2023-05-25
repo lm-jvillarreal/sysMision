@@ -45,6 +45,9 @@ if ($existe == 0) {
     case '5':
       $sucursal = "LA PETACA";
       break;
+    case '6':
+      $sucursal = "MONTEMORELOS";
+      break;
     default:
       $sucursal = "";
       break;

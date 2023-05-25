@@ -36,52 +36,57 @@ include '../global_settings/conexion_oracle.php';
           <div class="box-header">
             <div class="row">
               <div class="col-md-6 text-left">
-                <h3 class="box-title">Compras | Historial de Movimientos</h3>
+                <h3 class="box-title">Compras | Reporte de existencias</h3>
               </div>
               <div class="col-md-6 text-right">
-                
+
               </div>
             </div>
           </div>
           <div class="box-body">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="table-responsive">
-                  <table id="lista_teoricos" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                      <tr>
-                        <th width="10%">Depto.</th>
-                        <th width="10%">Familia</th>
-                        <th width="10%">Artículo</th>
-                        <th>Descripción</th>
-                        <th width="5%">DO</th>
-                        <th width="5%">ARB</th>
-                        <th width="5%">VILL</th>
-                        <th width="5%">ALLE</th>
-                        <th width="5%">PET</th>
-                        <th width="5%">CEDIS</th>
-                      </tr>
-                    </thead>
-                  </table>
-                </div>
+          <div class="row">
+            <form action="reportes/rpt_teoricos_baja.php" method="POST">
+              <div class="col-md-2 text-center">
+                <button id="btn-reporte_baja" class="btn btn-danger">Generar reporte (Baja)</button>
               </div>
-            </div>
+            </form>
+            <form action="reportes/rpt_teoricos_restaurant.php" method="POST">
+              <div class="col-md-2 text-center">
+                <button id="btn-reporte_baja" class="btn btn-success">Generar reporte (Restaurant)</button>
+              </div>
+            </form>
+            <form action="reportes/rpt_teoricos.php" method="POST">
+              <div class="col-md-2 text-center">
+                <button id="btn-reporte" class="btn btn-warning">Generar reporte (Alta)</button>
+              </div>
+            </form>
+            <form action="reportes/rpt_teoricos_separados.php" method="POST">
+              <div class="col-md-2 text-center">
+                <button id="btn-reporte_separados" class="btn btn-primary">Generar reporte (Separados)</button>
+              </div>
+            </form>
+            <form action="reportes/rpt_teoricos_cedisRopa.php" method="POST">
+              <div class="col-md-2 text-center">
+                <button id="btn-reporte_separados" class="btn btn-default">Generar reporte (203 - Ropa)</button>
+              </div>
+            </form>
           </div>
         </div>
-        <!-- /.row -->
-      </section>
-      <!-- /.content -->
     </div>
-    <?php include 'modal_kardex.php'; ?>
-    <!-- /.content-wrapper -->
-    <?php include '../footer2.php'; ?>
+    <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <?php include 'modal_kardex.php'; ?>
+  <!-- /.content-wrapper -->
+  <?php include '../footer2.php'; ?>
 
-    <!-- Control Sidebar -->
+  <!-- Control Sidebar -->
 
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+  <div class="control-sidebar-bg"></div>
   </div>
   <!-- ./wrapper -->
 
@@ -95,81 +100,15 @@ include '../global_settings/conexion_oracle.php';
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
   <!-- Page script -->
   <script>
-  $(document).ready(function(){
-    cargar_tabla();
-  })
-    function cargar_tabla() {
-      $('#lista_teoricos').dataTable().fnDestroy();
-      $('#lista_teoricos').DataTable({
-        'language': {
-          "url": "../plugins/DataTables/Spanish.json"
-        },
-        "paging": false,
-        "dom": 'Bfrtip',
-        buttons: [{
-            extend: 'pageLength',
-            text: 'Registros',
-            className: 'btn btn-default'
-          },
-          {
-            extend: 'excel',
-            text: 'Exportar a Excel',
-            className: 'btn btn-default',
-            title: 'Modulos-Lista',
-            exportOptions: {
-              columns: ':visible'
-            }
-          },
-          {
-            extend: 'copy',
-            text: 'Copiar registros',
-            className: 'btn btn-default',
-            copyTitle: 'Ajouté au presse-papiers',
-            copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
-            copySuccess: {
-              _: '%d lignes copiées',
-              1: '1 ligne copiée'
-            }
-          },
-        ],
-        "ajax": {
-          "type": "POST",
-          "url": "tabla_teoricos.php",
-          "dataSrc": ""
-        },
-        "columns": [{
-            "data": "depto"
-          },
-          {
-            "data": "familia"
-          },
-          {
-            "data": "articulo"
-          },
-          {
-            "data": "descripcion"
-          },
-          {
-            "data": "do"
-          },
-          {
-            "data": "arb"
-          },
-          {
-            "data": "vill"
-          },
-          {
-            "data": "all"
-          },
-          {
-            "data": "pet"
-          },
-          {
-            "data": "cedis"
-          }
-        ]
-      });
-    }
+    $("#btn-reporte").click(function() {
+      $("#form-existencias").submit();
+    });
+    $("#btn-reporte_baja").click(function() {
+      $("#form-existencias_baja").submit();
+    });
+    $("#btn-reporte_separados").click(function() {
+      $("#form-existencias_separados").submit();
+    });
   </script>
 </body>
 

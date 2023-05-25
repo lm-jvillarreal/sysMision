@@ -1,5 +1,5 @@
 <?php
-include '../global_settings/conexion_supsys.php';
+include '../global_settings/conexion.php';
 include '../global_settings/conexion_oracle.php';
 
 date_default_timezone_set('America/Monterrey');

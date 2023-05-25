@@ -71,7 +71,18 @@ $cadena_detalle = "SELECT
                         AND '$fecha_fin' 
                         AND ARTC_ARTICULO = COM_ARTICULOS.ARTC_ARTICULO 
                         AND TICC_SUCURSAL = '5' 
-                    ) AS PET 	
+                    ) AS PET,
+                    (
+                    SELECT
+                        NVL(SUM( VENTAS.ARTN_VENTA_C_IMPUESTO ),0)
+                    FROM
+                        PV_VENTAS_REPORTE_VW VENTAS 
+                    WHERE
+                        VENTAS.TICN_AAAAMMDDVENTA BETWEEN '$fecha_i' 
+                        AND '$fecha_fin' 
+                        AND ARTC_ARTICULO = COM_ARTICULOS.ARTC_ARTICULO 
+                        AND TICC_SUCURSAL = '6' 
+                    ) AS MM
                     FROM
                     COM_ARTICULOS 
                     WHERE
@@ -85,6 +96,7 @@ $v_arb = "";
 $v_vill = "";
 $v_all = "";
 $v_pet = "";
+$v_mm = "";
 
 
 while ($row = oci_fetch_row($st)) {
@@ -93,9 +105,10 @@ while ($row = oci_fetch_row($st)) {
     $v_vill = $v_vill + $row[4];
     $v_all = $v_all + $row[5];
     $v_pet = $v_pet + $row[6];
+    $v_mm = $v_mm + $row[7];
 
 }
-$total = $v_all + $v_d + $v_vill + $v_arb + $v_pet;
+$total = $v_all + $v_d + $v_vill + $v_arb + $v_pet + $v_mm;
 
 
 $cadena_detalleAgo = "SELECT
@@ -155,6 +168,17 @@ $cadena_detalleAgo = "SELECT
                         AND '$fecha_finAgo' 
                         AND ARTC_ARTICULO = COM_ARTICULOS.ARTC_ARTICULO 
                         AND TICC_SUCURSAL = '5' 
+                    ) AS PET,
+                    (
+                    SELECT
+                        NVL(SUM( VENTAS.ARTN_VENTA_C_IMPUESTO ),0)
+                    FROM
+                        PV_VENTAS_REPORTE_VW VENTAS 
+                    WHERE
+                        VENTAS.TICN_AAAAMMDDVENTA BETWEEN '$fecha_iAgo' 
+                        AND '$fecha_finAgo' 
+                        AND ARTC_ARTICULO = COM_ARTICULOS.ARTC_ARTICULO 
+                        AND TICC_SUCURSAL = '6' 
                     ) AS PET
                     FROM
                     COM_ARTICULOS 
@@ -169,6 +193,7 @@ $v_arbAgo = "";
 $v_villAgo = "";
 $v_allAgo = "";
 $v_petAgo = "";
+$v_mmAgo = "";
 
 while ($rowAgo = oci_fetch_row($stAgo)) {
     $v_dAgo = $v_dAgo + $rowAgo[2];
@@ -176,8 +201,9 @@ while ($rowAgo = oci_fetch_row($stAgo)) {
     $v_villAgo = $v_villAgo + $rowAgo[4];
     $v_allAgo = $v_allAgo + $rowAgo[5];
     $v_petAgo = $v_petAgo + $rowAgo[6];
+    $v_mmAgo = $v_mmAgo + $rowAgo[7];
 }
-$totalAgo = $v_allAgo + $v_dAgo + $v_villAgo + $v_arbAgo + $v_petAgo;
+$totalAgo = $v_allAgo + $v_dAgo + $v_villAgo + $v_arbAgo + $v_petAgo + $v_mmAgo;
 
 $cuerpo ="";
 
@@ -188,6 +214,7 @@ $renglon = "
 		\"vill\": \"$v_vill\",
         \"all\": \"$v_all\",
         \"pet\": \"$v_pet\",
+        \"mm\": \"$v_mm\",
         \"total\": \"$total\"
     },
     {
@@ -196,6 +223,7 @@ $renglon = "
 		\"vill\": \"$v_villAgo\",
         \"all\": \"$v_allAgo\",
         \"pet\": \"$v_petAgo\",
+        \"mm\": \"$v_mmAgo\",
         \"total\": \"$totalAgo\"
 	}";
     $cuerpo = $renglon;

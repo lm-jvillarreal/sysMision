@@ -4,7 +4,7 @@ include '../global_settings/conexion.php';
 $folio=$_POST['folio'];
 $id_usuario=$_POST['id_usuario'];
 
-$cadenaConsulta="SELECT codigo, descripcion, cantidad FROM detalle_solicitud where id_solicitud='530'";
+$cadenaConsulta="SELECT codigo, descripcion, cantidad FROM detalle_solicitud where id_solicitud='$folio'";
 $consultaDetalle=mysqli_query($conexion,$cadenaConsulta);
 $datos=array();
 while($row=mysqli_fetch_array($consultaDetalle)){

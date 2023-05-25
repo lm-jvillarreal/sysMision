@@ -11,6 +11,8 @@ if($id_sede=='1'){
   $sucursal = 'ALL';
 }elseif($id_sede=='5'){
   $sucursal = 'PTCA';
+}elseif($id_sede=='6'){
+  $sucursal = 'MMORELOS';
 }
 ?>
 <!DOCTYPE html>

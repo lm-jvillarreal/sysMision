@@ -77,9 +77,6 @@
     .rojo{
        color: #F10B0B;
     }
-    .rench{
-
-    }
 
 
     /*letras*/

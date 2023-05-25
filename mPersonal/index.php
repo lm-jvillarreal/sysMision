@@ -13,6 +13,7 @@ include '../global_seguridad/verificar_sesion.php';
 
     <header class="main-header">
       <?php include '../header.php'; ?>
+
     </header>
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="main-sidebar">
@@ -88,16 +89,6 @@ include '../global_seguridad/verificar_sesion.php';
                 <div class="table-responsive">
                   <table id="lista_modulos" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
-                    <tr>
-                        <td width="5%">#</td>
-                        <td>Nombre Completo</td>
-                        <td width='10%'>Sucursal</td>
-                        <td width="10%">Usuario</td>
-                        <td width="20%">Usuario</td>
-                        <td width="15%">Perfil</td>
-                        <td width="10%">Pswd</td>
-                        <td width="5%">Activo</td>
-                      </tr>
                       <tr>
                         <th width="5%">#</th>
                         <th>Nombre Completo</th>
@@ -151,6 +142,8 @@ include '../global_seguridad/verificar_sesion.php';
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+  <script src="https://cdn.datatables.net/searchpanes/1.2.1/js/dataTables.searchPanes.min.js"></script>
+  <script src="https://cdn.datatables.net/select/1.3.2/js/dataTables.select.min.js"></script>
 
   <!-- Page script -->
   <script>
@@ -334,16 +327,49 @@ include '../global_seguridad/verificar_sesion.php';
     }
 
     function cargar_tabla() {
-      $('#lista_modulos thead th').each(function() {
-        var title = $(this).text();
-        $(this).html('<input type="text" placeholder="' + title + '" style="width:100%" />');
-      });
       $('#lista_modulos').dataTable().fnDestroy();
-      var table = $('#lista_modulos').DataTable({
+      $('#lista_modulos').DataTable({
+        
         'language': {
           "url": "../plugins/DataTables/Spanish.json"
         },
         "paging": false,
+        dom: 'Bfrtip',
+        buttons: [{
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'FaltantesLista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'FaltantesLista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					}
+				],
         "ajax": {
           "type": "POST",
           "url": "tabla_categorias.php",
@@ -374,17 +400,13 @@ include '../global_seguridad/verificar_sesion.php';
           {
             "data": "activo"
           }
-        ]
-      });
-      table.columns().every(function() {
-        var that = this;
-        $('input', this.header()).on('keyup change', function() {
-          if (that.search() !== this.value) {
-            that
-              .search(this.value)
-              .draw();
-          }
-        });
+        ],
+        columnDefs: [{
+          searchPanes: {
+            show: true,
+          },
+          targets: [2, 5]
+        }]
       });
     }
 

@@ -22,7 +22,7 @@ $cadena_caducidad = "SELECT c.codigo_articulo,
                     FROM far_medicamentosCaducan AS c 
                     INNER JOIN sucursales as s 
                     ON c.sucursal = s.id 
-                    WHERE (estatus = '1' OR estatus = '2')".$filtro_registros_propios.$filtro_soloSucural;
+                    WHERE (estatus = '1' OR estatus = '2') AND c.cantidad=0 ".$filtro_registros_propios.$filtro_soloSucural.'';
 
 $consulta_caducidad = mysqli_query($conexion, $cadena_caducidad);
 $cuerpo ="";
@@ -45,21 +45,6 @@ while ($row_caducidad = mysqli_fetch_array($consulta_caducidad)) {
     $descripcion = $row_producto[3];
 
     $escape_descripcion = mysqli_real_escape_string($conexion, $row_caducidad[1]);
-
-    $cadena_ventas = "SELECT SUM(INV_RENGLONES_MOVIMIENTOS.RMON_CANTSURTIDA)
-    FROM INV_MOVIMIENTOS INNER JOIN INV_RENGLONES_MOVIMIENTOS
-    ON INV_MOVIMIENTOS.MODN_FOLIO = INV_RENGLONES_MOVIMIENTOS.MODN_FOLIO
-    AND INV_MOVIMIENTOS.ALMN_ALMACEN = INV_RENGLONES_MOVIMIENTOS.ALMN_ALMACEN
-    AND INV_MOVIMIENTOS.MODC_TIPOMOV = INV_RENGLONES_MOVIMIENTOS.MODC_TIPOMOV
-    WHERE (inv_movimientos.modc_tipomov = 'SALXVE')
-    AND INV_MOVIMIENTOS.MOVD_FECHAAFECTACION >= TRUNC(TO_DATE('$row_caducidad[9]','YYYY-MM-DD'))
-    AND INV_MOVIMIENTOS.MOVD_FECHAAFECTACION <= TRUNC(TO_DATE('$fecha', 'YYYY-MM-DD'))
-    AND INV_MOVIMIENTOS.ALMN_ALMACEN = '$row_caducidad[8]'
-    AND INV_RENGLONES_MOVIMIENTOS.ARTC_ARTICULO = '$row_caducidad[0]'";
-    $st_ventas = oci_parse($conexion_central, $cadena_ventas);
-    oci_execute($st_ventas);
-    $row_ventas = oci_fetch_row($st_ventas);
-    $inicial = $row_caducidad[4]-$row_ventas[0];
     $link_precios = "<center><a href='#' data-id = '$row_caducidad[0]' data-suc = '$row_caducidad[8]' data-toggle = 'modal' data-target = '#modal-precios' class='btn btn-danger' target='blank'>$row_caducidad[0]</a></center>";
 	$renglon = "
 	{
@@ -72,8 +57,8 @@ while ($row_caducidad = mysqli_fetch_array($consulta_caducidad)) {
         \"caducidad\": \"$row_caducidad[3]\",
         \"captura\": \"$row_caducidad[9]\",
         \"cantidad\": \"$row_caducidad[4]\",
-        \"ventas\": \"$row_ventas[0]\",
-        \"resto\": \"$inicial\"
+        \"ventas\": \"\",
+        \"resto\": \"\"
 	},";
 	$cuerpo = $cuerpo.$renglon;
 }

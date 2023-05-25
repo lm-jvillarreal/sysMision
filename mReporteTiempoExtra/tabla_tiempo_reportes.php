@@ -1,6 +1,7 @@
 <?php
 //include '../global_seguridad/verificar_sesion.php';
 include '../global_settings/consulta_sqlsrvr.php';
+include '../global_settings/conexion.php';
 
 $filtro_registros_propios = ($registros_propios=="0") ? "" : " AND ti.usuario='$id_usuario'";
 $tiempo = "";

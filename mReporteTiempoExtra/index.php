@@ -17,7 +17,6 @@ include '../global_seguridad/verificar_sesion.php';
     <?php include 'menuV.php'; ?>
     <!-- /.sidebar -->
   </aside>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -28,8 +27,9 @@ include '../global_seguridad/verificar_sesion.php';
             <h3 class="box-title">Tiempo Extra | Reportes</h3>
           </div>
           <div class="box-body">
-            <form method="POST" id="form_datoss" action="http://200.1.1.197/SMPruebas/mReporteTiempoExtra/generar_lista.php">
+          <form method="POST" id="form_datoss" action="generar_lista.php">
             <div class="row">
+            <!-- http://200.1.1.197/SMPruebas/mReporteTiempoExtra/ -->
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="fecha_uno">*Fecha de inicio:</label>
@@ -61,7 +61,7 @@ include '../global_seguridad/verificar_sesion.php';
             </div>
           </div>
           <div class="box-footer text-right">
-          <a class="btn btn-warning" onclick="verificar($('#fecha_uno').val(),$('#fecha_dos').val(),$('#sucursal').val());">Generar Tabla</a>
+            <a class="btn btn-warning" onclick="verificar($('#fecha_uno').val(),$('#fecha_dos').val(),$('#sucursal').val());">Generar Tabla</a>
             <input type="submit" value="Generar Excel" class="btn btn-danger">
           </div>
           </form>
@@ -77,7 +77,7 @@ include '../global_seguridad/verificar_sesion.php';
                   <table id="lista_tiempo_extra" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                       <tr>
-                      <th> ID</th>
+                        <th> ID</th>
                         <th>Empleado</th>
                         <th>Departamento</th>
                         <th>Sucursal</th>
@@ -89,7 +89,6 @@ include '../global_seguridad/verificar_sesion.php';
                         <th>Fecha Registro</th>
                         <th>Hora Inicio</th>
                         <th>Hora Final</th>
-
                       </tr>
                     </thead>
                     <tbody>
@@ -196,7 +195,8 @@ include '../global_seguridad/verificar_sesion.php';
         "lengthMenu": [[-1], ["All"]],
         "ajax": {
             "type": "POST",
-            "url": "http://200.1.1.197/SMPruebas/mReporteTiempoExtra/tabla_otros.php",
+            "url": "tabla_otros.php",
+            //http:200.1.1.197/SMPruebas/mReporteTiempoExtra/
             "dataSrc": "",
             "data":{'fecha_uno':fecha_uno,'fecha_dos':fecha_dos, 'sucursal':sucursal}
         },

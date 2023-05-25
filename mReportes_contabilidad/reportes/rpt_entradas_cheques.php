@@ -5,12 +5,14 @@ error_reporting(E_ALL ^ E_NOTICE);
 date_default_timezone_set('America/Monterrey');
 $fecha = date('Y-m-d');
 $hora = date('H:i:s');
-$folio = $_POST['folio'];
-$tipo = $_POST['tipo'];
-$sucursal = $_POST['sucursal'];
+$proveedor = $_POST['proveedor'];
 $fecha_inicio = $_POST['fecha_inicial'];
 $fecha_final = $_POST['fecha_final'];
-
+if($proveedor==""){
+	$filprov="";
+}else{
+	$filprov=" AND cuentas.PROC_CVEPROVEEDOR='$proveedor'";
+}
 
 
 $consulta_principal  = "SELECT DISTINCT
@@ -43,9 +45,10 @@ $consulta_principal  = "SELECT DISTINCT
 						AND CXPD_FECHACONTAB < TRUNC (
 							TO_DATE ('$fecha_final', 'YYYY/MM/DD')
 						) + 1
+						$filprov
 						ORDER BY
 							cuentas.CXPC_NUMFACT";
-
+							//
 							//echo "$consulta_principal";
 
 	$stmt = oci_parse($conexion_central, $consulta_principal);

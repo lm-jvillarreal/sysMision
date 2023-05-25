@@ -1,5 +1,9 @@
 <?php
-  include '../global_seguridad/verificar_sesion.php';
+  // esto permite tener acceso desde otro servidor
+    //header('Access-Control-Allow-Origin: *');
+  // esto permite tener acceso desde otro servidor
+  // include '../global_seguridad/verificar_sesion.php';
+  include '../global_settings/conexion.php';
   include '../global_settings/consulta_sqlsrvr.php';
 	date_default_timezone_set('America/Monterrey');
 
@@ -11,14 +15,20 @@
   $departamentos   ="";
 
   if($sucursal == '1'){
-    $sucursal = 'DIAZ ORDAZ';
-  }else if($sucursal == '2'){
-    $sucursal = 'ARBOLEDAS';
-  }else if($sucursal == '3'){
-    $sucursal = 'VILLEGAS';
-  }else{
-    $sucursal = 'ALLENDE';
-  }
+      $filtro=" AND sucursal='DIAZ ORDAZ'";
+    }else if($sucursal == '2'){
+      $filtro=" AND sucursal='ARBOLEDAS'";
+    }else if($sucursal == '3'){
+      $filtro=" AND sucursal='VILLEGAS'";
+    }else if($sucursal == '4'){
+      $filtro=" AND sucursal='ALLENDE'";
+    }else if($sucursal == '5'){
+      $filtro="AND sucursal='PETACA'";
+    }else if($sucursal == '99'){
+      $filtro ="AND sucursal= 'CEDIS'";
+    }else{
+      $filtro="";
+    }
 
 	$cadena_consulta= "SELECT
   id,
@@ -29,16 +39,18 @@
 	tiempo,
 	comentario,
 	date_format(fecha_inicio,'%d/%m/%Y') as Fecha,
+  date_format(fecha,'%d/%m/%Y') as FechaDos,
 	tiempo_aut,
 	folio,
-	motivo
+  motivo,
+  hora_inicio,
+  hora_final
 	FROM
 	tiempo_extra 
 	WHERE
 	activo = '1' 
-	AND sucursal = '$sucursal'
-	AND fecha_inicio >='$fecha_uno ' and fecha_final <= '$fecha_dos'";	
-  // echo $cadena_consulta;  
+	AND fecha >='$fecha_uno' and fecha <= '$fecha_dos'".$filtro;	
+//  echo $cadena_consulta;  
   
 
 $consulta = mysqli_query($conexion, $cadena_consulta);
@@ -75,11 +87,16 @@ $consulta = mysqli_query($conexion, $cadena_consulta);
       \"nombre\": \"$empleado\",
       \"departamento\": \"$departamentos\",
       \"sucursal\": \"$sucursales\",
-      \"motivo\": \"$row_incidencias[10]\",
+      \"motivo\": \"$row_incidencias[11]\",
       \"autoriza\": \"$row_incidencias[4]\",
       \"tiempo\": \"$tiempo\",
       \"comentario\": \"$row_incidencias[6]\",
-	    \"fecha\": \"$row_incidencias[7]\"
+      \"fecha\": \"$row_incidencias[7]\",
+      \"fechaDos\": \"$row_incidencias[8]\",
+	    \"estado\": \"$tiempo_autorizado\",
+      \"activo\": \"$autorizar\",
+      \"horaInicio\": \"$row_incidencias[12]\",
+      \"horaFinal\": \"$row_incidencias[13]\"
       },";
     $cuerpo = $cuerpo.$renglon;
     $texto = "";

@@ -1,7 +1,7 @@
 <?php
 	include '../global_seguridad/verificar_sesion.php';
  
-	$categoria= $_POST['categoria'];
+	$tipo= $_POST['tipo'];
 
   	if(isset($_POST['id_incidencia'])){
 		$id_persona = $_POST['id_incidencia'];
@@ -11,10 +11,10 @@
 	}
 
   	if(!isset($_POST['searchTerm'])){ 
-	  $cadena_incidencia = "SELECT id_incidencia, nombre FROM catalogo_incidencias WHERE activo = '1' AND categoria = '$categoria'";
+	  $cadena_incidencia = "SELECT id,incidencia FROM catalogo_incidencias WHERE activo = '1' AND tipo = '$tipo'";
 	}else{ 
 	  $search = $_POST['searchTerm'];   
-	  $cadena_incidencia = "SELECT id_incidencia, nombre FROM catalogo_incidencias WHERE activo = '1' AND categoria = '$categoria'";
+	  $cadena_incidencia = "SELECT id,incidencia FROM catalogo_incidencias WHERE activo = '1' AND tipo = '$tipo'";
 	} 
 
 

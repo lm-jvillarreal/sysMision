@@ -125,7 +125,7 @@ include '../global_seguridad/verificar_sesion.php';
         ],
         "ajax": {
           "type": "POST",
-          "url": "http://200.1.1.197/SMPruebas/mPlantillasEmpleados/tabla_plantilla.php",
+          "url": "tabla_plantilla.php",
           "dataSrc": ""
         },
         "columns": [{

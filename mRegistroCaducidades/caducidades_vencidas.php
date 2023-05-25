@@ -46,8 +46,6 @@ include '../global_seguridad/verificar_sesion.php';
 												<th width='10%'>Caducidad</th>
 												<th width='10%'>Captura</th>
 												<th width='3%'></th>
-												<th width='3%'></th>
-												<th width='3%'></th>
 											</tr>
 										</thead>
 										<tfoot>
@@ -60,8 +58,6 @@ include '../global_seguridad/verificar_sesion.php';
 												<th>Lote</th>
 												<th>Caducidad</th>
 												<th>Captura</th>
-												<th></th>
-												<th></th>
 												<th></th>
 											</tr>
 										</tfoot>
@@ -250,12 +246,6 @@ include '../global_seguridad/verificar_sesion.php';
 					},
 					{
 						"data": "cantidad"
-					},
-					{
-						"data": "ventas"
-					},
-					{
-						"data": "resto"
 					}
 				]
 			});

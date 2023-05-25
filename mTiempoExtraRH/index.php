@@ -7,75 +7,77 @@ $nuevafecha = date('Y-m-d', $nuevafecha);
 $hora       = date('h:i:s');
 ?>
 <!DOCTYPE html>
-<html>
-<head>
-  <?php include '../head.php'; ?>
-  <link rel="stylesheet" href="estilos2.css">
-</head>
-<body class="hold-transition skin-red sidebar-mini">
+  <html>
+    <head>
+      <?php include '../head.php'; ?>
+      <link rel="stylesheet" href="estilos2.css">
+    </head>
+    <body class="hold-transition skin-red sidebar-mini">
   <!-- <div class="wrapper"> -->
-    <header class="main-header">
+        <header class="main-header">
       <!-- //ajustar el zoom en el navegador -->
-      <?php include '../header.php'; ?>
-    </header>
+          <?php include '../header.php'; ?>
+        </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
+        <aside class="main-sidebar">
       <!-- sidebar: style can be found in sidebar.less -->
-      <?php include 'menuV.php'; ?>
+          <?php include 'menuV.php'; ?>
       <!-- /.sidebar -->
-    </aside>
+        </aside>
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+        <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <!-- Main content -->
-      <section class="content">
-        <div class="box box-danger">
-          <div class="box-header">
-            <h3 class="box-title">Lista Tiempo Extra</h3>
-          </div>
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="table-responsive">
-                  <table id="lista_extras" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                      <tr>
-                        <th width="5%"> #</th>
-                        <th width="35%">Empleado</th>
-                        <th width="20%">Departamento</th>
-                        <th width="20%">Sucursal</th>
-                        <th width="20%">Motivo</th>
-                        <th width="35%">Autoriza</th>
-                        <th width="15%">Tiempo</th>
-                        <th width="15%">Comentario</th>
-                        <th width="15%">Fecha</th>
-                      </tr>
-                    </thead>
-                    <tfoot>
-                      <tr>
-                        <th width="5%"> #</th>
-                        <th width="35%">Empleado</th>
-                        <th width="35%">Departamento</th>
-                        <th width="35%">Sucursal</th>
-                        <th width="20%">Motivo</th>
-                        <th width="35%">Autoriza</th>
-                        <th width="15%">Tiempo</th>
-                        <th width="15%">Comentario</th>
-                        <th width="15%">Fecha</th>
-                      </tr>
-                    </tfoot>
-                  </table>
+          <section class="content">
+            <div class="box box-danger">
+              <div class="box-header">
+                <h3 class="box-title">Lista Tiempo Extra</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="table-responsive">
+                      <table id="lista_extras" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                          <tr>
+                            <th width="5%"> #</th>
+                            <th width="35%">Empleado</th>
+                            <th width="20%">Departamento</th>
+                            <th width="20%">Sucursal</th>
+                            <th width="20%">Motivo</th>
+                            <th width="35%">Autoriza</th>
+                            <th width="15%">Tiempo</th>
+                            <th width="15%">Comentario</th>
+                            <th width="15%">Fecha</th>
+                          </tr>
+                        </thead>
+                        <tfoot>
+                          <tr>
+                            <th width="5%"> #</th>
+                            <th width="35%">Empleado</th>
+                            <th width="35%">Departamento</th>
+                            <th width="35%">Sucursal</th>
+                            <th width="20%">Motivo</th>
+                            <th width="35%">Autoriza</th>
+                            <th width="15%">Tiempo</th>
+                            <th width="15%">Comentario</th>
+                            <th width="15%">Fecha</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
         <!-- /.row -->
       
       <!-- /.content -->
-      </section>
-    <!-- /.content-wrapper --> </div>
-    <?php include '../footer2.php'; ?>
+          </section>
+    <!-- /.content-wrapper --> 
+        </div>
+      <?php include '../footer2.php'; ?>
+      
     <!-- Control Sidebar -->
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->

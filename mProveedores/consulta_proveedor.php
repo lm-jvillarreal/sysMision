@@ -2,8 +2,8 @@
 	include '../global_settings/conexion.php';
 	include "../global_settings/conexion_oracle.php";
 
-	$cve_proveedor = $_POST['clave_proveedor'];
-	$cadena_od = "SELECT PR.PROC_CVEPROVEEDOR, PR.PROC_NOMBRE FROM CXP_PROVEEDORES pr WHERE PR.PROC_CVEPROVEEDOR = '$cve_proveedor'";
+	$cve_proveedor = TRIM($_POST['clave_proveedor']);
+	$cadena_od = "SELECT TRIM(PR.PROC_CVEPROVEEDOR), PR.PROC_NOMBRE FROM CXP_PROVEEDORES pr WHERE PR.PROC_CVEPROVEEDOR = '$cve_proveedor'";
     //echo $cadena_od;
 	$sr_prov = oci_parse($conexion_central, $cadena_od);
 	oci_execute($sr_prov);
