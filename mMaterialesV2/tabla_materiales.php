@@ -34,14 +34,14 @@ while ($row = mysqli_fetch_array($consulta)) {
 	}
 
 	$boton_editar="<button onclick='editar_material($row[0])' class='btn btn-warning'><i class='fa fa-edit fa-lg' aria-hidden='true'></button>";
-    $boton_eliminar="<button onclick='eliminar_material($row[0])' class='btn btn-danger'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></button>";
-    $boton_pedir = "<button class='btn btn-$clase' type='button' onclick='pedir($row[0],1)' $disabled><i class='fa fa-comments fa-lg' aria-hidden='true'></i></button>";
-    $existencia = "<p id='existenciabd$numero' ondblclick='activar($numero)'>$row[3]</p><input id='nueva_existencia$numero' name='nueva_existencia' class='form-control hidden' onkeyup='if(event.keyCode == 13)actualizar_existencia($row[0],this.value)' size='6'>";
-
+	$boton_eliminar="<button onclick='eliminar_material($row[0])' class='btn btn-danger'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></button>";
+	$boton_pedir = "<button class='btn btn-$clase' type='button' onclick='pedir($row[0],1)' $disabled><i class='fa fa-comments fa-lg' aria-hidden='true'></i></button>";
+	$existencia = "<p id='existenciabd$numero' ondblclick='activar($numero)'>$row[3]</p><input id='nueva_existencia$numero' name='nueva_existencia' class='form-control hidden' onkeyup='if(event.keyCode == 13)actualizar_existencia($row[0],this.value)' size='6'>";
+	$escape_nombre=mysqli_real_escape_string($conexion,$row[1]);
 	$renglon = "
 		{
 		\"#\": \"$numero\",
-		\"Nombre\": \"$row[1]\",
+		\"Nombre\": \"$escape_nombre\",
 		\"Proveedor\": \"$nombre_proveedor\",
 		\"TBodega\": \"$row[7]\",
 		\"Existencia\": \"$existencia\",

@@ -122,6 +122,25 @@ $cadena_consulta  = "SELECT ALMN_ALMACEN, MODN_FOLIO, TO_CHAR(MOVD_FECHAELABORAC
 	}else{
 		$interval_sxmedo = $f_sxmedo->diff($now)->format("%d días de retraso");
 	}
+
+	$cadena_consulta  = "SELECT ALMN_ALMACEN, MODN_FOLIO, TO_CHAR(MOVD_FECHAELABORACION,'DD/MM/YYYY'), MOVN_ESTATUS, TO_CHAR(MOVD_FECHAELABORACION,'YYYY-MM-DD')
+    FROM INV_MOVIMIENTOS
+    WHERE MODC_TIPOMOV = 'SXMCAD'
+    AND MOVD_FECHAELABORACION >= TRUNC(TO_DATE('$fecha_inicio','YYYY-MM-DD'))
+    AND MOVD_FECHAELABORACION <= TRUNC(TO_DATE('$fecha_fin', 'YYYY-MM-DD'))
+    AND ALMN_ALMACEN = '$sucursal'";
+				
+    $consulta_sxmcad = oci_parse($conexion_central, $cadena_consulta);
+    oci_execute($consulta_sxmcad);
+    while($row_sxmcad = oci_fetch_array($consulta_sxmcad)){
+        $cantidad_sxmcad = oci_num_rows($consulta_sxmcad);
+        $f_sxmcad = new DateTime($row_sxmcad[4]);
+	}
+	if($cantidad_sxmcad==0){
+		$interval_sxmcad="No existen registros";
+	}else{
+		$interval_sxmcad = $f_sxmcad->diff($now)->format("%d días de retraso");
+	}
 	
 	$cadena_consulta  = "SELECT ALMN_ALMACEN, MODN_FOLIO, TO_CHAR(MOVD_FECHAELABORACION,'DD/MM/YYYY'), MOVN_ESTATUS, TO_CHAR(MOVD_FECHAELABORACION,'YYYY-MM-DD')
     FROM INV_MOVIMIENTOS
@@ -328,51 +347,54 @@ $cadena_consulta  = "SELECT ALMN_ALMACEN, MODN_FOLIO, TO_CHAR(MOVD_FECHAELABORAC
 		$objPHPExcel->getActiveSheet()->getStyle('E'.$fila)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
 		//$objPHPExcel->getActiveSheet()->getStyle('P'.$fila)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE);
 		 $objPHPExcel->setActiveSheetIndex(0)
-	            ->setCellValue('A2', 'Merma Carnicería')
-                ->setCellValue('B2', $cantidad_sxmcar)
-				->setCellValue('C2', $interval_sxmcar)
-				->setCellValue('A3', 'Merma Fruta')
-                ->setCellValue('B3', $cantidad_sxmfta)
-				->setCellValue('C3', $interval_sxmfta)
-				->setCellValue('A4', 'Merma Panadería')
-                ->setCellValue('B4', $cantidad_sxmpan)
-				->setCellValue('C4', $interval_sxmpan)
-				->setCellValue('A5', 'Merma Tortillería')
-                ->setCellValue('B5', $cantidad_sxmtor)
-				->setCellValue('C5', $interval_sxmtor)
-				->setCellValue('A6', 'Merma Bodega')
-                ->setCellValue('B6', $cantidad_sxmbod)
-				->setCellValue('C6', $interval_sxmbod)
-				->setCellValue('A7', 'Merma Mal Estado')
-                ->setCellValue('B7', $cantidad_sxmedo)
-				->setCellValue('C7', $interval_sxmedo)
-				->setCellValue('A8', 'Salida por Robo')
-                ->setCellValue('B8', $cantidad_sxrob)
-				->setCellValue('C8', $interval_sxrob)
-				->setCellValue('A9', 'Merma Farmacia')
-                ->setCellValue('B9', $cantidad_sxmfci)
-				->setCellValue('C9', $interval_sxmfci)
-				->setCellValue('A10', 'Salida Farm. Accidentes')
-                ->setCellValue('B10', $cantidad_sfaacc)
-				->setCellValue('C10', $interval_sfaacc)
-				->setCellValue('A11', 'Salida Farm. Botiquín')
-                ->setCellValue('B11', $cantidad_sfcbot)
-				->setCellValue('C11', $interval_sfcbot)
-				->setCellValue('A12', 'Ent. Vigilancia')
-                ->setCellValue('B12', $cantidad_exvigi)
-				->setCellValue('C12', $interval_exvigi)
-				->setCellValue('A13', 'Ent. Conv. Chorizo')
-                ->setCellValue('B13', $cantidad_echori)
-				->setCellValue('C13', $interval_echori)
-				->setCellValue('A14', 'Sal. Conv. Chorizo')
-                ->setCellValue('B14', $cantidad_schori)
-				->setCellValue('C14', $interval_schori)
-				->setCellValue('A15', 'Trans. entre Deptos.')
-                ->setCellValue('B15', $cantidad_tradep)
-				->setCellValue('C15', $interval_tradep)
-				->setCellValue('A16', 'Ent. conv. arts.')
-                ->setCellValue('B16', $cantidad_exconv)
-                ->setCellValue('C16', $interval_exconv);
+									->setCellValue('A2', 'Merma Carnicería')
+									->setCellValue('B2', $cantidad_sxmcar)
+									->setCellValue('C2', $interval_sxmcar)
+									->setCellValue('A3', 'Merma Fruta')
+									->setCellValue('B3', $cantidad_sxmfta)
+									->setCellValue('C3', $interval_sxmfta)
+									->setCellValue('A4', 'Merma Panadería')
+									->setCellValue('B4', $cantidad_sxmpan)
+									->setCellValue('C4', $interval_sxmpan)
+									->setCellValue('A5', 'Merma Tortillería')
+									->setCellValue('B5', $cantidad_sxmtor)
+									->setCellValue('C5', $interval_sxmtor)
+									->setCellValue('A6', 'Merma Bodega')
+									->setCellValue('B6', $cantidad_sxmbod)
+									->setCellValue('C6', $interval_sxmbod)
+									->setCellValue('A7', 'Merma Mal Estado')
+									->setCellValue('B7', $cantidad_sxmedo)
+									->setCellValue('C7', $interval_sxmedo)
+									->setCellValue('A8', 'Salida por Robo')
+									->setCellValue('B8', $cantidad_sxrob)
+									->setCellValue('C8', $interval_sxrob)
+									->setCellValue('A9', 'Merma Farmacia')
+									->setCellValue('B9', $cantidad_sxmfci)
+									->setCellValue('C9', $interval_sxmfci)
+									->setCellValue('A10', 'Salida Farm. Accidentes')
+									->setCellValue('B10', $cantidad_sfaacc)
+									->setCellValue('C10', $interval_sfaacc)
+									->setCellValue('A11', 'Salida Farm. Botiquín')
+									->setCellValue('B11', $cantidad_sfcbot)
+									->setCellValue('C11', $interval_sfcbot)
+									->setCellValue('A12', 'Ent. Vigilancia')
+									->setCellValue('B12', $cantidad_exvigi)
+									->setCellValue('C12', $interval_exvigi)
+									->setCellValue('A13', 'Ent. Conv. Chorizo')
+									->setCellValue('B13', $cantidad_echori)
+									->setCellValue('C13', $interval_echori)
+									->setCellValue('A14', 'Sal. Conv. Chorizo')
+									->setCellValue('B14', $cantidad_schori)
+									->setCellValue('C14', $interval_schori)
+									->setCellValue('A15', 'Trans. entre Deptos.')
+									->setCellValue('B15', $cantidad_tradep)
+									->setCellValue('C15', $interval_tradep)
+									->setCellValue('A16', 'Ent. conv. arts.')
+									->setCellValue('B16', $cantidad_exconv)
+									->setCellValue('C16', $interval_exconv)
+									->setCellValue('A17', 'Merma Caducidad')
+									->setCellValue('B17', $cantidad_sxmcad)
+									->setCellValue('C17', $interval_sxmcad);
 
          $objPHPExcel->getActiveSheet()
     		->getColumnDimension('A')

@@ -11,7 +11,13 @@
 	$start  =$_POST['start'];
 	$end    =$_POST['end'];
 
-	$consulta = mysqli_query($conexion,"SELECT backgroundColor FROM agenda WHERE title = '$title'");
+	$cadenaConteo = "SELECT COUNT(*) FROM agenda_tema";
+	$conteo=mysqli_query($conexion,$cadenaConteo);
+	$rowConteo=mysqli_fetch_array($conteo);
+
+	$aleatorio=rand(1,$rowConteo[0]);
+
+	$consulta = mysqli_query($conexion,"SELECT BGCOLOR FROM agenda_tema WHERE ID = '$aleatorio'");
 	$cant     = mysqli_num_rows($consulta);
 	$row      = mysqli_fetch_array($consulta);
 	$hex = '#';

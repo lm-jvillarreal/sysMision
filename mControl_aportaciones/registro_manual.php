@@ -64,6 +64,7 @@
                     <option value="EFECTIVO">Efectivo</option>
                     <option value="DEPOSITO">Depósito</option>
                     <option value="TRANSFERENCIA">Transferencia</option>
+                    <option value="REMISION">Remisión</option>
                   </select>
                 </div>
               </div>
@@ -87,11 +88,13 @@
                 <div class="form-group">
                   <label for="concepto">*Concepto</label>
                   <select name="concepto" id="concepto" class="form-control">
-                    <option value="APORTACION ANIVERSARIO" selected="TRUE">Aportación Aniversario</option>
+                    <option value="" selected="TRUE"></option>
+                    <option value="APORTACION ANIVERSARIO">Aportación Aniversario</option>
                     <option value="APORTACION POR DIA DEL NIÑO">Aportación Día del Niño</option>
                     <option value="PLAN COMERCIAL">Plan Comercial</option>
                     <option value="FONDOS">Fondos</option>
                     <option value="APERTURA LA PETACA">Apertura La Petaca</option>
+                    <option value="APERTURA MONTEMORELOS">Apertura Montemorelos</option>
                   </select>
                 </div>
               </div>
@@ -112,6 +115,8 @@
                     <option value="2">Arboledas</option>
                     <option value="3">Villegas</option>
                     <option value="4">Allende</option>
+                    <option value="5">La Petaca</option>
+                    <option value="6">Montemorelos</option>
                   </select>
                 </div>
               </div>

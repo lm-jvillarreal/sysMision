@@ -4,13 +4,13 @@
     $filtro_sucursal = ($solo_sucursal=='1') ? " AND cajas.id_sucursal='$id_sede'":"";
   
     $cadena  = "SELECT reportes_cajas.id, sucursales.nombre, cajas.nombre,
-                ( SELECT CONCAT(nombre,' - ', descripcion) FROM cajas_catalogo_equipos WHERE reportes_cajas.id_equipo = cajas_catalogo_equipos.id ),
-                id_falla, fallas_equipos.nombre, STATUS, reportes_cajas.comentario 
-                FROM reportes_cajas 
-                INNER JOIN cajas ON cajas.id = reportes_cajas.id_caja
-                INNER JOIN sucursales ON sucursales.id = cajas.id_sucursal
-                LEFT JOIN fallas_equipos ON fallas_equipos.id = reportes_cajas.id_falla
-                WHERE reportes_cajas.activo = '1' AND (status = '2' OR status = '3' OR status = '4')".$filtro_sucursal;          
+    ( SELECT nombre FROM tipos_equipos WHERE reportes_cajas.id_equipo = tipos_equipos.id_tipo ),
+    id_falla, fallas_equipos.nombre, STATUS, reportes_cajas.comentario 
+    FROM reportes_cajas 
+    INNER JOIN cajas ON cajas.id = reportes_cajas.id_caja
+    INNER JOIN sucursales ON sucursales.id =reportes_cajas.id_sucursal
+    LEFT JOIN fallas_equipos ON fallas_equipos.id = reportes_cajas.id_falla
+    WHERE reportes_cajas.activo = '1' AND (status = '2' OR status = '3' OR status = '4')".$filtro_sucursal;          
     $consulta = mysqli_query($conexion, $cadena);
 
     $cuerpo = "";

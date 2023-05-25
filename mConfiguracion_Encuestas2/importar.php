@@ -33,7 +33,7 @@
 	}	
 
 	$xlsx = new SimpleXLSX( './plantilla.xlsx' );
-	$conn = new PDO( "mysql:host=200.1.1.178;dbname=sysadmision2;charset=utf8", "root", "Xoops1991");
+	$conn = new PDO( "mysql:host=200.1.1.178;dbname=sysadmision2;charset=utf8", "jvillarreal", "Xoops1991");
 	$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$stmt = $conn->prepare( "INSERT INTO n_preguntas (pregunta, tipo, folio, activo, fecha, hora, id_usuario) VALUES (?, ?, '$folio','1','$fecha','$hora','$id_usuario')");
 	$stmt->bindParam( 1, $pregunta);

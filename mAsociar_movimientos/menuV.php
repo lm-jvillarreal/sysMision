@@ -35,6 +35,8 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
         <li class="header">Opciones del módulo</li>
         <li class="active"><a href="index.php"><i class="fa fa-bars"></i> <span>Formatos Pendientes</span></a></li>
         <li><a href="bitacora_movimientos.php"><i class="fa fa-bars"></i> <span>Bitácora</span></a></li>
+        <li><a href='#' data-id = '' data-toggle = 'modal' data-target = '#modal-default' target='blank'><i class="fa fa-commenting"></i><span>Catálogo Errores</span></a></li>
+        <li><a href="lista_registros.php"><i class="fa fa-bars"></i> <span>Bitácora Errores</span></a></li>
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones de navegaci&oacute;n</li>

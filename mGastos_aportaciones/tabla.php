@@ -5,7 +5,7 @@ date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d");
 $hora=date ("h:i:s");
 //$anio = date("Y");
-$anio = '2020';
+$anio = '2022';
 
 $cadena_gastos = "SELECT id, cve_proveedor, nombre_proveedor, concepto, CONCAT('$',FORMAT(importe,2)), CONCAT('$',FORMAT(iva,2)), CONCAT('$',FORMAT(retencion,2)), CONCAT('$',FORMAT(total,2)), comentarios,tipo_pago, no_comprobante, estatus FROM gastos_aportaciones WHERE anio = '$anio' AND concepto = 'GASTO POR ANIVERSARIO'";
 
@@ -26,15 +26,16 @@ while ($row_gastos = mysqli_fetch_array($consulta_gastos)) {
 	}else{
 		$link_total = $row_gastos[7];
 	}
-	
+	$escape_concepto=mysqli_real_escape_string($conexion,$row_gastos[3]);
+	$escape_comentario=mysqli_real_escape_string($conexion,$row_gastos[8]);
 	$editar = "<center><button class='btn btn-danger' onclick='editar($row_gastos[0])'><i class='fa fa-edit fa-lg' aria-hidden='true'></i></button></center>";
 	$renglon = "
 		{
 		\"folio\": \"$link_detalle\",
 		\"cve_proveedor\": \"$row_gastos[1]\",
 		\"proveedor\": \"$row_gastos[2]\",
-		\"concepto\": \"$row_gastos[3]\",
-		\"comentarios\": \"$row_gastos[8]\",
+		\"concepto\": \"$escape_concepto\",
+		\"comentarios\": \"$escape_comentario\",
 		\"importe\": \"$row_gastos[4]\",
 		\"iva\": \"$row_gastos[5]\",
 		\"retencion\": \"$row_gastos[6]\",

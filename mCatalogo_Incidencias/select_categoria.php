@@ -9,10 +9,10 @@
 	}
 
   	if(!isset($_POST['searchTerm'])){ 
-	  $cadena_categoria = "SELECT id, nombre FROM catalogo_formatos WHERE activo = '1'";
+	  $cadena_categoria = "SELECT id, categoria FROM categorias WHERE activo = '1'";
 	}else{ 
 	  $search = $_POST['searchTerm'];   
-	  $cadena_categoria = "SELECT id, nombre FROM catalogo_formatos WHERE activo = '1' ";
+	  $cadena_categoria = "SELECT id, categoria FROM categorias WHERE activo = '1' ";
 	} 
 
 

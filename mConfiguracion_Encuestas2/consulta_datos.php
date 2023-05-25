@@ -16,14 +16,15 @@
 		</td>
 		<td>
 			<?php
-				if($row[2] == "1"){ //Cualitativo
-					echo " 	<input type='radio' name='respuesta$numero' value='Si' checked='true'>
+				if($row[2] == "1"){ //Cualitativo // checked='true'va despues de 'Si' para marcar por default
+					echo " 	<input type='radio' name='respuesta$numero' value='Si' > 
 							<label>Si</label>
 							<input type='radio' name='respuesta$numero' value='No'>
 							<label>No</label>";
 				}else if($row[2] == "2"){
+					//checked='true' va despues de '1' para marcar por default
 					echo "<label>Muy Malo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>Muy Bueno</label><br>
-					<input type='radio' name='respuesta$numero' value='1' checked='true'>
+					<input type='radio' name='respuesta$numero' value='1'>
 						  <label>1</label>
 						  <input type='radio' name='respuesta$numero' value='2'>
 						  <label>2</label>

@@ -65,8 +65,8 @@ include '../global_seguridad/verificar_sesion.php';
                         ?>
                         <option value="<?php echo $row_categoria[0] ?>"><?php echo $row_categoria[1] ?></option>
                       <?php
-                    }
-                    ?>
+                      }
+                      ?>
                     </select>
                   </div>
                 </div>
@@ -118,18 +118,12 @@ include '../global_seguridad/verificar_sesion.php';
                       <tr>
                         <th width="5%">Clave</th>
                         <th width="15%">Nombre</th>
+                        <th width="15%">Categoría</th>
                         <th>Descripcion</th>
-                        <th width="10%">Editar</th>
+                        <th width="15%">ruta</th>
+                        <th width="5%"></th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>Clave</th>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Editar</th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
@@ -170,6 +164,7 @@ include '../global_seguridad/verificar_sesion.php';
         },
         "paging": false,
         "dom": 'Bfrtip',
+        "order": false,
         buttons: [{
             extend: 'pageLength',
             text: 'Registros',
@@ -215,11 +210,18 @@ include '../global_seguridad/verificar_sesion.php';
             "data": "nombre_modulo"
           },
           {
+            "data": "categoria"
+          },
+          {
             "data": "desc_modulo"
           },
           {
-            "data": "editar_modulo"
+            "data": "ruta"
+          },
+          {
+            "data": "opciones"
           }
+
         ]
       });
     }
@@ -287,14 +289,32 @@ include '../global_seguridad/verificar_sesion.php';
         }
       });
     });
-  </script>
-  <script>
-    $(function() {
-      $('.select').select2({
-        placeholder: 'Seleccione una opcion',
-        lenguage: 'es'
-      })
-    })
+
+    $('.select').select2({
+      placeholder: 'Seleccione una opcion',
+      lenguage: 'es'
+    });
+    function activo(registro) {
+      var id_modulo = registro;
+      var url = 'activo_modulo.php';
+      $.ajax({
+        url: url,
+        type: "POST",
+        dateType: "html",
+        data: {
+          id_modulo: id_modulo
+        },
+        success: function(respuesta) {
+          if (respuesta == "ok") {
+            alertify.success("Estatus modificado correctamente");
+          }
+        },
+        error: function(xhr, status) {
+          alert("error");
+          //alert(xhr);
+        },
+      });
+    }
   </script>
 </body>
 

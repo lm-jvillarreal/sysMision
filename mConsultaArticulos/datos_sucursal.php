@@ -635,23 +635,23 @@
 		$array_datos = array(
 			$row_compras[0],//0 
 			$row_traspasos[0],//1
-			 $row_altas_inv[0],//2
-			 $row_dev_venta[0], //3
-			 $row_forza[0], //4
-			 $row_ventas[0], //5
-			 $row_sal_transf[0],//6
-			  $row_bajas[0], //7
-			  $row_dev_compra[0],//8
-			   $row_existencia[0],//9
-			    $row_inventarios[0],//10
-			     $row_ventas_na[0], //11
-			     $row_sin_afectar[0],//12
-			      $row_mermas[0],//13
-			      $row_aetrans[0],//14
-			      $row_astrans[0],//15
-			      $row_inv_ini[0],//16
-			  	$row_separado[0],//17
-			  	$row_sal_restaurante[0]);//18
+			$row_altas_inv[0],//2
+			$row_dev_venta[0], //3
+			$row_forza[0], //4
+			$row_ventas[0], //5
+			$row_sal_transf[0],//6
+			$row_bajas[0], //7
+			$row_dev_compra[0],//8
+			$row_existencia[0],//9
+			$row_inventarios[0],//10
+			$row_ventas_na[0], //11
+			$row_sin_afectar[0],//12
+			$row_mermas[0],//13
+			$row_aetrans[0],//14
+			$row_astrans[0],//15
+			$row_inv_ini[0],//16
+			$row_separado[0],//17
+			$row_sal_restaurante[0]);//18
 		$array_encode = json_encode($array_datos);
 	echo "$array_encode";
  ?>

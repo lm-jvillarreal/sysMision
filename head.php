@@ -40,6 +40,8 @@
 <link href="../plugins/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 <link rel="shortcut icon" href="../d_plantilla/dist/img/logo.png" type='image/png'>
 <link rel="stylesheet" href="../plugins/dataTableButtons/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/1.2.1/css/searchPanes.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.2/css/select.dataTables.min.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

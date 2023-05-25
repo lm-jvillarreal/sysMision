@@ -3,13 +3,16 @@
   date_default_timezone_set('America/Monterrey');
   $fecha_actual = date('Y-m-d');
 
+  $fecha_Inicio = $_POST['fecha_inicial'];
+  $fecha_Final = $_POST['fecha_final'];
+
   $filtro=(!empty($registros_propios) == '1')?"WHERE id_usuario = '$id_usuario'":"";
 
   $folio   = "";
   $cadena  = "";
   $cadena2 = "";
 
-  $cadena  = "SELECT title,DATE_FORMAT(start, '%d-%m-%Y'),DATE_FORMAT(end, '%d-%m-%Y'),start,end,id,folio FROM agenda ". $filtro." ORDER BY id DESC";
+  $cadena  = "SELECT title,DATE_FORMAT(start, '%d-%m-%Y'),DATE_FORMAT(end, '%d-%m-%Y'),start,end,id,folio FROM agenda ". $filtro." AND fecha BETWEEN '$fecha_Inicio' AND '$fecha_Final' ORDER BY id DESC";
   
   $consulta = mysqli_query($conexion, $cadena);
 

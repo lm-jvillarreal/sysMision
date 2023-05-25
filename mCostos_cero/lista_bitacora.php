@@ -34,11 +34,12 @@ while ($row_codigos = mysqli_fetch_array($consulta_codigos)) {
 	oci_execute($consulta_pv);
     $row_pv = oci_fetch_row($consulta_pv);
     $precio_venta = number_format($row_pv[0],2,'.',' ');
+    $esc_descripcion=mysqli_real_escape_string($conexion,$row_codigos[2]);
 	$renglon = "
 		{
             \"id\": \"$editar\",
             \"codigo\": \"$link_detalle\",
-            \"descripcion\": \"$row_codigos[2]\",
+            \"descripcion\": \"$esc_descripcion\",
             \"costo\": \"$row_codigos[3]\",
             \"sucursal\": \"$row_codigos[4]\",
             \"pv\": \"$precio_venta\",

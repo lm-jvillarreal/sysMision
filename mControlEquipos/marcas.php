@@ -57,6 +57,8 @@
                       <tr>
                         <th width="5%">#</th>
                         <th>Nombre</th>
+                        <th>Agregar</th>
+                        <th>Editar</th>
                         <th width="20%">Eliminar</th>
                       </tr>
                     </thead>
@@ -100,26 +102,60 @@
 <!-- Page script -->
 <script>
   function estilo_tablas() {
-    $('#lista_marcas').dataTable().fnDestroy();
-    $('#lista_marcas').DataTable( {
-      'language': {"url": "../plugins/DataTables/Spanish.json"},
-        "paging":   false,
-        "dom": 'Bfrtip',
-        "buttons": [
-          'copy', 'csv', 'excel', 'pdf', 'print'
+      $('#lista_marcas').dataTable().fnDestroy();
+      $('#lista_marcas').DataTable( {
+        'language': {"url": "../plugins/DataTables/Spanish.json"},
+          "paging":   false,
+          "dom": 'Bfrtip',
+        buttons: [{
+            extend: 'pageLength',
+            text: 'Registros',
+            className: 'btn btn-default'
+          },
+          {
+            extend: 'excel',
+            text: 'Exportar a Excel',
+            className: 'btn btn-default',
+            title: 'Control Equipos',
+            exportOptions: {
+              columns: ':visible'
+            }
+          },
+          {
+            extend: 'pdf',
+            text: 'Exportar a PDF',
+            className: 'btn btn-default',
+            title: 'Control Equipos',
+            exportOptions: {
+              columns: ':visible'
+            }
+          },
+          {
+            extend: 'copy',
+            text: 'Copiar registros',
+            className: 'btn btn-default',
+            copyTitle: 'Ajouté au presse-papiers',
+            copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+            copySuccess: {
+              _: '%d lignes copiées',
+              1: '1 ligne copiée'
+            }
+          }
         ],
-      "ajax": {
-        "type": "POST",
-        "url": "tabla_marcas.php",
-        "dataSrc": ""
-      },
-      "columns": [
-        { "data": "#" },
-        { "data": "Nombre" },
-        { "data": "Eliminar" },
-      ]
-    });
-  }  
+        "ajax": {
+          "type": "POST",
+          "url": "tabla_modelosv2.php",
+          "dataSrc": ""
+        },
+        "columns": [
+          { "data": "#","width":"3%" },
+          { "data": "Nombre" },
+          { "data": "Agregar" },
+          { "data": "Editar","width":"3%" },
+          { "data": "Eliminar","width":"3%" },
+        ]
+      });
+    }
   $(function (){
    estilo_tablas();
   })

@@ -107,7 +107,7 @@ include '../global_seguridad/verificar_sesion.php';
                       <table id="lista_articulos" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                           <tr>
-                            <th width="12%">Departamento</th>
+                            <th width="10%">Departamento</th>
                             <th width="8%">Código</th>
                             <th width="15%">Código</th>
                             <th>Descripción</th>
@@ -116,6 +116,7 @@ include '../global_seguridad/verificar_sesion.php';
                             <th width="5%">C.U.</th>
                             <th width="5%">Imp.</th>
                             <th width="5%">Total</th>
+                            <th width='5%'></th>
                           </tr>
                         </thead>
                       </table>
@@ -209,6 +210,15 @@ include '../global_seguridad/verificar_sesion.php';
             }
           },
           {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
             extend: 'copy',
             text: 'Copiar registros',
             className: 'btn btn-default',
@@ -265,6 +275,9 @@ include '../global_seguridad/verificar_sesion.php';
           },
           {
             "data": "total"
+          },
+          {
+            "data": "opciones"
           }
         ]
       });
@@ -381,7 +394,11 @@ include '../global_seguridad/verificar_sesion.php';
             depto: depto
           },
           success: function(respuesta) {
-            alertify.success("El código ha sido registrado");
+            if (respuesta == "ya_existe") {
+              alertify.error("El artículo ya existe en el catálogo");
+            } else {
+              alertify.success("El artículo ha sido registrado");
+            }
           },
           error: function(xhr, status) {
             alert("error");
@@ -391,7 +408,42 @@ include '../global_seguridad/verificar_sesion.php';
         cargar_tabla();
       }
       return false;
-    })
+    });
+
+    function eliminar(id_registro) {
+      swal({
+          title: "¿Estás seguro de eliminar el registro?",
+          text: "Esta acción es permanente y no puede ser revertida",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+              url: "eliminar_registro.php",
+              type: "POST",
+              dateType: "html",
+              data: {
+                id_registro: id_registro
+              },
+              success: function(respuesta) {
+                swal("El registro ha sido eliminado correctamente", {
+                  icon: "success",
+                });
+                cargar_tabla();
+              },
+              error: function(xhr, status) {
+                alert("error");
+                //alert(xhr);
+              },
+            });
+
+          } else {
+            swal("La acción eliminar se ha cancelado");
+          }
+        });
+    }
   </script>
 </body>
 

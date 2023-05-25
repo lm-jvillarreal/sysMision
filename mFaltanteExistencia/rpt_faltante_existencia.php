@@ -14,29 +14,45 @@ DISTINCT(renglon.ARTC_ARTICULO),a.ARTC_DESCRIPCION,
 (SELECT SUM(a.RMON_CANTSURTIDA) 
     FROM INV_RENGLONES_MOVIMIENTOS a 
     WHERE a.artc_articulo = renglon.artc_articulo 
-    AND a.RMON_ESTATUS='2' AND a.MODC_TIPOMOV = 'SALXVE' AND ALMN_ALMACEN = '$sucursal') AS CANTIDAD,
+    AND (a.RMON_ESTATUS='1' OR a.RMON_ESTATUS='2') AND a.MODC_TIPOMOV = 'SALXVE' AND ALMN_ALMACEN = '$sucursal') AS CANTIDAD,
 (SELECT spin_articulos.fn_existencia_disponible_todos(13, NULL, NULL, 1, 1, $sucursal, renglon.ARTC_ARTICULO)FROM dual) AS Existencia,
 (SELECT FAMC_DESCRIPCION FROM COM_FAMILIAS WHERE FAM.FAMC_FAMILIAPADRE = COM_FAMILIAS.FAMC_FAMILIA AND ROWNUM =1) AS Departamento,
 (SELECT SUM(a.RMON_CANTSURTIDA) 
     FROM INV_RENGLONES_MOVIMIENTOS a 
     WHERE a.artc_articulo = renglon.artc_articulo 
-    AND a.RMON_ESTATUS='2' AND a.MODC_TIPOMOV = 'ENTCOC' AND ALMN_ALMACEN = '$sucursal') AS ENTCOC,
+    AND (a.RMON_ESTATUS='1' OR a.RMON_ESTATUS='2') AND a.MODC_TIPOMOV = 'ENTCOC' AND ALMN_ALMACEN = '$sucursal') AS ENTCOC,
 (SELECT SUM(a.RMON_CANTSURTIDA) 
     FROM INV_RENGLONES_MOVIMIENTOS a 
     WHERE a.artc_articulo = renglon.artc_articulo 
-    AND a.RMON_ESTATUS='2' AND a.MODC_TIPOMOV = 'ENTSOC' AND ALMN_ALMACEN = '$sucursal') AS ENTSOC,
+    AND (a.RMON_ESTATUS='1' OR a.RMON_ESTATUS='2') AND a.MODC_TIPOMOV = 'ENTSOC' AND ALMN_ALMACEN = '$sucursal') AS ENTSOC,
 (SELECT SUM(a.RMON_CANTSURTIDA) 
     FROM INV_RENGLONES_MOVIMIENTOS a 
     WHERE a.artc_articulo = renglon.artc_articulo 
-    AND a.RMON_ESTATUS='2' AND a.MODC_TIPOMOV = 'ENTTRA' AND ALMN_ALMACEN = '$sucursal') AS ENTTRA,
+    AND (a.RMON_ESTATUS='1' OR a.RMON_ESTATUS='2') AND a.MODC_TIPOMOV = 'ENTTRA' AND ALMN_ALMACEN = '$sucursal') AS ENTTRA,
 (SELECT SUM(a.RMON_CANTSURTIDA) 
     FROM INV_RENGLONES_MOVIMIENTOS a 
     WHERE a.artc_articulo = renglon.artc_articulo 
-    AND a.RMON_ESTATUS='2' AND a.MODC_TIPOMOV = 'ETRANS' AND ALMN_ALMACEN = '$sucursal') AS ETRANS
+    AND (a.RMON_ESTATUS='1' OR a.RMON_ESTATUS='2') AND a.MODC_TIPOMOV = 'ETRANS' AND ALMN_ALMACEN = '$sucursal') AS ETRANS,
+		(
+		SELECT
+			NVL( SUM( a.RMON_CANTSURTIDA ), 0 ) 
+		FROM
+			INV_RENGLONES_MOVIMIENTOS a 
+			INNER JOIN INV_MOVIMIENTOS m
+			ON a.MODC_TIPOMOV=m.MODC_TIPOMOV
+			and a.MODN_FOLIO=m.MODN_FOLIO
+			and a.ALMN_ALMACEN=m.ALMN_ALMACEN
+		WHERE
+			a.MODC_TIPOMOV='SIROTA'
+			and a.ALMN_ALMACEN='1'
+			AND a.ARTC_ARTICULO=renglon.artc_articulo 
+			AND (a.RMON_ESTATUS='2' OR a.RMON_ESTATUS='3')
+			and m.MOVN_ESTATUS='2'
+	) AS SIROTA
 FROM  INV_RENGLONES_MOVIMIENTOS renglon 
 INNER JOIN COM_ARTICULOS a  on a.artc_articulo = renglon.artc_articulo
 INNER JOIN COM_FAMILIAS FAM ON FAM.FAMC_FAMILIA = a.ARTC_FAMILIA
-WHERE renglon.RMON_ESTATUS = '2' AND renglon.MODC_TIPOMOV = 'SALXVE' AND renglon.ALMN_ALMACEN = '$sucursal'
+WHERE (renglon.RMON_ESTATUS='1' OR renglon.RMON_ESTATUS = '2') AND renglon.MODC_TIPOMOV = 'SALXVE' AND renglon.ALMN_ALMACEN = '$sucursal'
 ORDER BY renglon.ARTC_ARTICULO ASC";
 							
 							//echo "$cadena_consulta";
@@ -63,9 +79,9 @@ oci_execute($consulta_principal);
 	// // Set document properties
 	$objPHPExcel->getProperties()->setCreator("Josué Villarreal")
 								 ->setLastModifiedBy("La Misión Supermercados")
-								 ->setTitle("Reporte detalle de compras")
-								 ->setSubject("Reporte de compras")
-								 ->setDescription("Reporte de compras")
+								 ->setTitle("Reporte Movimientos")
+								 ->setSubject("Reporte de Inventarios")
+								 ->setDescription("Reporte de Inventarios")
 								 ->setKeywords("office PHPExcel php")
 								 ->setCategory("Reportes");
 
@@ -81,7 +97,8 @@ oci_execute($consulta_principal);
 	            ->setCellValue('G1', 'ENTSOC')
 	            ->setCellValue('H1', 'ENTTRA')
 	            ->setCellValue('I1', 'ETRANS')
-	            ->setCellValue('J1', 'Departamento');
+							->setCellValue('J1', 'SIROTA')
+	            ->setCellValue('K1', 'Departamento');
 
 
 	$fila = 2;
@@ -100,7 +117,8 @@ oci_execute($consulta_principal);
 	            ->setCellValue('G'.$fila, $row_principal[6])
 	            ->setCellValue('H'.$fila, $row_principal[7])
 	            ->setCellValue('I'.$fila, $row_principal[8])
-	            ->setCellValue('J'.$fila, $row_principal[4]);
+							->setCellValue('J'.$fila, $row_principal[9])
+	            ->setCellValue('k'.$fila, $row_principal[4]);
 
          $objPHPExcel->getActiveSheet()
     		->getColumnDimension('A')
@@ -142,17 +160,21 @@ oci_execute($consulta_principal);
     		->getColumnDimension('J')
     		->setAutoSize(true);
 
+			$objPHPExcel->getActiveSheet()
+    		->getColumnDimension('K')
+    		->setAutoSize(true);
+
 	$fila = $fila + 1;
 	}
 	//Rename worksheet
-	$objPHPExcel->getActiveSheet()->setTitle('Detalle de compras');
+	$objPHPExcel->getActiveSheet()->setTitle('Reporte de Inventarios');
 
 	// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 	$objPHPExcel->setActiveSheetIndex(0);
 
 	// Redirect output to a client’s web browser (Excel2007)
 	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-	header('Content-Disposition: attachment;filename="Estado de resultados" '.$fecha.' ".xlsx"');
+	header('Content-Disposition: attachment;filename="Movimientos" '.$fecha.' ".xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');

@@ -1,8 +1,5 @@
 <?php
-		//include 'conexion_servidor.php';
 		include '../global_seguridad/verificar_sesion.php';
-		session_name("login_supsys"); 
-		session_start(); 
 		date_default_timezone_set('America/Monterrey');
 
 		$id_caja = $_POST['id_caja'];
@@ -18,8 +15,6 @@
 				WHERE
 					id_caja = '$id_caja'";
       	$exSql = mysqli_query($conexion, $sql);
-
-
  ?>
 	<script>
 		$(document).ready(function() {
@@ -29,7 +24,7 @@
 					[[-1], [ "All"]],
 				
 				 "language": {
-				"url": "../assets/js/Spanish.json"
+				"url": "../plugins/DataTables/Spanish.json"
 				 }
 			});
 		});

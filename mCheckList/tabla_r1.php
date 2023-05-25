@@ -22,7 +22,8 @@
   # 24 horas * 60 minutos por hora * 60 segundos por minuto
   $dia = 86400;
   while($tiempoInicio <= $tiempoFin){
-    $fechaActual = date("Y-m-d", $tiempoInicio);
+    //hora mundial para evitar el cambio de horario
+    $fechaActual = gmdate("Y-m-d", $tiempoInicio);
     #Verificacion de Usuario
     $cadena = mysqli_query($conexion,"SELECT resultados_checklist.id,(
                                         SELECT CONCAT( personas.nombre, ' ', personas.ap_paterno, ' ', personas.ap_materno ) 

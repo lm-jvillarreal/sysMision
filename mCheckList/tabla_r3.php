@@ -15,20 +15,21 @@
     echo "[]";
     return false;
   }
-
-  $cadena = mysqli_query($conexion,"SELECT
-                                      detalle_checklist.nombre,
-                                      sub_departamentos.nombre,
-                                      AVG(detalle_resultados_checklist.calificacion)
-                                      FROM detalle_resultados_checklist 
-                                      LEFT JOIN detalle_checklist ON detalle_resultados_checklist.id_actividad = detalle_checklist.id
-                                      LEFT JOIN sub_departamentos ON sub_departamentos.id = detalle_checklist.id_subdepartamento
-                                      INNER JOIN resultados_checklist ON resultados_checklist.id = detalle_resultados_checklist.id_resultado
-                                    WHERE detalle_resultados_checklist.fecha BETWEEN CAST('$fecha1' AS DATE)
-                                              AND CAST('$fecha2' AS DATE)
-                                    AND detalle_checklist.id_checklist = '$checklist'
-                                    AND resultados_checklist.id_sucursal = '$sucursal'
-                                    GROUP BY  id_actividad");
+  $cadena="SELECT
+              detalle_checklist.nombre,
+              sub_departamentos.nombre,
+              AVG(detalle_resultados_checklist.calificacion)
+              FROM detalle_resultados_checklist
+              LEFT JOIN detalle_checklist ON detalle_resultados_checklist.id_actividad = detalle_checklist.id
+              LEFT JOIN sub_departamentos ON sub_departamentos.id = detalle_checklist.id_subdepartamento
+              INNER JOIN resultados_checklist ON resultados_checklist.id = detalle_resultados_checklist.id_resultado
+            WHERE detalle_resultados_checklist.fecha BETWEEN CAST('$fecha1' AS DATE)
+                      AND CAST('$fecha2' AS DATE)
+            AND detalle_checklist.id_checklist = '$checklist'
+            AND resultados_checklist.id_sucursal = '$sucursal'
+            GROUP BY  id_actividad";
+  
+  $cadena = mysqli_query($conexion,$cadena);
 
   while ($row = mysqli_fetch_array($cadena)){
     

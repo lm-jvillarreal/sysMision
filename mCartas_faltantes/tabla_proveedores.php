@@ -20,18 +20,19 @@
 
     $cadena = mysqli_query($conexion,"SELECT
   (SELECT proveedores.proveedor FROM proveedores WHERE proveedores.id = carta_faltante.id_proveedor ) AS Proveedor,count( * ) AS CantidadCartas,SUM(total_diferencia) AS Monto
-FROM carta_faltante WHERE activo = '2' AND fecha_afectacion BETWEEN CAST('$fecha1' AS DATE) AND CAST('$fecha2' AS DATE)".$filtro_sucursal.$filtro_proveedor."GROUP BY carta_faltante.id_proveedor ORDER BY CantidadCartas DESC");
+  FROM carta_faltante WHERE activo = '2' AND fecha_afectacion BETWEEN CAST('$fecha1' AS DATE) AND CAST('$fecha2' AS DATE)".$filtro_sucursal.$filtro_proveedor."GROUP BY carta_faltante.id_proveedor ORDER BY CantidadCartas DESC");
                         
 
     $cuerpo      = "";
     $numero      = 1;
   while ($row = mysqli_fetch_array($cadena)) 
   {
+    $escape_prov=mysqli_real_escape_string($conexion,$row[0]);
     $monto     = number_format($row[2], 0, '.', ',');
     $renglon = "
       {
       \"#\": \"$numero\",
-      \"Proveedor\": \"$row[0]\",
+      \"Proveedor\": \"$escape_prov\",
       \"Cartas Faltantes\": \"$row[1]\",
       \"Monto Total\": \"$ $monto\"
       },";

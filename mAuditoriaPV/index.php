@@ -50,6 +50,8 @@ include '../global_seguridad/verificar_sesion.php';
                       <option value="REV. TEO. VS FIS.">REV. TEO. VS FIS.</option>
                       <option value="REV. COSTO">REV. COSTO</option>
                       <option value="MERCADEO">MERCADEO</option>
+                      <option value="OK">OK</option>
+                      <option value="X">X</option>
                     </select>
                   </div>
                 </div>

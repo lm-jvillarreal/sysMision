@@ -13,6 +13,7 @@ if (!empty($cantidad)) {
 	$row_conteo = mysqli_fetch_array($consulta_conteo);
 
 	if ($cantidad<$row_conteo[0]) {
+		$cantidad=$row_conteo[0]-$cantidad;
 		$cadena_descontar = "UPDATE cambios SET cantidad = '$cantidad' WHERE id = '$id_cambio'";
 		$consulta_descontar = mysqli_query($conexion, $cadena_descontar);
 		echo "descuento";

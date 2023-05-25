@@ -1,7 +1,7 @@
 <?php
 include '../global_seguridad/verificar_sesion.php';
 
-if(!isset($_POST['searchTerm'])){ 
+if(!isset($_POST['searchTerm'])){
   $cadena_catalogo = "SELECT u.id, 
                       (SELECT CONCAT(nombre,' ',ap_paterno,' ',ap_materno) FROM personas WHERE id = u.id_persona)
                       FROM detalle_usuario as d INNER JOIN usuarios as u ON d.id_usuario = u.id

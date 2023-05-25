@@ -25,6 +25,10 @@ switch ($sucursal) {
   case '5':
     $nombre_sucursal = 'Petaca';
     break;
+  
+  case '6':
+    $nombre_sucursal = 'Montemorelos';
+    break;
   default:
     $nombre_sucursal = '';
     break;

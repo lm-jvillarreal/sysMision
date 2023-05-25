@@ -7,7 +7,7 @@ date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d");
 $hora=date ("h:i:s");
 //$anio = date("Y");
-$anio = '2020';
+$anio = '2022';
 
 $fecha_afectacion = $_POST['fecha_afectacion'];
 $movimiento = $_POST['movimiento'];

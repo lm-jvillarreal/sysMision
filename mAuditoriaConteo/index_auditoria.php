@@ -54,6 +54,16 @@ $hora = date("h:i:s");
             <h3 class="box-title">Inventario | Auditoria</h3>
           </div>
           <div class="box-body">
+            <form>
+              <div class="row">
+                <div class="col-lg-4">
+                  <a href="#" onclick="javascript:AutorizarTodo()" class="btn btn-danger">Autorizar Todo</a>
+                </div>
+                <div class="col-lg-4">
+                  <a href="#" class="btn btn-danger" onclick="javascript:EliminarTodo()">Eliminar Todo</a>
+                </div>
+              </div>
+            </form>
             <div id="contenedor_tabla">
             </div>
           </div>

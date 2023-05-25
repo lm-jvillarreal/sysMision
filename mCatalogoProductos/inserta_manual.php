@@ -8,7 +8,14 @@ $codigo = $_POST['codigo'];
 $um = $_POST['unidad_medida'];
 $depto = $_POST['depto'];
 
-$cadenaInsertar = "INSERT INTO cp_productos (departamento, artc_articulo, um, fecha, hora, activo, usuario)VALUES('$depto','$codigo', '$um', '$fecha', '$hora', '1', '$id_usuario')";
-$insertar = mysqli_query($conexion, $cadenaInsertar);
-echo "ok";
+$cadenaValidar="SELECT COUNT(*) FROM cp_productos WHERE artc_articulo='$codigo'";
+$consultaValidar=mysqli_query($conexion,$cadenaValidar);
+$rowValidar=mysqli_fetch_array($consultaValidar);
+if($rowValidar[0]>0){
+  echo "ya_existe";
+}else{
+  $cadenaInsertar = "INSERT INTO cp_productos (departamento, artc_articulo, um, fecha, hora, activo, usuario)VALUES('$depto','$codigo', '$um', '$fecha', '$hora', '1', '$id_usuario')";
+  $insertar = mysqli_query($conexion, $cadenaInsertar);
+  echo "ok";
+}
 ?>

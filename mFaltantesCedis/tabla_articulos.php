@@ -3,7 +3,7 @@ include '../global_seguridad/verificar_sesion.php';
 include '../global_settings/conexion_oracle.php';
 
 $fecha_i = date("Y-m-d",strtotime($fecha."- 1 days"));
-$fecha_f = date("Y-m-d",strtotime($fecha."- 16 days"));
+$fecha_f = date("Y-m-d",strtotime($fecha."- 17 days"));
 $folio_i = str_replace("-","",$fecha_i);
 $folio_f = str_replace("-","",$fecha_f);
 
@@ -19,7 +19,8 @@ $cadenaPrincipal = "SELECT
                       ROUND( INV_ARTICULOS_DETALLE.ARTN_COSTO_PROMEDIO, 2) AS C_PROM,
                       NVL((SELECT AREN_CANTIDAD FROM INV_ARTICULOS_EMPAQUE WHERE ARTC_ARTICULO = INV_ARTICULOS_DETALLE.ARTC_ARTICULO AND ROWNUM = 1),0) AS U_EMP,
                       INV_ARTICULOS_DETALLE.artc_unimedida_compra,
-                      (SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '99', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS CEDIS
+                      (SELECT spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, '99', INV_ARTICULOS_DETALLE.ARTC_ARTICULO ) FROM dual ) AS CEDIS,
+                      (SELECT INVN_MINIMO FROM INV_INVENTARIO  WHERE  ARTC_ARTICULO=INV_ARTICULOS_DETALLE.ARTC_ARTICULO AND ALMN_ALMACEN='$id_sede') AS SM
                     FROM
                     INV_ARTICULOS_DETALLE 
                     INNER JOIN COM_ARTICULOSLISTAPRECIOS ON INV_ARTICULOS_DETALLE.ARTC_ARTICULO = COM_ARTICULOSLISTAPRECIOS.ARTC_ARTICULO
@@ -33,7 +34,11 @@ oci_execute($consultaPrincipal);
 $cuerpo ="";
 $conteo=0;
 while($row_articulo = oci_fetch_row($consultaPrincipal)){
-  if($row_articulo[9]=='0'){
+  //Validar descatalogados
+  $cadenaValidar="SELECT COUNT(ID) FROM ARTC_DESCATALOGADOS WHERE ARTC_ARTICULO='$row_articulo[0]' AND ID_SUCURSAL='$id_sede'";
+  $validar=mysqli_query($conexion,$cadenaValidar);
+  $rowValidar=mysqli_fetch_array($validar);
+  if($row_articulo[9]=='0' || $rowValidar[0]!='0'){
     $renglon="";
   }else{
   $conteo=$conteo+1;
@@ -60,7 +65,7 @@ while($row_articulo = oci_fetch_row($consultaPrincipal)){
   $consultaVentas = oci_parse($conexion_central, $cadenaVentas);
   oci_execute($consultaVentas);
   $row_ventas = oci_fetch_row($consultaVentas);
-  $faltante = $row_ventas[0] - $row_articulo[5];
+  $faltante = ($row_ventas[0] + $row_articulo[10]) - $row_articulo[5];
   if($row_articulo[7]=='0'){
     $faltante_ue = "0";
   }else{
@@ -70,7 +75,7 @@ while($row_articulo = oci_fetch_row($consultaPrincipal)){
   if($row_articulo[5]==0 || $row_ventas[0]==0){
     $dias_inv=0;
   }else{
-    $dias_inv = $row_articulo[5]/($row_ventas[0]/15);
+    $dias_inv = $row_articulo[5]/($row_ventas[0]/17);
     $dias_inv=round($dias_inv,2);
   }
   if($faltante_ue<0){
@@ -78,8 +83,22 @@ while($row_articulo = oci_fetch_row($consultaPrincipal)){
   }else{
     $faltante_pedido=$faltante_ue;
   }
-  $sugerido = "<input type='hidden' id='sugerido_$conteo' value='$faltante' readonly='true' class='form-control'>";
-  $pedido="<div class='input-group'><span class='input-group-addon'><input type='checkbox' id='$conteo' name='articulos' value='$row_articulo[0]' onclick='pedido($row_articulo[0],$conteo)'></span><input type='number' min='0' step='1' id='cantidad_$conteo' value='$faltante' readonly='true' class='form-control'></div>";
+
+  //Si ventas es menor a teórico-sucursal || (ventas y teórico son cero) || teórico-sucursal es igual a ventas || teórico-cedis es menor a sugerido
+  if($row_ventas[0]<$row_articulo[5] || ($row_ventas[0]==0 && $row_articulo[5]==0) || $row_ventas[0]==$row_articulo[5] || ($row_ventas[0]>0 && $row_articulo[5]==0)){
+    $sugerido = "<input type='hidden' id='sugerido_$conteo' value='$faltante' readonly='true' class='form-control'>";
+    $pedido="<div class='input-group'><span class='input-group-addon'><input type='checkbox' id='$conteo' name='articulos' value='$row_articulo[0]' onclick='pedido($row_articulo[0],$conteo)'></span><input type='number' min='0' step='1' id='cantidad_$conteo' value='$faltante' readonly='true' class='form-control'></div>";
+  }elseif($row_articulo[9]<$faltante){
+    $sugerido = "<input type='hidden' id='sugerido_$conteo' value='$faltante' readonly='true' class='form-control'>";
+    $pedido="<div class='input-group'><span class='input-group-addon'><input type='checkbox' id='$conteo' checked='true' disabled='true' name='articulos' value='$row_articulo[0]' onclick='pedido($row_articulo[0],$conteo)'></span><input type='number' min='0' step='1' id='cantidad_$conteo' value='$row_articulo[9]' readonly='true' class='form-control'></div>";
+  }
+  else{
+    $sugerido = "<input type='hidden' id='sugerido_$conteo' value='$faltante' readonly='true' class='form-control'>";
+    $pedido="<div class='input-group'><span class='input-group-addon'><input type='checkbox' id='$conteo' checked='true' disabled='true' name='articulos' value='$row_articulo[0]' onclick='pedido($row_articulo[0],$conteo)'></span><input type='number' min='0' step='1' id='cantidad_$conteo' value='$faltante' readonly='true' class='form-control'></div>";
+  }
+
+  //$sugerido = "<input type='hidden' id='sugerido_$conteo' value='$faltante' readonly='true' class='form-control'>";
+  //$pedido="<div class='input-group'><span class='input-group-addon'><input type='checkbox' id='$conteo' name='articulos' value='$row_articulo[0]' onclick='pedido($row_articulo[0],$conteo)'></span><input type='number' min='0' step='1' id='cantidad_$conteo' value='$faltante' readonly='true' class='form-control'></div>";
   
   $cadenaFaltantePV="SELECT * FROM faltantes_pasven where sucursal='$id_sede' and cve_articulo='$row_articulo[0]' and (estatus='1' or estatus='3')
                     AND DATE(fecha_captura) BETWEEN DATE_SUB(NOW(),INTERVAL 7 DAY) AND DATE(NOW())";
@@ -92,6 +111,13 @@ while($row_articulo = oci_fetch_row($consultaPrincipal)){
     $descripcion=$descripcion;
   }
 
+  /*$cadenaMinimo = "";
+  $consultaMinimo = oci_parse($conexion_central, $cadenaMinimo);
+  oci_execute($consultaMinimo);
+  $row_minimo = oci_fetch_row($consultaMinimo);
+  $stockMinimo = $row_minimo[0];
+  $pedido=$pedido+$stockMinimo;*/
+
   $renglon="
   {
     \"codigo\":\"$row_articulo[0]\",
@@ -99,6 +125,7 @@ while($row_articulo = oci_fetch_row($consultaPrincipal)){
     \"departamento\":\"$escape_depto\",
     \"unidad_compra\":\"$row_articulo[8]\",
     \"unidad_empaque\":\"$row_articulo[7]\",
+    \"stock_minimo\":\"$row_articulo[10]\",
     \"ventas\":\"$row_ventas[0]\",
     \"teorico\":\"$row_articulo[5]\",
     \"cedis\":\"$row_articulo[9]\",

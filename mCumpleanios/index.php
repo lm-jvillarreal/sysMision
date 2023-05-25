@@ -72,7 +72,8 @@ $mes_letra = nombremes($num_mes);
   <!-- Page script -->
   <script>
     function llenar() {
-      var url = 'http://200.1.1.197/SMPruebas/cumple_empleados.php';
+      var url = '../cumple_empleados.php';
+      //http://200.1.1.197/SMPruebas/
       $.ajax({
         url: url,
         type: "POST",

@@ -44,12 +44,13 @@ if($row_cartas[8]=="1"){
 	$ver_pdf = "";
 	$totales = "";
 }
+	$escape_desc=mysqli_real_escape_string($conexion,$row_cartas[5]);
 	$renglon = "
 		{
 		\"folio\": \"$row_cartas[0]\",
 	   \"no_orden\": \"$row_cartas[2]\",
 	   \"clave_proveedor\": \"$row_cartas[4]\",
-	   \"proveedor\": \"$row_cartas[5]\",
+	   \"proveedor\": \"$escape_desc\",
 	   \"fecha_elab\": \"$row_cartas[9]\",
 	   \"no_factura\": \"$row_cartas[6]\",
 	   \"sucursal\": \"$row_cartas[7]\",

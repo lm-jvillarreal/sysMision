@@ -12,7 +12,7 @@
 		<div class="form-group">
 			<!-- <label for="image">Nueva imagen</label> -->
 	        <input type="file" class="form-control-file" name="image" id="image">
-	        <input type="hidden" class="form-control-file" name="id_codigo" id="id_codigo">
+	        <input type="text" class="form-control-file" name="id_codigo" id="id_codigo">
 	    </div>
       </div>
       <div class="modal-footer">

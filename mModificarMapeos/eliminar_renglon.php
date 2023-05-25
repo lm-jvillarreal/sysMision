@@ -5,7 +5,7 @@
 	include '../global_seguridad/verificar_sesion.php';
 	$id = $_POST['id'];
 
-	$qry = "DELETE FROM inv_detalle_mapeo WHERE id = $id ";
+	$qry = "DELETE FROM inv_detalle_mapeo WHERE id = $id";
 	
 	//echo "$sql";
 	$exSql = mysqli_query($conexion, $qry);

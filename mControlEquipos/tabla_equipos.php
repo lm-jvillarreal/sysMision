@@ -1,6 +1,7 @@
 <?php 
   include '../global_seguridad/verificar_sesion.php';
   $filtro=(!empty($registros_propios) == '1')?"AND control_equipos.id_usuario = '$id_usuario'":"";
+  $datos = array();
 
   if(!empty($_POST['id_sucursal'])){
     $id_sucursal     = $_POST['id_sucursal'];
@@ -57,29 +58,21 @@
     $boton_editar   = "<a class='btn btn-warning' onclick='editar_registro($row[0])'><i class='fa fa-edit fa-lg' aria-hidden='true'></i></a>";
     $boton_falla    = "<a class='btn btn-".$color."' onclick='reporte($row[0])'><i class='fa fa-clipboard fa-lg' aria-hidden='true'></i></a>";
 
-    $renglon = "
-      {
-      \"#\": \"$numero\",
-      \"Marca\": \"$row[1]\",
-      \"Modelo\": \"$row[2]\",
-      \"NS\": \"$row[4]\",
-      \"Llave\": \"$row[5]\",
-      \"Caja\": \"$row[3]\",
-      \"Afiliacion\": \"$row[6]\",
-      \"Tipo\": \"$row[7]\",
-      \"Editar\": \"$boton_editar\",
-      \"Eliminar\": \"$boton_eliminar\",
-      \"Reporte Falla\": \"$boton_falla\"
-      },";
-    $cuerpo = $cuerpo.$renglon;
-    $numero ++;
-    $color  ="";
+    array_push($datos,array(
+      '#'=>$numero,
+      'Marca'=>$row[1],
+      'Modelo'=>$row[2],
+      'NS'=>$row[4],
+      'Llave'=>$row[5],
+      'Caja'=>$row[3],
+      'Afiliacion'=>$row[6],
+      'Tipo'=>$row[7],
+      'Editar'=>$boton_editar,
+      'Eliminar'=>$boton_eliminar,
+      'Reporte Falla'=>$boton_falla
+    ));
+     $numero ++;
   }
-  $cuerpo2 = trim($cuerpo,','); ///Quitarle la coma
-  $tabla = "
-    ["
-    .$cuerpo2.
-    "]
-    ";
-  echo $tabla;
+
+  echo utf8_encode(json_encode($datos));
 ?>

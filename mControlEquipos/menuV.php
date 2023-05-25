@@ -33,14 +33,16 @@
   </div>
   <ul class="sidebar-menu" data-widget="tree">
     <li class="header">Opciones del módulo</li>
-    <li class="active"><a href="index.php"><i class="fa fa-desktop"></i> <span>Registro Equipos</span></a></li>
-    <li><a href='#' data-id = '1' data-toggle = 'modal' data-target = '#modal-default2' target='blank'><i class="fa fa-tags"></i><span>Registro Marcas</span></a></li>
-    <li><a href='#' data-id = '3' data-toggle = 'modal' data-target = '#modal-default2' target='blank'><i class="fa fa-tag"></i><span>Registro Modelos</span></a></li>
-    <li><a href='#' data-id = '2' data-toggle = 'modal' data-target = '#modal-default2' target='blank'><i class="fa fa-building"></i><span>Registro de Cajas</span></a></li>
+    <!-- <li class="active"><a href="index.php"><i class="fa fa-desktop"></i> <span>Registro Equipos</span></a></li> -->
+    <li class=""><a href="index.php"><i class="fa fa-credit-card"></i> <span>Registro Terminales</span></a></li>
+    <li class=""><a href="scanner.php"><i class="fa fa-paw"></i> <span>Registro Escáner</span></a></li>
+    <li class=""><a href="ups.php"><i class="fa fa-desktop"></i> <span>Registro UPS</span></a></li>
+    <li class=""><a href="marcas2.php"><i class="fa fa-google-wallet"></i> <span>Catálogo Marcas</span></a></li>
+    <li><a href='#' data-id = '2' data-toggle = 'modal' data-target = '#modal-defaultcajas' target='blank'><i class="fa fa-building"></i><span>Registro de Cajas</span></a></li>
     <li class=""><a href="equipos_caja.php"><i class="fa fa-desktop"></i> <span>Equipos por Caja</span></a></li>
     <li class=""><a href="c_equipos.php"><i class="fa fa-desktop"></i> <span>Catálogo de Equipos</span></a></li>
     <li class=""><a href="fallas_equipo.php"><i class="fa fa-wrench"></i> <span>Fallas de Equipos</span></a></li>
-    <li class=""><a href="ups.php"><i class="fa fa-desktop"></i> <span>Registro UPS</span></a></li>
+    
   </ul>
   <ul class="sidebar-menu" data-widget="tree">
     <li class="header">Opciones de navegaci&oacute;n</li>

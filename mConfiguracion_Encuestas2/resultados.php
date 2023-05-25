@@ -35,7 +35,7 @@
         <div class="box-body">
           <div class="row">
             <div class="col-md-12">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label>*Selecccione una Encuesta</label>
                 <select id="encuestas" name="encuestas" style="width: 100%"></select>
               </div>
@@ -43,7 +43,7 @@
                 <label>*Selecccione una Pregunta</label>
                 <select id="preguntas" name="preguntas" style="width: 100%"></select>
               </div> -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <!-- <div class="form-group">
                     <label>Rango 1</label>
                     <div class="input-group">
@@ -62,7 +62,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label for="fecha2">*Fecha Final:</label>
                   <div class="input-group date form_date" data-date="<?php echo $fecha ?>" data-date-format="yyyy-mm-dd" data-link-field="fecha2" data-link-format="yyyy-mm-dd">
@@ -85,6 +85,13 @@
                 <input type="hidden" name="filtro2" id="filtro2" value="0">
                 <input type="hidden" name="sucur" id="sucur" value="">
                 <input type="hidden" name="dept" id="dept" value="">
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="sucursal">*Sucursal:</label>
+                    <select name="sucursal" id="sucursal" class="form-control select2">
+                    </select>
+                </div>
               </div>
             </div>
           </div>
@@ -110,15 +117,16 @@
             </div>
             <div class="box-body">
               <div class="row">
-                <!-- <div class="col-md-2">
-                  <div id="div_sucursal" style="display: none">
+                <!--  
+                <div class="col-md-2">
+                  <div id="div_sucursal" style="display: none">depto
                     <label for="">*Sucursal</label>
                     <select name="sucursal" id="sucursal" class="form-control" onchange="mostrar_depto()" style="width: 180px"></select>
                   </div>
                   <br>
                   <div id="div_depto" style="display: none">
                     <label for="">*Departamento</label>
-                    <select name="depto" id="depto" class="form-control" onchange="mostrar_tra()" style="width: 180px"></select>
+                    <select name="" id="depto" class="form-control" onchange="mostrar_tra()" style="width: 180px"></select>
                   </div>
                   <br>
                   <div id="div_tra" style="display: none">
@@ -127,7 +135,8 @@
                   </div>
                   <br>
                   <button class="btn btn-danger btn-sm" onclick="limpiar_d()"><i class='fa fa-undo fa-sm'></i></button>
-                </div> -->
+                </div>
+                  -->
                 <div class="col-md-12" id="tabla">
                   
                 </div>
@@ -203,7 +212,7 @@
   }
   function mostrar_suc(){
     resultados();
-    $('#div_sucursal').show();
+    //$('#div_sucursal').show();
   }
   function mostrar_depto(){
     resultados();
@@ -220,15 +229,15 @@
     var filtro2  = $('#filtro2').val();
     var fecha1   = $('#fecha1').val();
     var fecha2   = $('#fecha2').val();
-    var sucur    = $('#sucur').val();
+    var sucursal    = $('#sucursal').val();
     var dept     = $('#dept').val();
     // var id_trabajador = $('#id_trabajador').val();
 
     if (encuesta != null){
       $.ajax({
         type: "POST",
-        url: "http://200.1.1.197/SMPruebas/mConfiguracion_Encuestas/resultado_porcentaje.php",
-        data: {'encuesta':encuesta,'fecha1':fecha1,'fecha2':fecha2,'filtro':filtro,'filtro1':filtro1,'filtro2':filtro2,'sucur':sucur,'dept':dept}, // Adjuntar los campos del formulario enviado.
+        url: "resultado_porcentaje.php",
+        data: {'encuesta':encuesta,'fecha1':fecha1,'fecha2':fecha2,'filtro':filtro,'filtro1':filtro1,'filtro2':filtro2,'sucursal':sucursal,'dept':dept}, // Adjuntar los campos del formulario enviado.
         success: function(respuesta)
         {
           $('#tabla').html(respuesta);
@@ -334,6 +343,78 @@
       $('#sucur').val("");
     }
   }
+  $('#sucursal').select2({
+    placeholder: 'Seleccione una opcion',
+    lenguage: 'es',
+    //minimumResultsForSearch: Infinity
+    ajax: { 
+     url: "combo_sucursal.php",
+     type: "post",
+     dataType: 'json',
+     delay: 250,
+     data: function (params){
+      var id_encuesta = $('#id_encuesta').val();
+      return {
+        searchTerm: params.term, // search term
+        id_encuesta: id_encuesta
+      };
+     },
+     processResults: function (response) {
+       return {
+          results: response
+       };
+     },
+     cache: true
+    }
+  })
+  // $('#depto').select2({
+  //   placeholder: 'Seleccione una opcion',
+  //   lenguage: 'es',
+  //   //minimumResultsForSearch: Infinity
+  //   ajax: { 
+  //    url: "combo_departamentos.php",
+  //    type: "post",
+  //    dataType: 'json',
+  //    delay: 250,
+  //    data: function (params){
+  //     var id_encuesta = $('#id_encuesta').val();
+  //     return {
+  //       searchTerm: params.term, // search term
+  //       id_encuesta: id_encuesta
+  //     };
+  //    },
+  //    processResults: function (response) {
+  //      return {
+  //         results: response
+  //      };
+  //    },
+  //    cache: true
+  //   }
+  // })
+  // $('#id_trabajador').select2({
+  //   placeholder: 'Seleccione una opcion',
+  //   lenguage: 'es',
+  //   //minimumResultsForSearch: Infinity
+  //   ajax: { 
+  //    url: "select_persona.php",
+  //    type: "post",
+  //    dataType: 'json',
+  //    delay: 250,
+  //    data: function (params){
+  //     var id_encuesta = $('#id_encuesta').val();
+  //     return {
+  //       searchTerm: params.term, // search term
+  //       id_encuesta: id_encuesta
+  //     };
+  //    },
+  //    processResults: function (response) {
+  //      return {
+  //         results: response
+  //      };
+  //    },
+  //    cache: true
+  //   }
+  // })
 </script>
 <script type="text/javascript">
   $('.form_datetime').datetimepicker({

@@ -73,7 +73,7 @@ include '../global_seguridad/verificar_sesion.php';
               <div class="row">
                 <div class="col-md-2">
                   <div class="form-group">
-                    <label for="estatus">*Estatus</label>
+                    <label for="estatus">*Estatus (INFOFIN)</label>
                     <input type="text" name="estatus" id="estatus" class="form-control" readonly="true">
                   </div>
                 </div>
@@ -185,6 +185,13 @@ include '../global_seguridad/verificar_sesion.php';
               $('#id_sucursal').val(array[4]);
               $('#fecha_llegada').val(array[5]);
               $('#estatus').val(array[6]);
+              if(array[6]=='6'){
+                $('#estatus').val('Cancelada');
+                $("#btn-guardar").attr('disabled',true);
+              }else{
+                $('#estatus').val(array[6]);
+                $("#btn-guardar").removeAttr('disabled');
+              }
             }
           });
           return false;

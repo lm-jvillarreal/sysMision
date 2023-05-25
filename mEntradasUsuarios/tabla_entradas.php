@@ -48,10 +48,12 @@
 		            OR MOVN_USUARIOREALIZAMOV = '3102'
 		            OR MOVN_USUARIOREALIZAMOV = '3114'
 								OR MOVN_USUARIOREALIZAMOV = '3206'
+								OR MOVN_USUARIOREALIZAMOV = '3207'
 		            OR MOVN_USUARIOREALIZAMOV = '3232'
+								OR MOVN_USUARIOREALIZAMOV = '3343'
 								OR MOVN_USUARIOREALIZAMOV = '3476'
 								OR MOVN_USUARIOREALIZAMOV = '3491'
-		            
+								OR MOVN_USUARIOREALIZAMOV = '3548'
 				) ORDER BY Cantidad DESC";
 
 	$st = oci_parse($conexion_central, $cadena);

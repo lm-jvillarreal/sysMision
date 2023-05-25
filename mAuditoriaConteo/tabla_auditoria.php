@@ -13,13 +13,16 @@
 					D.descripcion,
 					D.id_mapeo,
 					M.fecha_conteo,
-					S.nombre
+					S.nombre,
+					U.nombre_usuario
 				FROM AuditoriaConteo A
 				INNER JOIN inv_detalle_mapeo D ON D.id = A.IdDetalleMapeo
 				INNER JOIN inv_captura C ON C.id_detalle_mapeo = A.IdDetalleMapeo AND A.IdCaptura = C.id
 				INNER JOIN inv_mapeo M ON M.id = D.id_mapeo
 				INNER JOIN sucursales S ON S.id = M.id_sucursal
-				WHERE A.Estatus = 1";
+				INNER JOIN usuarios U ON U.id = A.Usuario
+				WHERE A.Estatus = 1
+				GROUP BY IdDetalleMapeo";
 				//echo "$qry";
 		$exQry = mysqli_query($conexion, $qry);
 		date_default_timezone_set('America/Monterrey');
@@ -82,7 +85,10 @@
                     	<th>Descripcion</th>
                     	<th>Conteo</th>
                     	<th>Auditor</th>
+                    	<th>Sucursal</th>
+                    	<th>Usuario</th>
                     	<th>Guardar</th>
+                    	<th>Eliminar</th>
 					</tr>
 				</thead>
 				<body>
@@ -104,9 +110,12 @@
 							<td align="center" width="60%">
 								<?php echo $row[4] ?>
 							</td>
+							<td><?php echo $row[9] ?></td>
+							<td><?php echo $row[10] ?></td>
 							<td>
-								<a href="#" class="btn btn-danger" onclick="InsertDetalle('<?php echo $row[5] ?>','<?php echo $row[7] ?>', '<?php echo $row[4] ?>', '<?php echo $row[3] ?>', '<?php echo $row[6] ?>', '<?php echo $row[0] ?>' )">Guardar</a>
+								<a href="#" id="boton_<?php echo $row[0] ?>" class="btn btn-danger" onclick="InsertDetalle('<?php echo $row[5] ?>','<?php echo $row[7] ?>', '<?php echo $row[4] ?>', '<?php echo $row[3] ?>', '<?php echo $row[6] ?>', '<?php echo $row[0] ?>' )">Guardar</a>
 							</td>
+							<td><a href="#" class="btn btn-danger" onclick="Eliminar(<?php echo $row[0] ?>)">Eliminar</a></td>
 							
 						</tr>
 						<?php

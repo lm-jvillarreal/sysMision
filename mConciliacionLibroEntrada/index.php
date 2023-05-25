@@ -110,7 +110,16 @@ include '../global_seguridad/verificar_sesion.php';
                     <input type="text" name="diferencia" id="diferencia" class="form-control" readonly="true">
                   </div>
                 </div>
-              </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="escaneada">*Escaneada:</label>
+                    <select name="escaneada" id="escaneada" class="form-control">
+                      <option value=""></option>
+                      <option value="1">Si</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                </div>
             </form>
           </div>
           <div class="box-footer text-right">
@@ -229,6 +238,9 @@ include '../global_seguridad/verificar_sesion.php';
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
   <!-- Page script -->
   <script>
+    $("#escaneada").select2({
+      placeholder: "Selecciona ..."
+    });
     $(document).ready(function() {
       $("#ficha_entrada").focus();
       tabla_folios();
@@ -286,7 +298,13 @@ include '../global_seguridad/verificar_sesion.php';
         "paging": false,
         "dom": 'Bfrtip',
         "searching": false,
-        buttons: [{
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+          {
             extend: 'excel',
             text: 'Exportar a Excel',
             className: 'btn btn-default',
@@ -295,6 +313,15 @@ include '../global_seguridad/verificar_sesion.php';
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'AuditoriaPV',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',
@@ -348,7 +375,13 @@ include '../global_seguridad/verificar_sesion.php';
         "paging": false,
         "dom": 'Bfrtip',
         "searching": false,
-        buttons: [{
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+          {
             extend: 'excel',
             text: 'Exportar a Excel',
             className: 'btn btn-default',
@@ -357,6 +390,15 @@ include '../global_seguridad/verificar_sesion.php';
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'AuditoriaPV',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',
@@ -406,7 +448,13 @@ include '../global_seguridad/verificar_sesion.php';
         "paging": false,
         "dom": 'Bfrtip',
         "searching": false,
-        buttons: [{
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+          {
             extend: 'excel',
             text: 'Exportar a Excel',
             className: 'btn btn-default',
@@ -415,6 +463,15 @@ include '../global_seguridad/verificar_sesion.php';
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'AuditoriaPV',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',
@@ -461,7 +518,13 @@ include '../global_seguridad/verificar_sesion.php';
         "paging": false,
         "dom": 'Bfrtip',
         "searching": false,
-        buttons: [{
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+          {
             extend: 'excel',
             text: 'Exportar a Excel',
             className: 'btn btn-default',
@@ -470,6 +533,15 @@ include '../global_seguridad/verificar_sesion.php';
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'AuditoriaPV',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',
@@ -538,6 +610,7 @@ include '../global_seguridad/verificar_sesion.php';
             tabla_folios();
             tabla_nc();
             totales();
+            $('#escaneada').val(null).trigger('change');
           }
         });
       }
@@ -578,49 +651,55 @@ include '../global_seguridad/verificar_sesion.php';
       }
     };
     $("#btnFinalizar").click(function() {
-      var ficha_entrada = $("#ficha_entrada").val();
-      var clave_proveedor = $("#clave_proveedor").val();
-      var nombre_proveedor = $("#nombre_proveedor").val();
-      var remision = $("#remision").val();
-      var total_remision = $("#total_remision").val();
-      var total_entrada = $("#total_entrada").val();
-      var total_devoluciones = $("#total_devoluciones").val();
-      var total_cf = $("#total_cf").val();
-      var total_dc = $("#total_nc").val();
-      var total_dc2 = $("#total_nc2").val();
-      var gran_total = $("#gran_total").val();
-      var diferencia = $("#diferencia").val();
-      var url = "insertar_conciliacion.php";
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: {
-          ficha_entrada: ficha_entrada,
-          clave_proveedor: clave_proveedor,
-          nombre_proveedor: nombre_proveedor,
-          remision: remision,
-          total_remision: total_remision,
-          total_entrada: total_entrada,
-          total_devoluciones: total_devoluciones,
-          total_cf: total_cf,
-          total_dc: total_dc,
-          total_dc2: total_dc2,
-          gran_total: gran_total,
-          diferencia: diferencia
-        }, // Adjuntar los campos del formulario enviado.
-        success: function(respuesta) {
-          if (respuesta == "ok") {
-            $("#form-datos")[0].reset();
-            alertify.success("Registro insertado correctamente");
-            $("#ficha_entrada").focus();
-            tabla_folios();
-            tabla_nc();
-            tabla_cf();
-          } else if (respuesta == "existe") {
-            alertify.error("El registro ya existe");
+      if ($("#escaneada").val() == "") {
+        alertify.error("Selecciona una opción");
+      } else {
+        var ficha_entrada = $("#ficha_entrada").val();
+        var clave_proveedor = $("#clave_proveedor").val();
+        var nombre_proveedor = $("#nombre_proveedor").val();
+        var remision = $("#remision").val();
+        var total_remision = $("#total_remision").val();
+        var total_entrada = $("#total_entrada").val();
+        var total_devoluciones = $("#total_devoluciones").val();
+        var total_cf = $("#total_cf").val();
+        var total_dc = $("#total_nc").val();
+        var total_dc2 = $("#total_nc2").val();
+        var gran_total = $("#gran_total").val();
+        var diferencia = $("#diferencia").val();
+        var escaneada = $("#escaneada").val();
+        var url = "insertar_conciliacion.php";
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: {
+            ficha_entrada: ficha_entrada,
+            clave_proveedor: clave_proveedor,
+            nombre_proveedor: nombre_proveedor,
+            remision: remision,
+            total_remision: total_remision,
+            total_entrada: total_entrada,
+            total_devoluciones: total_devoluciones,
+            total_cf: total_cf,
+            total_dc: total_dc,
+            total_dc2: total_dc2,
+            gran_total: gran_total,
+            diferencia: diferencia,
+            escaneada: escaneada
+          }, // Adjuntar los campos del formulario enviado.
+          success: function(respuesta) {
+            if (respuesta == "ok") {
+              $("#form-datos")[0].reset();
+              alertify.success("Registro insertado correctamente");
+              $("#ficha_entrada").focus();
+              tabla_folios();
+              tabla_nc();
+              tabla_cf();
+            } else if (respuesta == "existe") {
+              alertify.error("El registro ya existe");
+            }
           }
-        }
-      });
+        });
+      }
     });
 
     function eliminar(id_folio) {

@@ -336,7 +336,13 @@ include '../global_seguridad/verificar_sesion.php';
           [0, "desc"]
         ],
         "dom": 'Bfrtip',
-        buttons: [{
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+          {
             extend: 'excel',
             text: 'Exportar a Excel',
             className: 'btn btn-default',
@@ -345,6 +351,15 @@ include '../global_seguridad/verificar_sesion.php';
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+            title: 'AuditoriaPV',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',

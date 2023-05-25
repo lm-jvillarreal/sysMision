@@ -25,7 +25,7 @@
       {
       \"#\": \"$numero\",
       \"Nombre\": \"$row_marca[1]\",
-      \"Equipo\": \"$row_marca[2]\",
+      \"Agregar\": \"$row_marca[2]\",
       \"Editar\": \"$boton_editar\",
       \"Eliminar\": \"$boton_eliminar\"
       },";

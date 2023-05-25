@@ -9,7 +9,7 @@
 	}
 
   	if(!isset($_POST['searchTerm'])){ 
-	  $cadena_modelos = "SELECT id,modelo FROM modelos WHERE activo = '1'".$filtro_marca;
+	  $cadena_modelos = "SELECT id,modelo FROM modelos WHERE activo = '1' and id_marca = '6'".$filtro_marca;
 	}else{ 
 	  $search = $_POST['searchTerm'];   
 	  $cadena_modelos = "SELECT id,modelo FROM modelos WHERE activo = '1'".$filtro_marca." AND modelo like '%".$search."%'";

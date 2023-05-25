@@ -38,6 +38,7 @@ $hora = date("h:i:s");
                       <option value="3">Villegas</option>
                       <option value="4">Allende</option>
                       <option value="5">La Petaca</option>
+                      <option value="6">Montemorelos</option>
                       <option value="99">CEDIS</option>
                     </select>
                   </div>
@@ -102,6 +103,14 @@ $hora = date("h:i:s");
   include 'modal_opciones.php';
   include 'modal_entrada.php';
   ?>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
 
 
   <!-- <script>CargarBodega();</script>

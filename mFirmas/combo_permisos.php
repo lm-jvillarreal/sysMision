@@ -5,8 +5,7 @@
 	}else{
 		$folio = "";
 	}
-	$cadena_permisos = "SELECT id_permiso,nombre
-							FROM permisos WHERE activo = '1'";
+	$cadena_permisos = "SELECT id_permiso,nombre FROM permisos WHERE activo = '1'";
 							
 	$consulta_permisos = mysqli_query($conexion, $cadena_permisos);
 	 

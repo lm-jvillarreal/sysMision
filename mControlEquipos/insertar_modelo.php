@@ -5,9 +5,9 @@
 	$fecha=date("Y-m-d"); 
 	$hora=date ("h:i:s");
 
-	$marca     = $_POST['marca_terminal'];
+	$marca     = $_POST['id_marca'];
 	$modelo    = $_POST['modelo_terminal'];
-	$id_modelo = $_POST['id_modelo_modal'];
+	$id_modelo = $_POST['id_registro_mo'];
 	$tipo          = (!empty($_POST['tipo_terminal']))?$_POST['tipo_terminal']:0;
 
 	if ($id_modelo == 0){
@@ -25,7 +25,8 @@
 		}
 	}
 	else{
-		$actualizar = mysqli_query($conexion,"UPDATE modelos SET id_marca = '$marca', modelo = '$modelo', tipo = '$tipo', fecha = '$fecha', hora = '$hora', id_usuario = '$id_usuario' WHERE id = '$id_modelo'");
-		echo "ok";
+		$actualizar ="UPDATE modelos SET id_marca = '$marca', modelo = '$modelo', tipo = '$tipo', fecha = '$fecha', hora = '$hora', id_usuario = '$id_usuario' WHERE id = '$id_modelo'";
+		 mysqli_query($conexion,$actualizar);
+		echo "ok_actualizado";
 	}
 ?>

@@ -15,6 +15,8 @@ if($sucursal=='1' || empty($sucursal)){
 	$conexion_central = $conexion_all;
 }elseif($sucursal=='5'){
 	$conexion_central = $conexion_lp;
+}elseif($sucursal=='6'){
+	$conexion_central = $conexion_mm;
 }
 
 //Fecha y hora actual

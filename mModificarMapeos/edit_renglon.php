@@ -6,8 +6,9 @@
 	$id = $_POST['txtIdRenglon'];
 	$descripcion = $_POST['txtDescripcion'];
 	$codigo= $_POST['txtCodProd'];
+	$consecutivo = $_POST["txtConsecutivo"];
 
-	$qry = "UPDATE inv_detalle_mapeo SET codigo_producto = '$codigo', descripcion = '$descripcion' WHERE id = $id ";
+	$qry = "UPDATE inv_detalle_mapeo SET codigo_producto = '$codigo', descripcion = '$descripcion', consecutivo_mueble = '$consecutivo' WHERE id = $id ";
 	
 	//echo "$sql";
 	$exSql = mysqli_query($conexion, $qry);

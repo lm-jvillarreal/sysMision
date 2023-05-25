@@ -1,19 +1,9 @@
 <?php 
-//include("conexion_servidor.php");
-include '../global_settings/conexion_supsys.php';
+include '../global_seguridad/verificar_sesion.php';
 error_reporting(E_ALL ^ E_NOTICE);
-//include("conexion.php");
 date_default_timezone_set('America/Monterrey');
 $fecha = date('Y-m-d');
 $hora = date('H:i:s');
-$fecha_inicio = $_POST['fecha_inicial'];
-$fecha_final = $_POST['fecha_final'];
-$tipo = $_POST['tipo'];
-$sucursal = $_POST['sucursal'];
-$proveedor = $_POST['proveedor'];
-$codigo = $_POST['codigo'];
-$familia = $_POST['familia'];
-
 
 $consulta_principal  = "SELECT
 							cajas_articulos.id,
@@ -30,13 +20,6 @@ $consulta_principal  = "SELECT
 							cajas_articulos.id";
 							//echo "$consulta_principal";
 $exQry = mysqli_query($conexion, $consulta_principal);
-
-
-
-
-	
-	
-	
 	/** Error reporting */
 	//error_reporting(E_ALL);
 	ini_set('max_execution_time', 1000); 
@@ -154,7 +137,7 @@ $exQry = mysqli_query($conexion, $consulta_principal);
 
 	// Redirect output to a client’s web browser (Excel2007)
 	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-	header('Content-Disposition: attachment;filename="rpt_analisis" '.$Msucursal.$fecha.' ".xlsx"');
+	header('Content-Disposition: attachment;filename="rpt_cajaArticulos" '.$fecha.' ".xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');

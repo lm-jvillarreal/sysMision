@@ -5,6 +5,7 @@ date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d"); 
 $hora=date ("H:i:s");
 
+	$id_registro = $_POST['id_registro'];
 	$nombre = $_POST['nombre'];
 	//$abreviatura         = $_POST['abreviatura'];
 	//$agrupacion          = $_POST['id_agrupacion'];

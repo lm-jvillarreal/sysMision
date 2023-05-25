@@ -1,4 +1,5 @@
 <?php
+include '../global_seguridad/verificar_sesion.php';
 //include '../global_settings/conexion_pruebas.php';
 // $pId_sucursal = $_POST['id_sucursal'];
 // $sucursal = $_SESSION["s_Sucursal"];
@@ -50,6 +51,7 @@ if ($pId_sucursal == "") {
 				AND mapeo.activo = 1
 				AND mapeo.id_sucursal = '$id_sede'";
 }
+
 //echo "$qry";
 $consulta = mysqli_query($conexion, $qry);
 ?>

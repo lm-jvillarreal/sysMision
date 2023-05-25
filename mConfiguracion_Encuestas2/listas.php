@@ -203,7 +203,7 @@
     lenguage: 'es',
     //minimumResultsForSearch: Infinity
     ajax: { 
-     url: "http://200.1.1.197/SMPruebas/mConfiguracion_Encuestas/select_persona.php",
+     url: "select_persona.php",
      type: "post",
      dataType: 'json',
      delay: 250,
@@ -322,7 +322,7 @@
         ],
       "ajax": {
         "type": "POST",
-        "url": "http://200.1.1.197/SMPruebas/mConfiguracion_Encuestas/tabla3.php",
+        "url": "tabla3Original.php",
         "dataSrc": "",
         "data":{'id_encuesta':id_encuesta},
       },
@@ -368,7 +368,7 @@
         });
         $.ajax({
           type: "POST",
-          url: "http://200.1.1.197/SMPruebas/mConfiguracion_Encuestas/consulta_datos2.php",
+          url: "consulta_datos2.php",
           data: {'id_trabajador':id_trabajador,'folio':folio}, // Adjuntar los campos del formulario enviado.
           success: function(respuesta)
           {
@@ -403,7 +403,7 @@
     }
     function cargar_datos(codigo){
       $.ajax({
-        url: "http://200.1.1.197/SMPruebas/mConfiguracion_Encuestas/datos_persona.php",
+        url: "datos_persona.php",
         type: "POST",
         dateType: "html",
         data: {'codigo':codigo},

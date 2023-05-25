@@ -41,26 +41,15 @@ include '../global_seguridad/verificar_sesion.php';
                         <th width="10%">Sucursal</th>
                         <th>Nombre</th>
                         <th width="10%">Formato</th>
-                        <th width="15%">Fecha</th>
+                        <th width="15%">Solicitud</th>
+                        <th width="15%">Autorización</th>
                         <th width="20%">Usuario</th>
                         <th width="5%">Ver</th>
                         <th width="5%">Merma</th>
+                        <th width="5%">Detalle</th>
                         <th width="5%">Impreso</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Sucursal</th>
-                        <th>Nombre</th>
-                        <th>Formato</th>
-                        <th>Fecha</th>
-                        <th>Usuario</th>
-                        <th>Ver</th>
-                        <th>Merma</th>
-                        <th>Impreso</th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
@@ -100,6 +89,44 @@ include '../global_seguridad/verificar_sesion.php';
           "url": "../plugins/DataTables/Spanish.json"
         },
         "paging": false,
+        "searching": true,
+        "dom": 'Bfrtip',
+         buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					}
+				],
         "ajax": {
           "type": "POST",
           "url": "lista_pendientes.php",
@@ -119,7 +146,10 @@ include '../global_seguridad/verificar_sesion.php';
             "data": "formato"
           },
           {
-            "data": "fecha"
+            "data": "solicitud"
+          },
+          {
+            "data": "autorizacion"
           },
           {
             "data": "usuario"
@@ -129,6 +159,9 @@ include '../global_seguridad/verificar_sesion.php';
           },
           {
             "data": "merma"
+          },
+          {
+            "data": "detalle"
           },
           {
             "data": "impreso"

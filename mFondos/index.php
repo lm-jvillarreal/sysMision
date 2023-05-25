@@ -201,6 +201,14 @@ include '../global_seguridad/verificar_sesion.php';
     </div>
     <!-- /.content-wrapper -->
     <?php include '../footer2.php'; ?>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <!-- Control Sidebar -->
 
@@ -279,32 +287,42 @@ include '../global_seguridad/verificar_sesion.php';
         },
         "paging": false,
         "dom": 'Bfrtip',
-        buttons: [{
-            extend: 'pageLength',
-            text: 'Registros',
-            className: 'btn btn-default'
-          },
+         buttons: [
           {
-            extend: 'excel',
-            text: 'Exportar a Excel',
-            className: 'btn btn-default',
-            title: 'CostosCero',
-            exportOptions: {
-              columns: ':visible'
-            }
-          },
-          {
-            extend: 'copy',
-            text: 'Copiar registros',
-            className: 'btn btn-default',
-            copyTitle: 'Ajouté au presse-papiers',
-            copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
-            copySuccess: {
-              _: '%d lignes copiées',
-              1: '1 ligne copiée'
-            }
-          },
-        ],
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					}
+				],
         "ajax": {
           "type": "POST",
           "url": "tabla_fondos.php",

@@ -201,6 +201,37 @@ $renglon_sxmedo = "
     \"retraso\": \"$interval_sxmedo\"
 },";
 
+//MERMA CADUCIDAD
+$cantidad_sxmcad = 0;
+$cadena_consulta  = "SELECT ALMN_ALMACEN, MODN_FOLIO, TO_CHAR(MOVD_FECHAELABORACION,'DD/MM/YYYY'), MOVN_ESTATUS, TO_CHAR(MOVD_FECHAELABORACION,'YYYY-MM-DD')
+    FROM INV_MOVIMIENTOS
+    WHERE MODC_TIPOMOV = 'SXMCAD'
+    AND MOVD_FECHAELABORACION >= TRUNC(TO_DATE('$fecha_inicio','YYYY-MM-DD'))
+    AND MOVD_FECHAELABORACION <= TRUNC(TO_DATE('$fecha_fin', 'YYYY-MM-DD'))
+    AND ALMN_ALMACEN = '$sucursal'";
+				
+$consulta_sxmcad = oci_parse($conexion_central, $cadena_consulta);
+oci_execute($consulta_sxmcad);
+while($row_sxmcad = oci_fetch_array($consulta_sxmcad)){
+    $cantidad_sxmcad = oci_num_rows($consulta_sxmcad);
+    $f_sxmcad = new DateTime($row_sxmcad[4]);
+}
+if($cantidad_sxmcad==0){
+    $interval_sxmcad="No existen registros";
+}else{
+    $interval_sxmcad = $f_sxmcad->diff($now)->format("%d");
+    if($interval_sxmcad >0 AND $interval_sxmcad<10){
+        $interval_sxmcad = '0'.$interval_sxmcad;
+    }
+    $interval_sxmcad = $interval_sxmcad." días de retraso";
+}
+
+$renglon_sxmcad = "
+{
+    \"movimiento\": \"Merma Por Caducidad\",
+    \"retraso\": \"$interval_sxmcad\"
+},";
+
 //SALIDA POR ROBO
 $cantidad_sxrob = 0;
 $cadena_consulta  = "SELECT ALMN_ALMACEN, MODN_FOLIO, TO_CHAR(MOVD_FECHAELABORACION,'DD/MM/YYYY'), MOVN_ESTATUS, TO_CHAR(MOVD_FECHAELABORACION,'YYYY-MM-DD')
@@ -587,7 +618,7 @@ $renglon_devxco = "
     \"retraso\": \"$interval_devxco\"
 },";
 
-$renglon = $renglon_sxmcar.$renglon_sxmfta.$renglon_sxmpan.$renglon_sxmtor.$renglon_sxmbod.$renglon_sxmedo.$renglon_sxrob.$renglon_sxmfci.$renglon_sfaacc.$renglon_sfcbot.$renglon_exvigi.$renglon_echori.$renglon_schori.$renglon_tradep.$renglon_exconv.$renglon_devpro.$renglon_dmprov.$renglon_devctr.$renglon_devxco;
+$renglon = $renglon_sxmcar.$renglon_sxmfta.$renglon_sxmpan.$renglon_sxmtor.$renglon_sxmbod.$renglon_sxmedo.$renglon_sxmcad.$renglon_sxrob.$renglon_sxmfci.$renglon_sfaacc.$renglon_sfcbot.$renglon_exvigi.$renglon_echori.$renglon_schori.$renglon_tradep.$renglon_exconv.$renglon_devpro.$renglon_dmprov.$renglon_devctr.$renglon_devxco;
 $cuerpo = $cuerpo.$renglon;
 $cuerpo2 = trim($cuerpo, ',');
 $tabla = "

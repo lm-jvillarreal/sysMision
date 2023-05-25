@@ -4,10 +4,10 @@ include '../global_seguridad/verificar_sesion.php';
 date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d"); 
 $hora=date ("h:i:s");
-$anio = '2020';
+$anio = '2021';
 $filtro_rp = (!empty($registros_propios) == '1') ? " AND id_comprador = '$id_usuario'" : "";
 
-$cadena_aportaciones = "SELECT proy.id, proy.cve_proveedor, proy.nombre_proveedor, proy.monto, aport.total, usr.nombre_usuario 
+$cadena_aportaciones = "SELECT proy.id, proy.cve_proveedor, proy.nombre_proveedor, proy.monto, aport.total, usr.nombre_usuario, aport.concepto 
 						FROM ap_proyeccion AS proy
 						INNER JOIN usuarios as usr on proy.id_comprador = usr.id
 						LEFT JOIN aportaciones as aport
@@ -40,6 +40,7 @@ while ($row_aportaciones = mysqli_fetch_array($consulta_aportaciones)) {
 		\"proveedor\": \"$row_aportaciones[1] - $row_aportaciones[2]\",
 		\"proyeccion\": \"$proyeccion\",
 		\"aportacion\": \"$aportacion\",
+		\"concepto\": \"$row_aportaciones[6]\",
 		\"diferencia\": \"$diferencia\",
 		\"comprador\": \"$row_aportaciones[5]\"
 		},";

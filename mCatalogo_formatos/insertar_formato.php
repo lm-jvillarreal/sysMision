@@ -15,6 +15,7 @@
 	$ext = explode(".", $_FILES['archivos']['name']);
 	$extension = end($ext);
 
+	
 	if (empty($id_registro)) {
 		//Insertar nuevo registro
 		$verificar=mysqli_query($conexion,"SELECT id FROM catalogo_formatos WHERE id= '$id_registro'");

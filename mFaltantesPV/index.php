@@ -1,6 +1,6 @@
 <?php
 include '../global_seguridad/verificar_sesion.php';
-if ($dia_semana != "Sunday" and $dia_semana != "Monday") {
+if ($dia_semana != "Sunday" && $dia_semana != "Saturday" && $dia_semana != "Monday") {
   echo "<script language=\"javascript\">window.location=\"../mPanel_control/index.php\"</script>";
 }
 ?>

@@ -15,6 +15,8 @@ if($id_sede=='1'){
     $conexion_sucursal=$conexion_all;
 }elseif($id_sede=='5'){
     $conexion_sucursal=$conexion_lp;
+}elseif($id_sede=='6'){
+    $conexion_sucursal=$conexion_mm;
 }
 if($tipo_mov=='O'){
     $cadena_folio = "SELECT  COOC_DESCRIPCION, cood_vigencia_fin

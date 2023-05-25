@@ -16,6 +16,7 @@ while ($row_articulos = mysqli_fetch_array($consulta_articulos)) {
   $codigo = "<div class='input-group' style='width:100%''><input type='text' id='id_$row_articulos[0]' class='form-control' value='$row_articulos[2]'><span class='input-group-btn'><button onclick='cambiar_codigo($row_articulos[0])' class='btn btn-danger' type='button'><i class='fa fa-save fa-lg' aria-hidden='true'></i></button></span></div>";
   $um = "<div class='input-group' style='width:100%''><input type='text' id='um_$row_articulos[0]' class='form-control' value='$row_articulos[5]'><span class='input-group-btn'><button onclick='cambiar_um($row_articulos[0])' class='btn btn-danger' type='button'><i class='fa fa-save fa-lg' aria-hidden='true'></i></button></span></div>";
   $escape_desc=mysqli_real_escape_string($conexion,$row_articulos[3]);
+  $opciones="<center><a href='#' onclick='eliminar($row_articulos[0])' class='btn btn-danger'><i class='fa fa-trash-o fa-lg' aria-hidden='true'></i></a></center>";
   $renglon = "
 		{
     \"departamento\": \"$row_articulos[1]\",
@@ -26,7 +27,8 @@ while ($row_articulos = mysqli_fetch_array($consulta_articulos)) {
     \"um\": \"$um\",
     \"costo_unitario\": \"$row_articulos[6]\",
     \"impuesto\": \"$row_articulos[7]\",
-    \"total\": \"$row_articulos[8]\"
+    \"total\": \"$row_articulos[8]\",
+    \"opciones\": \"$opciones\"
 		},";
 	$cuerpo = $cuerpo.$renglon;
 }

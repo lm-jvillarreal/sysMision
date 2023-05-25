@@ -1,19 +1,21 @@
 <?php
-  include '../global_seguridad/verificar_sesion.php';
-  function _data_last_month_day() { 
-    $month = date('m');
-    $year = date('Y');
-    $day = date("d", mktime(0,0,0, $month+1, 0, $year));
-    return date('Y-m-d', mktime(0,0,0, $month, $day, $year));
-  };
-  /** Actual month first day **/
-  function _data_first_month_day() {
-    $month = date('m');
-    $year = date('Y');
-    return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
-  }
-  $fecha1 = _data_first_month_day();
-  $fecha2 = _data_last_month_day();
+include '../global_seguridad/verificar_sesion.php';
+function _data_last_month_day()
+{
+	$month = date('m');
+	$year = date('Y');
+	$day = date("d", mktime(0, 0, 0, $month + 1, 0, $year));
+	return date('Y-m-d', mktime(0, 0, 0, $month, $day, $year));
+};
+/** Actual month first day **/
+function _data_first_month_day()
+{
+	$month = date('m');
+	$year = date('Y');
+	return date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
+}
+$fecha1 = _data_first_month_day();
+$fecha2 = _data_last_month_day();
 ?>
 <!DOCTYPE html>
 <html>
@@ -48,26 +50,26 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="col-md-3">
-					                <div class="form-group">
-					                  <label for="fecha">*Fecha:</label>
-					                  <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha" data-link-format="yyyy-mm-dd" >
-					                    <input class="form-control" size="16" type="text"  id="fecha1" name="fecha1" value="<?php echo $fecha1?>" onchange='cargar()'>
-					                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-					                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-					                  </div>
-					                </div>
-					            </div>
-					            <div class="col-md-3">
-					                <div class="form-group">
-					                  <label for="fecha">*Fecha:</label>
-					                  <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha" data-link-format="yyyy-mm-dd" >
-					                    <input class="form-control" size="16" type="text"  id="fecha2" name="fecha2" value="<?php echo $fecha2?>" onchange='cargar()'>
-					                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-					                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-					                  </div>
-					                </div>
-					            </div>
-					            <div class="col-md-3">
+									<div class="form-group">
+										<label for="fecha">*Fecha:</label>
+										<div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha" data-link-format="yyyy-mm-dd">
+											<input class="form-control" size="16" type="text" id="fecha1" name="fecha1" value="<?php echo $fecha1 ?>" onchange='cargar()'>
+											<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="fecha">*Fecha:</label>
+										<div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha" data-link-format="yyyy-mm-dd">
+											<input class="form-control" size="16" type="text" id="fecha2" name="fecha2" value="<?php echo $fecha2 ?>" onchange='cargar()'>
+											<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
 									<div class="form-group">
 										<label for="sucursal">*Sucursal</label>
 										<select name="sucursal" id="sucursal" class="form-control" onchange="">
@@ -83,12 +85,12 @@
 										</select>
 									</div>
 								</div>
-					        </div>
+							</div>
 						</div>
 						<div class="box-footer text-right">
-		                  <button type="button" class="btn btn-warning" id="guardar1" onclick="limpiar()">Limpiar</button>
-		                  <button type="button" class="btn btn-danger" id="guardar1" onclick="cargar()">Generar</button>
-		                </div>
+							<button type="button" class="btn btn-warning" id="guardar1" onclick="limpiar()">Limpiar</button>
+							<button type="button" class="btn btn-danger" id="guardar1" onclick="cargar()">Generar</button>
+						</div>
 						<!-- <br> -->
 						<div class="row">
 							<div class="col-md-12">
@@ -137,31 +139,31 @@
 					</div>
 					<div class="box-body">
 						<div class="row">
-						  <div class="col-md-12">
-						    <div class="table-responsive">
-						      <table id='lista_proveedores' class='table table-striped table-bordered' cellspacing='0' width='100%'>
-						        <thead>
-						          <tr>
-						            <th width="5%">#</th>
-						            <th >Proveedor</th>
-						            <th width="12%">Notas de Cargo</th>
-						            <th width="10%">Monto Total</th>
-						          </tr>
-						        </thead>
-						        <tfoot>
-						          <tr>
-						            <th>#</th>
-						            <th>Proveedor</th>
-						            <th>Notas de Cargo</th>
-						            <th>Monto Total</th>
-						          </tr>
-						        </tfoot>
-						      </table>
-						    </div>
-						  </div>
+							<div class="col-md-12">
+								<div class="table-responsive">
+									<table id='lista_proveedores' class='table table-striped table-bordered' cellspacing='0' width='100%'>
+										<thead>
+											<tr>
+												<th width="5%">#</th>
+												<th>Proveedor</th>
+												<th width="12%">Notas de Cargo</th>
+												<th width="10%">Monto Total</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th>#</th>
+												<th>Proveedor</th>
+												<th>Notas de Cargo</th>
+												<th>Monto Total</th>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
-        		</div>
+				</div>
 				<!-- /.row -->
 			</section>
 			<!-- /.content -->
@@ -188,67 +190,76 @@
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 	<script>
-		function tabla(){
-			var sucursal  = $("#sucursal").val();
-			var fecha1    = $("#fecha1").val();
-			var fecha2    = $("#fecha2").val();
+		function tabla() {
+			var sucursal = $("#sucursal").val();
+			var fecha1 = $("#fecha1").val();
+			var fecha2 = $("#fecha2").val();
 			var proveedor = $('#proveedor').val();
 			$('#lista_proveedores').dataTable().fnDestroy();
 			$('#lista_proveedores').DataTable({
-				'language': {"url": "../plugins/DataTables/Spanish.json"},
+				'language': {
+					"url": "../plugins/DataTables/Spanish.json"
+				},
 				"paging": true,
 				"dom": 'Bfrtip',
-		        buttons: [{
-		            extend: 'pageLength',
-		            text: 'Registros',
-		            className: 'btn btn-default'
-		          },
-		          {
-		            extend: 'excel',
-		            text: 'Exportar a Excel',
-		            className: 'btn btn-default',
-		            title: 'Notas de Cargo',
-		            exportOptions: {
-		              columns: ':visible'
-		            }
-		          },
-		          {
-		            extend: 'pdf',
-		            text: 'Exportar a PDF',
-		            className: 'btn btn-default',
-		            title: 'Notas de Cargo',
-		            exportOptions: {
-		              columns: ':visible'
-		            }
-		          },
-		          {
-		            extend: 'copy',
-		            text: 'Copiar registros',
-		            className: 'btn btn-default',
-		            copyTitle: 'Ajouté au presse-papiers',
-		            copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
-		            copySuccess: {
-		              _: '%d lignes copiées',
-		              1: '1 ligne copiée'
-		            }
-		          }
-		        ],
+				buttons: [{
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Notas de Cargo',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Notas de Cargo',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					}
+				],
 				"ajax": {
 					"type": "POST",
 					"url": "tabla_proveedores.php",
 					"dataSrc": "",
-					"data":{
+					"data": {
 						'sucursal': sucursal,
 						'fecha1': fecha1,
 						'fecha2': fecha2,
 						'proveedor': proveedor
 					}
 				},
-				"columns": [
-					{ "data": "#" },
-					{ "data": "Proveedor" },
-					{ "data": "Cartas Faltantes" },
-					{ "data": "Monto Total" }
+				"columns": [{
+						"data": "#"
+					},
+					{
+						"data": "Proveedor"
+					},
+					{
+						"data": "Cartas Faltantes"
+					},
+					{
+						"data": "Monto Total"
+					}
 				]
 			});
 		}
@@ -256,23 +267,32 @@
 			cargar_totales();
 			tabla();
 		});
-		function cargar(){
+
+		function cargar() {
 			cargar_totales();
 			tabla();
 		}
-		function limpiar(){
+
+		function limpiar() {
 			$("#sucursal").select2("trigger", "select", {
-		        data: { id: '', text:'' }
-		    });
-		    $("#proveedor").select2("trigger", "select", {
-		    	data: { id: '', text:'' }
-		    });
-		    cargar();
+				data: {
+					id: '',
+					text: ''
+				}
+			});
+			$("#proveedor").select2("trigger", "select", {
+				data: {
+					id: '',
+					text: ''
+				}
+			});
+			cargar();
 		}
+
 		function cargar_totales() {
 			var sucursal = $("#sucursal").val();
-			var fecha1   = $("#fecha1").val();
-			var fecha2   = $("#fecha2").val();
+			var fecha1 = $("#fecha1").val();
+			var fecha2 = $("#fecha2").val();
 			var proveedor = $('#proveedor').val();
 			$.ajax({
 				type: "POST",
@@ -336,15 +356,15 @@
 			}
 		});
 		$('.form_date').datetimepicker({
-	      language:  'es',
-	      weekStart: 1,
-	      todayBtn:  1,
-	      autoclose: 1,
-	      todayHighlight: 1,
-	      startView: 2,
-	      minView: 2,
-	      forceParse: 0
-	    }); 
+			language: 'es',
+			weekStart: 1,
+			todayBtn: 1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0
+		});
 	</script>
 </body>
 

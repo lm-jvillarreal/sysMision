@@ -174,6 +174,39 @@ $calculo_lp = ROUND((100*$afectados_lp)/$total_lp,2);
 $calificacion_lp = $calculo_lp."% de efectividad";
 $bp_lp = ROUND($calculo_lp,0)."%";
 
+//CALIFICACIÓN LA PETACA
+$cadena_afectados = "SELECT COUNT(*) FROM INV_MOVIMIENTOS
+						WHERE (modc_tipomov = 'ENTSOC' OR modc_tipomov = 'ENTCOC')
+						AND movd_fechaafectacion >= trunc(TO_DATE ('$fecha_inicio', 'YYYY/MM/DD'))
+						AND movd_fechaafectacion < trunc(TO_DATE ('$fecha_fin', 'YYYY/MM/DD'))+1
+						AND ALMN_ALMACEN = '5'
+						ORDER BY modn_folio ASC";
+
+$consulta_afectados = oci_parse($conexion_central, $cadena_afectados);
+					  oci_execute($consulta_afectados);
+$row_afectados = oci_fetch_row($consulta_afectados);
+
+//CALIFICACION MONTEMORELOS
+$cadena_pendientes = "SELECT COUNT(*)
+				        FROM INV_MOVIMIENTOS
+				        WHERE (modc_tipomov = 'ENTSOC' OR modc_tipomov = 'ENTCOC')
+				        AND movd_fechaafectacion IS NULL
+				        AND movd_fechaelaboracion >= trunc(TO_DATE ('$fecha_inicio', 'YYYY/MM/DD'))
+				        AND movd_fechaelaboracion < trunc(TO_DATE ('$fecha_fin', 'YYYY/MM/DD'))+1
+				        AND almn_almacen = '6'";
+
+$consulta_pendientes = oci_parse($conexion_central, $cadena_pendientes);
+					   oci_execute($consulta_pendientes);
+$row_pendientes = oci_fetch_row($consulta_pendientes);
+
+$pendientes_mm = $row_pendientes[0];
+$afectados_mm = $row_afectados[0];
+
+$total_lp = $pendientes_lp + $afectados_lp;
+$calculo_lp = ROUND((100*$afectados_lp)/$total_lp,2);
+$calificacion_lp = $calculo_lp."% de efectividad";
+$bp_lp = ROUND($calculo_lp,0)."%";
+
 //CALIFICACIÓN CEDIS
 $cadena_afectados = "SELECT COUNT(*) FROM INV_MOVIMIENTOS
 						WHERE (modc_tipomov = 'ENTSOC' OR modc_tipomov = 'ENTCOC')
@@ -222,6 +255,9 @@ $array = array(
 	$afectados_lp,
 	$calificacion_lp,
 	$bp_lp,
+	$afectados_mm,
+	$calificacion_mm,
+	$bp_mm,
 	$afectados_cedis,
 	$calificacion_cedis,
 	$bp_cedis

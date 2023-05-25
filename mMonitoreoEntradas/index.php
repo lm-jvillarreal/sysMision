@@ -82,6 +82,7 @@ $primer_dia = _data_first_month_day($fecha);
                     <option value="4">Allende</option>
                     <option value="5">Petaca</option>
                     <option value="99">CEDIS</option>
+                    <option value="6">Montemorelos</option>
                   </select>
                 </div>
               </div>
@@ -103,12 +104,14 @@ $primer_dia = _data_first_month_day($fecha);
                     <thead>
                       <tr>
                         <th width='5%'>Sucursal</th>
-                        <th width='10%'>Folio</th>
+                        <th width='5%'>Folio</th>
                         <th>Proveedor</th>
                         <th width='10%'>OC</th>
                         <th width="10%">Estatus</th>
+                        <th width='5%'>Cumpl.%</th>
+                        <th width='5%'>Cum. Uni. %</th>
                         <th width='10%'>Factura</th>
-                        <th width='10%'>Fecha</th>
+                        <th width='8%'>Fecha</th>
                         <th width='5%'></th>
                       </tr>
                     </thead>
@@ -210,6 +213,15 @@ $primer_dia = _data_first_month_day($fecha);
             }
           },
           {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
             extend: 'copy',
             text: 'Copiar registros',
             className: 'btn btn-default',
@@ -245,6 +257,12 @@ $primer_dia = _data_first_month_day($fecha);
           },
           {
             "data": "estatus"
+          },
+          {
+            "data": "porcentaje"
+          },
+          {
+            "data": "cumuni"
           },
           {
             "data": "factura"
@@ -285,6 +303,15 @@ $primer_dia = _data_first_month_day($fecha);
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',

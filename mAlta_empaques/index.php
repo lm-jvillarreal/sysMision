@@ -60,6 +60,7 @@ include '../global_seguridad/verificar_sesion.php';
                       <tr>
                         <th width="15%">Articulo</th>
                         <th>Descripcion</th>
+                        <th>C. empaque</th>
                         <th>U. Emp.</th>
                         <th width="10%">Cantidad</th>
                       </tr>
@@ -68,6 +69,7 @@ include '../global_seguridad/verificar_sesion.php';
                       <tr>
                         <th width="15%">Articulo</th>
                         <th>Descripcion</th>
+                        <th>C. empaque</th>
                         <th>U. Emp.</th>
                         <th width="10%">Cantidad</th>
                       </tr>
@@ -156,6 +158,15 @@ include '../global_seguridad/verificar_sesion.php';
             }
           },
           {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
             extend: 'copy',
             text: 'Copiar registros',
             className: 'btn btn-default',
@@ -187,6 +198,9 @@ include '../global_seguridad/verificar_sesion.php';
           },
           {
             "data": "descripcion"
+          },
+          {
+            "data":"empaque"
           },
           {
             "data": "unidad_empaque"

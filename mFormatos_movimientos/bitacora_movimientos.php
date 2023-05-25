@@ -1,5 +1,11 @@
 <?php
 include '../global_seguridad/verificar_sesion.php';
+date_default_timezone_set('America/Monterrey');
+$fecha      = date('Y-m-d');
+$nuevafecha = strtotime('+1 day', strtotime($fecha));
+$nuevafecha = date('Y-m-d', $nuevafecha);
+$hora       = date('h:i:s');
+$prim_dia   = date('Y-m-01');
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,6 +37,34 @@ include '../global_seguridad/verificar_sesion.php';
 						<h3 class="box-title">Lista de faltantes registrados</h3>
 					</div>
 					<div class="box-body">
+						<form method="POST" id = "form_datos">
+                  			<div class="row">
+                    			<div class="col-md-3">
+                      				<div class="form-group">
+                        				<label for="fecha_inicio">*Fecha Inicio: </label>
+                        				<div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicial" data-link-format="yyyy-mm-dd">
+                          					<input class="form-control" size="16" type="text" value="<?php echo $prim_dia?>" id="fecha_inicial" name="fecha_inicial">
+                          					<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                          					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        				</div>
+                      				</div>
+                    			</div>
+                    			<div class="col-md-3">
+                      				<div class="form-group">
+                        				<label for="fecha_final">*Fecha final:</label>
+                        				<div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_final" data-link-format="yyyy-mm-dd">
+                          					<input class="form-control" size="16" type="text" value="<?php echo $fecha?>" id="fecha_final" name="fecha_final">
+                          					<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                          					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        				</div>
+                      				</div>
+                    			</div>
+                  			</div>
+                		</form>
+					</div>
+					<div class="box-footer text-right">
+						<button class="btn btn-danger" id="btn-generar">Generar</button>
+              		</div>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="table-responsive">
@@ -94,8 +128,12 @@ include '../global_seguridad/verificar_sesion.php';
 		$(document).ready(function(e) {
 			cargar_tabla();
 		});
-
-		function cargar_tabla() {
+		$("#btn-generar").click(function() {
+			cargar_tabla(1);
+		})
+		function cargar_tabla(parametro) {
+			var fecha_inicial = $("#fecha_inicial").val();
+			var fecha_final = $("#fecha_final").val();
 			$('#lista_codigos').dataTable().fnDestroy();
 			$('#lista_codigos').DataTable({
 				'language': {
@@ -142,7 +180,11 @@ include '../global_seguridad/verificar_sesion.php';
 					"type": "POST",
 					"url": "tabla_bitacora.php",
 					"dataSrc": "",
-					"data": ""
+					"data": {
+          				fecha_final: fecha_final,
+          				fecha_inicial: fecha_inicial,
+            			parametro: parametro
+        			}
 				},
 				"columns": [{
 						"data": "id"

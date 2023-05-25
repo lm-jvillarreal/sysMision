@@ -1,6 +1,7 @@
 <?php 
   include '../global_seguridad/verificar_sesion.php';
   $filtro=(!empty($registros_propios) == '1')?"AND equipos_escaner.id_usuario = '$id_usuario'":"";
+  $datos = array();
 
   if(!empty($_POST['id_sucursal'])){
     $id_sucursal     = $_POST['id_sucursal'];
@@ -35,28 +36,41 @@
     $boton_eliminar = "<a onclick='eliminar_escaner($row[0])' class='btn btn-danger'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></a>";
     $boton_editar   = "<a class='btn btn-warning' onclick='editar_registro_escaner($row[0])'><i class='fa fa-edit fa-lg' aria-hidden='true'></i></a>";
 
-    $renglon = "
-      {
-      \"#\": \"$numero\",
-      \"Marca\": \"$row[1]\",
-      \"Modelo\": \"$row[3]\",
-      \"Caja\": \"$row[4]\",
-      \"Serie\": \"$row[2]\",
-      \"Class\": \"$row[5]\",
-      \"FF\": \"$row[6]\",
-      \"NS\": \"$row[7]\",
-      \"Factura\": \"$documento\",
-      \"Editar\": \"$boton_editar\",
-      \"Eliminar\": \"$boton_eliminar\"
-      },";
-    $cuerpo = $cuerpo.$renglon;
-    $numero ++;
-  }
-  $cuerpo2 = trim($cuerpo,','); ///Quitarle la coma
-  $tabla = "
-    ["
-    .$cuerpo2.
-    "]
-    ";
-  echo $tabla;
+    array_push($datos,array(
+      '#'=>$numero,
+      'Marca'=>$row[1],
+      'Modelo'=>$row[3],
+      'Caja'=>$row[4],
+      'Serie'=>$row[2],
+      'Class'=>$row[5],
+      'FF'=>$row[6],
+      'NS'=>$row[7],
+      'Factura'=>$documento,
+      'Editar'=>$boton_editar,
+      'Eliminar'=>$boton_eliminar
+    ));
+  //   $renglon = "
+  //     {
+  //     \"#\": \"$numero\",
+  //     \"Marca\": \"$row[1]\",
+  //     \"Modelo\": \"$row[3]\",
+  //     \"Caja\": \"$row[4]\",
+  //     \"Serie\": \"$row[2]\",
+  //     \"Class\": \"$row[5]\",
+  //     \"FF\": \"$row[6]\",
+  //     \"NS\": \"$row[7]\",
+  //     \"Factura\": \"$documento\",
+  //     \"Editar\": \"$boton_editar\",
+  //     \"Eliminar\": \"$boton_eliminar\"
+  //     },";
+  //   $cuerpo = $cuerpo.$renglon;
+     $numero ++;
+   }
+  // $cuerpo2 = trim($cuerpo,','); ///Quitarle la coma
+  // $tabla = "
+  //   ["
+  //   .$cuerpo2.
+  //   "]
+  //   ";
+  echo utf8_encode(json_encode($datos));
 ?>

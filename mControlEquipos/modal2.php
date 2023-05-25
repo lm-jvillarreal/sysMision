@@ -28,12 +28,12 @@
                         <div class="col-md-6">
                             <div class="form-group">
                             <label for="fecha_cambio">*Equipo:</label>
-                                <select id="equipo_marca" name="equipo_marca" style="width: 100%">
-                                    <option value=""></option>
-                                    <option value="1">Terminal</option>
-                                    <option value="2">Escaner</option>
-                                </select>
-                            </div>
+                            <select name="equipo_m" id="equipo_m" class="form-control" onchange="formulario_modelo(this.value)">
+                                <option value=""></option>
+                                <option value="1">Terminal</option>
+                                <option value="2">Escáner</option>
+                            </select>
+                        </div>
                         </div>
                     </div>
                 </form>

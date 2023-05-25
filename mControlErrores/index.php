@@ -88,7 +88,9 @@ $fecha2 =  _data_last_month_day();
                       <option value="3">Villegas</option>
                       <option value="4">Allende</option>
                       <option value="5">La Petaca</option>
+                      <option value="6">Montemorelos</option>
                       <option value="99">CEDIS</option>
+                      <option value="203">CEDIS Ropa</option>
                     </select>
                   </div>
                 </div>
@@ -275,6 +277,43 @@ $fecha2 =  _data_last_month_day();
         'language': {"url": "../plugins/DataTables/Spanish.json"},
         "paging":   true,
         "pageLength" : 5,
+        "dom": 'Bfrtip',
+         buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					}
+				],
         "ajax": {
           "type": "POST",
           "url": "tabla_comentarios.php",

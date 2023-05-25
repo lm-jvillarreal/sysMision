@@ -123,6 +123,7 @@ $hora = date("h:i:s");
       </section>
       <!-- /.content -->
     </div>
+    <?php include 'modal_coincidencias.php'; ?>
     <!-- /.content-wrapper -->
     <?php include '../footer2.php'; ?>
 
@@ -230,6 +231,13 @@ $hora = date("h:i:s");
               1: '1 ligne copiée'
             }
           },
+          {
+            text: 'Coincidencias',
+            action: function() {
+              coincidencias();
+            },
+            counter: 1
+          },
         ],
         "ajax": {
           "type": "POST",
@@ -283,6 +291,51 @@ $hora = date("h:i:s");
               .draw();
           }
         });
+      });
+    }
+
+    function tabla_modal() {
+      var articulo = $("#modal_descripcion").val();
+      var f_inicio = $("#fecha_inicial_modal").val();
+      var f_fin = $("#fecha_final_modal").val();
+      $('#lista_articulos').dataTable().fnDestroy();
+      $('#lista_articulos').DataTable({
+        'language': {
+          "url": "../plugins/DataTables/Spanish.json"
+        },
+        'paging': false,
+        "ajax": {
+          "type": "POST",
+          "url": "tabla_coincidencias.php",
+          "dataSrc": "",
+          "data": {
+            articulo: articulo,
+            f_inicio: f_inicio,
+            f_fin: f_fin
+          }
+        },
+        "columns": [{
+            "data": "id_carta"
+          },
+          {
+            "data": "folio_entrada"
+          },
+          {
+            "data": "cantidad"
+          },
+          {
+            "data": "descripcion"
+          },
+          {
+            "data": "costo_unitario"
+          },
+          {
+            "data": "total"
+          },
+          {
+            "data": "fecha"
+          }
+        ]
       });
     }
 
@@ -340,6 +393,16 @@ $hora = date("h:i:s");
       startView: 2,
       minView: 2,
       forceParse: 0
+    });
+
+    function coincidencias() {
+      $("#modal-coincidencias").modal("show");
+    }
+    $("#modal_descripcion").keypress(function(e) { //Función que se desencadena al presionar enter
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 13) {
+        tabla_modal();
+      }
     });
   </script>
 </body>

@@ -9,26 +9,6 @@ $hora = date("h:i:s");
 $month = date('m');
 $year = date('Y');
 $nuevafecha = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
-
-// function _data_last_month_day() { 
-//   $month = date('m');
-//   $year = date('Y');
-//   $day = date("d", mktime(0,0,0, $month+1, 0, $year));
-
-//   return date('Y-m-d', mktime(0,0,0, $month, $day, $year));
-// };
-
-// * Actual month first day *
-// function _data_first_month_day() {
-//   $month = date('m');
-//   $year = date('Y');
-//   return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
-// }
-// $fecha1 = _data_first_month_day();
-// $fecha2 =  _data_last_month_day();
-
-// $nuevafecha = strtotime ( '-5 day' , strtotime($fecha)) ;
-// $nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 ?>
 <!DOCTYPE html>
 <html>
@@ -92,7 +72,9 @@ $nuevafecha = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
                       <option value="3">Villegas</option>
                       <option value="4">Allende</option>
                       <option value="5">La Petaca</option>
+                      <option value="6">Montemorelos</option>
                       <option value="99">CEDIS</option>
+                      <option value="203">CEDIS ROPA</option>
                     </select>
                   </div>
                 </div>
@@ -224,6 +206,7 @@ $nuevafecha = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
     <!-- /.content -->
   </div>
   <?php include 'modal.php'; ?>
+  <?php include 'modal_detalle.php'; ?>
   <!-- /.content-wrapper -->
   <?php include '../footer2.php'; ?>
 
@@ -238,15 +221,20 @@ $nuevafecha = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
 
   <?php include '../footer.php'; ?>
   <!-- Page script -->
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
   <script>
-    $(function() {
-      $('.select').select2({
-        placeholder: 'Seleccione una opcion',
-        lenguage: 'es',
-        minimumResultsForSearch: Infinity
-      })
-      cargar_tabla();
+    $('.select').select2({
+      placeholder: 'Seleccione una opcion',
+      lenguage: 'es',
+      minimumResultsForSearch: Infinity
     })
+    cargar_tabla();
 
     function cargar_tabla() {
       var fecha_inicio = $("input[name='fecha_inicial']").val();
@@ -258,6 +246,50 @@ $nuevafecha = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
         'language': {
           "url": "../plugins/DataTables/Spanish.json"
         },
+        "dom": 'Bfrtip',
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+          {
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					},
+          {
+            text: 'Ver detalle',
+            action: function() {
+              ver_detalle();
+            },
+            counter: 1
+          },
+        ],
         "ajax": {
           "type": "POST",
           "url": "tabla.php",
@@ -292,6 +324,76 @@ $nuevafecha = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
         ]
       });
     }
+
+    function tabla_detalle() {
+      var fecha_inicio = $("input[name='fecha_inicial']").val();
+      var fecha_fin = $("input[name='fecha_final']").val();
+      var sucursal = $("select[name='sucursal']").val();
+      $('#detalle_categoria').dataTable().fnDestroy();
+      $('#detalle_categoria').DataTable({
+        'language': {
+          "url": "../plugins/DataTables/Spanish.json"
+        },
+        "paging": false,
+        "dom": 'Bfrtip',
+        buttons: [{
+            extend: 'excel',
+            text: 'Exportar a Excel',
+            className: 'btn btn-default',
+            title: 'ListaCategorias',
+            exportOptions: {
+              columns: ':visible'
+            }
+          },
+          {
+            extend: 'copy',
+            text: 'Copiar registros',
+            className: 'btn btn-default',
+            copyTitle: 'Ajouté au presse-papiers',
+            copyKeys: '',
+            copySuccess: {
+              _: '%d lignes copiées',
+              1: '1 ligne copiée'
+            }
+          },
+        ],
+        "ajax": {
+          "type": "POST",
+          "url": "tabla_detalle.php",
+          "dataSrc": "",
+          data: {
+            fecha_inicial: fecha_inicio,
+            fecha_final: fecha_fin,
+            sucursal: sucursal
+          }
+        },
+        "columns": [{
+            "data": "codigo",
+            "width": "15%"
+          },
+          {
+            "data": "descripcion",
+            "width": "45%"
+          },
+          {
+            "data": "salida",
+            "width": "20%"
+          },
+          {
+            "data": "salida",
+            "width": "20%"
+          }
+
+        ]
+      });
+    };
+
+    function ver_detalle() {
+      $("#modal-detalle").modal("show");
+    }
+    $('#modal-detalle').on('show.bs.modal', function(e) {
+      tabla_detalle();
+    });
     $("#btn-mostrar").click(function() {
       cargar_tabla();
       carga_calificaciones();
@@ -326,18 +428,6 @@ $nuevafecha = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
       });
       return false;
     });
-  </script>
-  <script type="text/javascript">
-    $('.form_datetime').datetimepicker({
-      //language:  'fr',
-      weekStart: 1,
-      todayBtn: 1,
-      autoclose: 1,
-      todayHighlight: 1,
-      startView: 2,
-      forceParse: 0,
-      showMeridian: 1
-    });
     $('.form_date').datetimepicker({
       language: 'es',
       weekStart: 1,
@@ -348,19 +438,6 @@ $nuevafecha = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
       minView: 2,
       forceParse: 0
     });
-    $('.form_time').datetimepicker({
-      language: 'fr',
-      weekStart: 1,
-      todayBtn: 1,
-      autoclose: 1,
-      todayHighlight: 1,
-      startView: 1,
-      minView: 0,
-      maxView: 1,
-      forceParse: 0
-    });
-  </script>
-  <script>
     $(document).ready(function(e) {
       $('#modal-default').on('show.bs.modal', function(e) {
         var id = $(e.relatedTarget).data().id;
@@ -408,6 +485,10 @@ $nuevafecha = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
         }
       });
       return false;
+    }
+
+    function imprimir(folio){
+      alert(folio);
     }
   </script>
 </body>

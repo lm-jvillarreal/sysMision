@@ -19,6 +19,7 @@
 					COM_ARTICULOS
 				WHERE
 					ARTC_DESCRIPCION NOT LIKE '%NO USAR%'
+					AND ARTC_DESCRIPCION NOT LIKE '%***DESCATALOGADO***%'
 				and ARTC_DESCRIPCION LIKE '%$descripcion%'";
             $st_detalle = oci_parse($conexion_central, $qry);
             oci_execute($st_detalle);
@@ -55,7 +56,7 @@
 	              <?php echo "$row[1]"; ?>
 	            </td>
 	          </tr>
-	          <?
+	          <?php
 	        }
 	        ?>
 	    </table>

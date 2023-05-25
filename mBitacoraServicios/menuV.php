@@ -35,7 +35,7 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
       <li class="header">Opciones del módulo</li>
       <li class="active"><a href="index.php"><i class="fa fa-dollar"></i> <span>Registro de Servicios</span></a></li>
       <li class=""><a href="servicios.php"><i class="fa fa-money"></i> <span>Pago de Servicios</span></a></li>
-      <li><a href='#' data-id = '' data-toggle = 'modal' data-target = '#modal-default' target='blank'><i class="fa fa-square"></i><span>Rublos</span></a></li>
+      <li><a href='#' data-id = '' data-toggle = 'modal' data-target = '#modal-default' target='blank'><i class="fa fa-square"></i><span>Rubros</span></a></li>
     </ul>
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">Opciones de navegaci&oacute;n</li>

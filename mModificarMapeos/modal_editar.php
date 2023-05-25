@@ -20,7 +20,9 @@
 										<label for="area">Codigo del producto</label>
 										<input type="text" id="txtCodProd" onchange="javascript:consulta_codigo()" name="txtCodProd" class="form-control">
 										<label>Descripcion</label>
-										<input type="text" name="txtDescripcion" readonly class="form-control" id="txtDescripcionM">					
+										<input type="text" name="txtDescripcion" readonly class="form-control" id="txtDescripcionM">
+										<label>Consecutivo</label>
+										<input type="text" class="form-control" name="txtConsecutivo" id="txtConsecutivo">					
 									</div>
 						        </div>
 							</div>

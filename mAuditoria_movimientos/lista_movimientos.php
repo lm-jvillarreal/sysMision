@@ -332,6 +332,49 @@ switch ($sucursal) {
           <div class="col-md-3">
             <div class="box box-warning box-solid">
               <div class="box-header with-border">
+                <h3 class="box-title">MERMA CADUCIDAD (SXMCAD)</h3>
+                <!-- /.box-tools -->
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <?php
+                $cadena_consulta = "SELECT ALMN_ALMACEN, MODN_FOLIO, TO_CHAR(MOVD_FECHAELABORACION,'DD/MM/YYYY'), MOVN_ESTATUS, TO_CHAR(MOVD_FECHAELABORACION,'YYYY-MM-DD')
+                                        FROM INV_MOVIMIENTOS
+                                        WHERE MODC_TIPOMOV = 'SXMCAD'
+                                        AND MOVD_FECHAELABORACION >= TRUNC(TO_DATE('$fecha_inicio','YYYY-MM-DD'))
+                                        AND MOVD_FECHAELABORACION <= TRUNC(TO_DATE('$fecha_fin', 'YYYY-MM-DD'))
+                                        AND ALMN_ALMACEN = '$sucursal'" . $filtro_estatus;
+                //echo $cadena_consulta;
+                $consulta_sxmcad = oci_parse($conexion_central, $cadena_consulta);
+                oci_execute($consulta_sxmcad);
+                while ($row_sxmcad = oci_fetch_row($consulta_sxmcad)) {
+                  if ($row_sxmcad[3] != '4') {
+                    $status = 'Capturado (Sin Contabilizar)';
+                  } elseif ($row_sxmcad[3] == '4') {
+                    $status = 'Afectado (Contabilizado)';
+                  }
+                ?>
+                  <a href="#" data-id="<?php echo $row_sxmcad[1] ?>" data-mov="SXMCAD" data-suc="<?php echo $row_sxmcad[0] ?>" data-toggle="modal" data-target="#modal-default"><?php echo $row_sxmcad[1] . ' - ' . $status . ' ' . $row_sxmcad[2]; ?></a><br>
+                <?php
+                  $fecha_ultimoMov = new DateTime($row_sxmcad[4]);
+                  $now = new DateTime();
+                }
+                $cantidad_sxmcad = oci_num_rows($consulta_sxmcad);
+                if ($cantidad_sxmcad == 0) {
+                  echo "<p style='color:#FF0000';>No existen registros</p>";
+                } else {
+                  $interval = $fecha_ultimoMov->diff($now)->format("%d días de retraso");
+                  echo "Total.- " . $cantidad_sxmcad . "<br>" . $interval;
+                }
+                ?>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+          <div class="col-md-3">
+            <div class="box box-warning box-solid">
+              <div class="box-header with-border">
                 <h3 class="box-title">MERMA VARIEDADES (SXMVAR)</h3>
                 <!-- /.box-tools -->
               </div>

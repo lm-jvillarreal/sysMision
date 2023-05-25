@@ -7,14 +7,16 @@ $qry = "SELECT
 				mapeo.fecha,
 				mapeo.impreso,
 				mapeo.id_sucursal,
-				areas.nombre
+				areas.nombre,
+                sucursales.nombre
 			FROM
 				inv_mapeo mapeo 
 			INNER JOIN areas ON areas.id = mapeo.id_area
+            INNER JOIN sucursales ON sucursales.id = mapeo.id_sucursal
 			
 			WHERE mapeo.activo = 1
 			AND mapeo.completo = 1
-			AND mapeo.impreso = 0
+			and mapeo.impreso = 0
 			AND mapeo.id_sucursal = '$id_sede'";
 $consulta = mysqli_query($conexion, $qry);
 ?>
@@ -22,11 +24,12 @@ $consulta = mysqli_query($conexion, $qry);
 	<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 		<thead>
 			<tr>
-				<th width='5%'>Area</th>
+				<th>Sucursal</th>
+				<th width='10%'>Area</th>
 				<th>Zona</th>
-				<th>Mueble</th>
-				<th>Cara</th>
-				<th>Fecha</th>
+				<th width='40%'>Mueble</th>
+				<th width='40%'>Cara</th>
+				<th width='45%'>Fecha</th>
 				<th>PDF</th>
 				<th>Excel</th>
 				<th>Revision</th>
@@ -37,6 +40,7 @@ $consulta = mysqli_query($conexion, $qry);
 			<?php
 			while ($row = mysqli_fetch_array($consulta)) {	?>
 				<tr>
+					<td><?php echo "$row[8]" ?></td>
 					<td>
 						<?php echo "$row[7]" ?>
 					</td>

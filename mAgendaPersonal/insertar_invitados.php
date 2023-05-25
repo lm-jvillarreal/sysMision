@@ -11,6 +11,11 @@
 		else{
 			$cadena = mysqli_query($conexion,"INSERT INTO agenda (folio,title,start,end,backgroundColor,borderColor,fecha,hora,id_usuario)
 					VALUES ('$folio','$row_verificar[1]','$row_verificar[2]','$row_verificar[3]','$row_verificar[4]','$row_verificar[5]','$fecha','$hora','$invitados[$i]')");
+
+			////////////////Empieza editado de Gustavo
+			
+			////////////////Termina aquí
+		
 		}
 	}
 	echo "ok";

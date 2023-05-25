@@ -3,8 +3,8 @@ include '../global_seguridad/verificar_sesion.php';
 date_default_timezone_set('America/Monterrey');
 
 $fecha=date("Y-m-d"); 
-$fecha_libera = date("Y-m-d h:i:s");
-$hora=date ("h:i:s");
+$fecha_libera = date("Y-m-d H:i:s");
+$hora=date ("H:i:s");
 
 $id_cambio = $_POST['id_cambio'];
 $folio = (!empty($_POST['folio']))?$_POST['folio']:"0";

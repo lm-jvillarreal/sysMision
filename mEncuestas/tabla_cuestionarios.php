@@ -43,14 +43,15 @@
       $clase = "";
     }
     else{
-      $clase = "disabled";
+      //$clase = "disabled";
     }
 
     if($DO == 1){
       $boton_DO = "<a class='btn btn-primary ".$clase."' href='encuesta.php?id=$row_cuestionario[8]&id_sucursal=$DO'>DO</a>";
     }
     else{
-      $boton_DO   = "<a class='btn btn-primary disabled' href='encuesta.php?id=$row_cuestionario[0]&id_sucursal=$DO'>DO</a>";
+      $boton_DO = "<a class='btn btn-primary ".$clase."' href='encuesta.php?id=$row_cuestionario[8]&id_sucursal=$DO'>DO</a>";
+      //$boton_DO   = "<a class='btn btn-primary disabled' href='encuesta.php?id=$row_cuestionario[0]&id_sucursal=$DO'>DO</a>";
     }
 
     if ($ARB == 2){

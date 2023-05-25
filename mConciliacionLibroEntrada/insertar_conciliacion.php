@@ -15,16 +15,17 @@ $total_dc = $_POST['total_dc'];
 $total_dc2 = $_POST['total_dc2'];
 $gran_total = $_POST['gran_total'];
 $diferencia = $_POST['diferencia'];
+$escaneada = $_POST['escaneada'];
 
 $cadenaValidar = "SELECT id FROM alb_resumenEntradas WHERE ficha_entrada = '$ficha_entrada'";
 $consultaValidar = mysqli_query($conexion, $cadenaValidar);
 $rowValidar = mysqli_fetch_array($consultaValidar);
 $conteo = count($rowValidar[0]);
 if($conteo>0){
-  $cadenaInsertar = "UPDATE alb_resumenEntradas SET cve_proveedor = '$clave_proveedor', proveedor='$nombre_proveedor', remision='$remision',total_remision='$total_remision', total_entrada='$total_entrada', total_devoluciones='$total_devoluciones', total_cf='$total_cf', total_dc='$total_dc', total_dc2='$total_dc2', gran_total='$gran_total', diferencia='$diferencia', fecha='$fecha', activo='1', usuario='$id_usuario' WHERE ficha_entrada = '$ficha_entrada'";
-  echo $cadenaInsertar;
+  $cadenaInsertar = "UPDATE alb_resumenEntradas SET cve_proveedor = '$clave_proveedor', proveedor='$nombre_proveedor', remision='$remision',total_remision='$total_remision', total_entrada='$total_entrada', total_devoluciones='$total_devoluciones', total_cf='$total_cf', total_dc='$total_dc', total_dc2='$total_dc2', gran_total='$gran_total', diferencia='$diferencia', fecha='$fecha', activo='1', usuario='$id_usuario', escaneada='$escaneada' WHERE ficha_entrada = '$ficha_entrada'";
+  //echo $cadenaInsertar;
 }else{
-  $cadenaInsertar = "INSERT INTO alb_resumenEntradas (ficha_entrada, cve_proveedor, proveedor, remision, total_remision, total_entrada, total_devoluciones, total_cf, total_dc, total_dc2, gran_total, diferencia, fecha, activo, usuario)VALUES('$ficha_entrada','$clave_proveedor','$nombre_proveedor','$remision','$total_remision','$total_entrada','$total_devoluciones','$total_cf','$total_dc','$total_dc2','$gran_total','$diferencia','$fecha','1','$id_usuario')";
+  $cadenaInsertar = "INSERT INTO alb_resumenEntradas (ficha_entrada, cve_proveedor, proveedor, remision, total_remision, total_entrada, total_devoluciones, total_cf, total_dc, total_dc2, gran_total, diferencia, fecha, activo, usuario, escaneada)VALUES('$ficha_entrada','$clave_proveedor','$nombre_proveedor','$remision','$total_remision','$total_entrada','$total_devoluciones','$total_cf','$total_dc','$total_dc2','$gran_total','$diferencia','$fecha','1','$id_usuario','$escaneada')";
 }
 $insertarResumen = mysqli_query($conexion, $cadenaInsertar);
 echo "ok";

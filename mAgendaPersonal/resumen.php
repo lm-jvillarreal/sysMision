@@ -1,7 +1,11 @@
 <?php
   include '../global_seguridad/verificar_sesion.php';
   date_default_timezone_set('America/Monterrey');
-  $fecha = date('Y-m-d');
+  $fecha      = date('Y-m-d');
+  $nuevafecha = strtotime('+1 day', strtotime($fecha));
+  $nuevafecha = date('Y-m-d', $nuevafecha);
+  $hora       = date('h:i:s');
+  $prim_dia   = date('Y-m-01');
  ?>
 <!DOCTYPE html>
 <html>
@@ -29,6 +33,40 @@
         <div class="box box-danger">
           <div class="box-header">
             <h3 class="box-title">Resumen de Eventos del Calendario</h3>
+          </div>
+          <div class="box-body">
+            <form method="POST" id="form_datoss" action="generar_lista.php">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="fecha_inicio">*Fecha Inicio: </label>
+                    <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicio" data-link-format="yyyy-mm-dd">
+                      <input class="form-control" size="16" type="text" value="<?php echo $prim_dia?>" id="fecha_inicio" name="fecha_inicio">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="fecha_final">*Fecha final:</label>
+                    <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_final" data-link-format="yyyy-mm-dd">
+                      <input class="form-control" size="16" type="text" value="<?php echo $fecha?>" id="fecha_final" name="fecha_final">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer text-right">
+                <a class="btn btn-warning" id= "btn-generar" >Mostrar Datos</a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="box box-danger">
+          <div class="box-header">
+            <h3 class="box-title">Desglose de Eventos del Calendario</h3>
           </div>
           <div class="box-body">
             <div class="row">
@@ -88,7 +126,15 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <!-- Page script -->
 <script>
+  $("#btn-generar").click(function() {
+		  cargar_tabla_eventos();
+      //mostrar_datos();
+     
+  })
+
   function cargar_tabla_eventos(){
+    var fecha_inicial = $("#fecha_inicio").val();
+			var fecha_final = $("#fecha_final").val();
     $('#lista_eventos').dataTable().fnDestroy();
     $('#lista_eventos').DataTable( {
       'language': {"url": "../plugins/DataTables/Spanish.json"},
@@ -132,7 +178,11 @@
       "ajax": {
           "type": "POST",
           "url": "tabla_eventos.php",
-          "dataSrc": ""
+          "dataSrc": "",
+          "data":{
+          fecha_final: fecha_final,
+					fecha_inicial: fecha_inicial
+        }
       },
       "columns": [
           { "data": "#" },
@@ -320,5 +370,38 @@
     });
   }
 </script>
+<script type="text/javascript">
+      $('.form_datetime').datetimepicker({
+          //language:  'fr',
+          weekStart: 1,
+          todayBtn:  1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 2,
+          forceParse: 0,
+          showMeridian: 1
+      });
+      $('.form_date').datetimepicker({
+          language:  'es',
+          weekStart: 1,
+          todayBtn:  1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 2,
+          minView: 2,
+          forceParse: 0
+      });
+      $('.form_time').datetimepicker({
+          language:  'fr',
+          weekStart: 1,
+          todayBtn:  1,
+          autoclose: 1,
+          todayHighlight: 1,
+          startView: 1,
+          minView: 0,
+          maxView: 1,
+          forceParse: 0
+      });
+  </script>
 </body>
 </html>

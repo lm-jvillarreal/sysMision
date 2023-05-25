@@ -38,6 +38,14 @@ mysqli_set_charset($conexion, "utf8");
 					'Villegas' 
 					WHEN 4 THEN
 					'Allende' 
+					WHEN 5 THEN
+					'Petaca' 
+					WHEN 6 THEN
+					'Montemorelos' 
+					WHEN 99 THEN
+					'CEDIS' 
+					WHEN 203 THEN
+					'CEDIS Ropa' 
 				END,
 				CONCAT(personas.nombre, ' ', personas.ap_paterno, ' ', personas.ap_materno),
 				ROUND(diferencia,2),

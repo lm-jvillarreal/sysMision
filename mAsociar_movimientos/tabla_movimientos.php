@@ -13,7 +13,7 @@ $filtro_sucursal =($solo_sucursal=='1') ? " AND sucursal='$id_sede'":"";
 $cadena_formatos ="SELECT f.id, f.tipo_movimiento, s.nombre, f.estatus, date_format(f.fecha, '%d/%m/%Y'), f.nombre_solicita, f.folio_infofin
                     FROM formatos_movimientos as f 
                     INNER JOIN sucursales as s ON f.sucursal = s.id
-                    WHERE (f.estatus = '0' or f.estatus = '1')".$filtro_sucursal;
+                    WHERE (f.estatus = '0')".$filtro_sucursal;
 
 $consulta_formatos = mysqli_query($conexion,$cadena_formatos);
 $cuerpo ="";
@@ -60,6 +60,8 @@ while ($row_formatos = mysqli_fetch_array($consulta_formatos)) {
         $nom_movimiento='SALIDA POR ROBO';
     }elseif($row_formatos[1]=='TRADEP'){
         $nom_movimiento='TRANSFERENCIA DEPTOS.';
+    }elseif($row_formatos[1]=='SXMCAD'){
+        $nom_movimiento='MERMA CADUCIDAD';
     }
     $renglon = "
 		{

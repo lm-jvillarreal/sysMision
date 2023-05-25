@@ -15,7 +15,7 @@
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <?php include 'menuV5.php'; ?>
+    <?php include 'menuV.php'; ?>
     <!-- /.sidebar -->
   </aside>
 
@@ -36,12 +36,6 @@
                     <label>*Equipo:</label>
                     <input type="text" name="equipo" id="equipo" class="form-control" placeholder="Nombre de Equipo">
                     <input type="text" name="id_registro" id="id_registro" value="0" class="hidden">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>*Descripcion:</label>
-                    <input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="Descripcion del Equipo">
                   </div>
                 </div>
               </div>
@@ -65,14 +59,12 @@
                       <tr>
                         <th>#</th>
                         <th>Equipo</th>
-                        <th>Descripcion</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -160,7 +152,6 @@
         "columns": [
             { "data": "#", "width":"3%" },
             { "data": "Equipo" },
-            { "data": "Descripcion" },
             { "data": "Editar", "width":"3%" },
             { "data": "Eliminar", "width":"3%" }
         ]
@@ -179,6 +170,10 @@
               alertify.success("Registro guardado correctamente");
               $('#form_datos')[0].reset();
               cargar_tabla();
+            }else if(respuesta=="ok_actualizado"){
+              alertify.success("Registro Actualizado");
+              $('#form_datos')[0].reset();
+              cargar_tabla();
             }else if(respuesta=="duplicado"){
               alertify.error("El registro ya existe");
             }else {
@@ -193,13 +188,11 @@
     $( document ).ready( function () {
       $( "#form_datos" ).validate( {
         rules: {
-            equipo: "required",
-            descripcion: "required"
+            equipo: "required"
 
         },
         messages: {
-            equipo: "Campo requerido",
-            descripcion: "Campo requerido"
+            equipo: "Campo requerido"
         },
         errorElement: "em",
         errorPlacement: function ( error, element ) {
@@ -259,7 +252,6 @@
           var array = eval(respuesta);
           $('#id_registro').val(array[0]);
           $('#equipo').val(array[1]);
-          $('#descripcion').val(array[2]);
         }
       });
     }

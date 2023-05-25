@@ -34,7 +34,7 @@
   <ul class="sidebar-menu" data-widget="tree">
     <li class="header">Opciones del módulo</li>
     <li class=""><a href="index.php"><i class="fa fa-list-ul"></i> <span>Lista de Reportes de Cajas</span></a></li>
-    <li class=""><a href="listamantenimiento.php"><i class="fa fa-list-ul"></i> <span>Lista de Mtto. de Cajas</span></a></li>
+    <!-- <li class=""><a href="listamantenimiento.php"><i class="fa fa-list-ul"></i> <span>Lista de Mtto. de Cajas</span></a></li> -->
     <li class="active"><a href="bitacora_reportes.php"><i class="fa fa-list-ul"></i> <span>Bitacora de Reportes.</span></a></li>
   </ul>
   <ul class="sidebar-menu" data-widget="tree">

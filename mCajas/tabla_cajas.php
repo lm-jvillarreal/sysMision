@@ -18,7 +18,7 @@
 					[[-1], [ "All"]],
 				
 				 "language": {
-				"url": "../assets/js/Spanish.json"
+				"url": "../plugins/DataTables/Spanish.json"
 				 }
 			});
 		});

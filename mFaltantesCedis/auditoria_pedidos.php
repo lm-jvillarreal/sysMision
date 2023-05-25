@@ -113,7 +113,7 @@ include '../global_seguridad/verificar_sesion.php';
         success: function(respuesta) {
           swal("Listo!", "El pedido ha sido finalizado correctamente", "success");
           $("#modal-detalle").modal("hide");
-          cargar_tabla();
+          //cargar_tabla();
         }
       });
     }

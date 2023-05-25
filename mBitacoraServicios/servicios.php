@@ -1,5 +1,11 @@
 <?php
 include '../global_seguridad/verificar_sesion.php';
+date_default_timezone_set('America/Monterrey');
+  $fecha      = date('Y-m-d');
+  $nuevafecha = strtotime('+1 day', strtotime($fecha));
+  $nuevafecha = date('Y-m-d', $nuevafecha);
+  $hora       = date('h:i:s');
+  $prim_dia   = date('Y-m-01');
 ?>
 <!DOCTYPE html>
 <html>
@@ -87,27 +93,42 @@ include '../global_seguridad/verificar_sesion.php';
                     <th>Gasto</th>
                     <th>Sucursal</th>
                     <!-- <th>Img.</th> -->
-                    <th>Comm</th>
+                    <th>Comentario</th>
                     <th>Selec.</th>
                   </tr>
                 </thead>
-                <tfooter>
-                  <tr>
-                    <th>#</th>
-                    <th>Proveedor</th>
-                    <th>Encargado</th>
-                    <th>Fecha</th>
-                    <th>Gasto</th>
-                    <th>Sucursal</th>
-                    <!-- <th>Img.</th> -->
-                    <th>Comm</th>
-                    <th>Selec.</th>
-                  </tr>
-                </tfooter>
               </table>
             </div>
           </div>
           <div class="box-body">
+            <form method="POST" id="form_datoss" action="generar_lista.php">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="fecha_inicio">*Fecha Inicio: </label>
+                    <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicio" data-link-format="yyyy-mm-dd">
+                      <input class="form-control" size="16" type="text" value="<?php echo $prim_dia?>" id="fecha_inicio" name="fecha_inicio">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="fecha_final">*Fecha final:</label>
+                    <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_final" data-link-format="yyyy-mm-dd">
+                      <input class="form-control" size="16" type="text" value="<?php echo $fecha?>" id="fecha_final" name="fecha_final">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer text-right">
+                <a class="btn btn-warning" id= "btn-generar" >Mostrar Datos</a>
+                <br>
+              </div>
+            </form>
             <div class="table-responsive">
               <table id="lista_servicios_guardados" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
@@ -116,6 +137,7 @@ include '../global_seguridad/verificar_sesion.php';
                     <th>Descripcion</th>
                     <th width="16%">Monto Total</th>
                     <th width="16%">Sucursal</th>
+                    <th width="16%">Fecha</th>
                     <th width="5%">Acciones</th>
                   </tr>
                 </thead>
@@ -125,6 +147,7 @@ include '../global_seguridad/verificar_sesion.php';
                     <th>Descripcion</th>
                     <th width="16%">Monto Total</th>
                     <th width="16%">Sucursal</th>
+                    <th width="16%">Fecha</th>
                     <th width="5%">Acciones</th>
                   </tr>
                 </tfooter>
@@ -172,12 +195,11 @@ include '../global_seguridad/verificar_sesion.php';
         .columns().search('')
         .draw();
     }
-    // function editar_pago(id) {
-    //   // body...
-    // }
-    // function eliminar_pago(id) {
-    //   // body...
-    // }
+    $("#btn-generar").click(function() {
+		  cargar_tabla2();
+      //mostrar_datos();
+     
+  })
     function efecto() {
       var test = $('.venobox').venobox();
       // close current item clicking on .closeme
@@ -194,7 +216,9 @@ include '../global_seguridad/verificar_sesion.php';
       });
     }
 
-    function cargar_tabla2() {
+    function cargar_tabla2(filtro) {
+      var fecha_inicial = $("#fecha_inicio").val();
+			var fecha_final = $("#fecha_final").val();
       $('#lista_servicios_guardados').dataTable().fnDestroy();
       $('#lista_servicios_guardados').DataTable({
         'language': {
@@ -235,13 +259,33 @@ include '../global_seguridad/verificar_sesion.php';
               _: '%d lignes copiées',
               1: '1 ligne copiée'
             }
+          },
+          {
+            text: 'Registros Propios',
+            action: function() {
+              cargar_tabla2(1);
+            },
+            className: 'btn btn-default',
+            counter: 1
+          },
+          {
+            text: 'Registros Todos',
+            action: function() {
+              cargar_tabla2(0);
+            },
+            className: 'btn btn-default',
+            counter: 1
           }
         ],
         "ajax": {
           "type": "POST",
           "url": "tabla3.php",
           "dataSrc": "",
-          "data": "",
+          "data": {
+            filtro: filtro,
+            fecha_final: fecha_final,
+					  fecha_inicial: fecha_inicial
+          },
         },
         "columns": [{
             "data": "#"
@@ -255,6 +299,10 @@ include '../global_seguridad/verificar_sesion.php';
           },
           {
             "data": "Sucursal",
+            "width": "5%"
+          },
+          {
+            "data": "Fecha",
             "width": "5%"
           },
           {
@@ -272,7 +320,7 @@ include '../global_seguridad/verificar_sesion.php';
       }
     }
 
-    function cargar_tabla() {
+    function cargar_tabla(filtro) {
       var id_pago = $('#id_pago').val();
       $('#lista_servicios').dataTable().fnDestroy();
       $('#lista_servicios').DataTable({
@@ -322,6 +370,22 @@ include '../global_seguridad/verificar_sesion.php';
             },
             className: 'btn btn-default',
             counter: 1
+          },
+          {
+            text: 'Registros Propios',
+            action: function() {
+              cargar_tabla(1);
+            },
+            className: 'btn btn-default',
+            counter: 1
+          },
+          {
+            text: 'Registros Todos',
+            action: function() {
+              cargar_tabla(0);
+            },
+            className: 'btn btn-default',
+            counter: 1
           }
         ],
         "ajax": {
@@ -329,7 +393,8 @@ include '../global_seguridad/verificar_sesion.php';
           "url": "tabla2.php",
           "dataSrc": "",
           "data": {
-            'id_pago': id_pago
+            'id_pago': id_pago,
+            'filtro': filtro
           },
         },
         "columns": [{
@@ -338,15 +403,15 @@ include '../global_seguridad/verificar_sesion.php';
           },
           {
             "data": "Proveedor",
-            "width": '10%'
+            "width": '15%'
           },
           {
             "data": "Encargado",
-            "width": '5%'
+            "width": '10%'
           },
           {
             "data": "Fecha",
-            "width": '5%'
+            "width": '8%'
           },
           {
             "data": "Gasto",
@@ -361,7 +426,7 @@ include '../global_seguridad/verificar_sesion.php';
           },
           {
             "data": "Seleccionar",
-            "width": '10%'
+            "width": '9%'
           }
         ]
       });
@@ -385,7 +450,7 @@ include '../global_seguridad/verificar_sesion.php';
               text: array[3]
             }
           });
-          cargar_tabla();
+          cargar_tabla(0);
         }
       });
     }
@@ -406,8 +471,8 @@ include '../global_seguridad/verificar_sesion.php';
               success: function(respuesta) {
                 if (respuesta = "ok") {
                   alertify.success("Registro Eliminado Correctamente");
-                  cargar_tabla();
-                  cargar_tabla2();
+                  cargar_tabla(0);
+                  cargar_tabla2(0);
                 } else {
                   alertify.error("Ha Ocurrido un Error");
                 }
@@ -433,7 +498,7 @@ include '../global_seguridad/verificar_sesion.php';
               success: function(respuesta) {
                 if (respuesta = "ok") {
                   alertify.success("Registro Eliminado Correctamente");
-                  cargar_tabla();
+                  cargar_tabla(0);
                 } else {
                   alertify.error("Ha Ocurrido un Error");
                 }
@@ -479,8 +544,8 @@ include '../global_seguridad/verificar_sesion.php';
         }
       });
     });
-    cargar_tabla();
-    cargar_tabla2();
+    cargar_tabla(0);
+    cargar_tabla2(0);
     $.validator.setDefaults({
       submitHandler: function() {
         limpiar_filtro();
@@ -507,8 +572,8 @@ include '../global_seguridad/verificar_sesion.php';
                 }
               });
               $('#form_datos')[0].reset();
-              cargar_tabla();
-              cargar_tabla2();
+              cargar_tabla(0);
+              cargar_tabla2(0);
             } else if (res == "vacio") {
               alertify.error("Selecciona un Servicio");
             } else {

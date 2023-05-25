@@ -1,32 +1,23 @@
 <div class="modal fade" id="modal_buscar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content modal-lg">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4>Detalles del codigo</h4>
 			</div>
 			<div class="modal-body">
-			<form action="" method="POST" id="formulario_editar">
-				<div class="container">
+				<form action="" method="POST" id="formulario_editar">
 					<div class="row">
-						<div class="col-sm-5">
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3>Buscar Articulo</h3>
-						        </div>
-						        <div class="panel-body">
-									<div class="form-group" id="modal_contenedor">
-									</div>
-						        </div>
+						<div class="col-md-12">
+							<div class="form-group" id="modal_contenedor">
 							</div>
 						</div>
 					</div>
-				</div>
-			</form>
+				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-				
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+
 			</div>
 		</div>
 	</div>

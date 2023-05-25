@@ -212,6 +212,15 @@ include '../global_seguridad/verificar_sesion.php';
             }
           },
           {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
             extend: 'copy',
             text: 'Copiar registros',
             className: 'btn btn-default',
@@ -279,6 +288,15 @@ include '../global_seguridad/verificar_sesion.php';
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',

@@ -1,5 +1,5 @@
 <?php 
-	include '../global_settings/conexion_supsys.php';
+	include '../global_seguridad/verificar_sesion.php';
 	date_default_timezone_set('America/Monterrey');
 	$fecha = date('Y-m-d');
 	$hora = date('H:i:s');

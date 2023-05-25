@@ -46,23 +46,10 @@ include '../global_seguridad/verificar_sesion.php';
                         <th width="5%">ARB</th>
                         <th width="5%">VILL</th>
                         <th width="5%">ALL</th>
+                        <th width="5%">PET</th>
                         <th width="5%">AjuInv</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Código</th>
-                        <th>Descripción</th>
-                        <th>Sucursal</th>
-                        <th>Captura</th>
-                        <th>DO</th>
-                        <th>ARB</th>
-                        <th>VILL</th>
-                        <th>ALL</th>
-                        <th>AjuInv</th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
@@ -198,6 +185,9 @@ include '../global_seguridad/verificar_sesion.php';
           },
           {
             "data": "all"
+          },
+          {
+            "data": "pet"
           },
           {
             "data": "ajuste"

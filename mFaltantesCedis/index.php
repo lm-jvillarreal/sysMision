@@ -62,6 +62,7 @@ include '../global_seguridad/verificar_sesion.php';
                           <td width='5%'><strong>Codigo</strong></td>
                           <td><strong>Descripcion</strong></td>
                           <td width='6%'><strong>U. Emp.</strong></td>
+                          <td width='6%'><strong>S. Min.</strong></td>
                           <td width='6%'><strong>Ventas</strong></td>
                           <td width='6%'><strong>Teórico</strong></td>
                           <td width='6%'><strong>CEDIS</strong></td>
@@ -74,6 +75,7 @@ include '../global_seguridad/verificar_sesion.php';
                           <th width='5%'>Codigo</th>
                           <th>Descripcion</th>
                           <th width='6%'>U. Emp.</th>
+                          <th width='6%'>S. Min.</th>
                           <th width='6%'>Ventas</th>
                           <th width='6%'>Teórico</th>
                           <th width='6%'>CEDIS</th>
@@ -190,9 +192,9 @@ include '../global_seguridad/verificar_sesion.php';
       $('#lista_registros').dataTable().fnDestroy();
       var table = $('#lista_registros').DataTable({
         "initComplete": function(settings, json) {
-          if(condicion=='si'){
+          if (condicion == 'si') {
             swal("Registros cargados", "En este listado solo aparecen los códigos que tienen existencia en CEDIS", "success");
-          }else{
+          } else {
 
           }
         },
@@ -202,7 +204,13 @@ include '../global_seguridad/verificar_sesion.php';
         "paging": false,
         "searching": true,
         "dom": 'Bfrtip',
-        buttons: [{
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+          {
             extend: 'excel',
             text: 'Exportar a Excel',
             className: 'btn btn-default',
@@ -211,6 +219,15 @@ include '../global_seguridad/verificar_sesion.php';
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'AuditoriaPV',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',
@@ -226,6 +243,10 @@ include '../global_seguridad/verificar_sesion.php';
             text: 'Finalizar pedido',
             className: 'red',
             action: function() {
+              table
+                .search('')
+                .columns().search('')
+                .draw();
               finaliza_pedido();
             },
             counter: 1
@@ -249,6 +270,9 @@ include '../global_seguridad/verificar_sesion.php';
             "data": "unidad_empaque"
           },
           {
+            "data": "stock_minimo"
+          },
+          {
             "data": "ventas"
           },
           {
@@ -269,7 +293,12 @@ include '../global_seguridad/verificar_sesion.php';
           {
             "data": "pedido"
           }
-        ]
+        ],
+        "rowCallback": function(row, data, index) {
+          if ((parseInt(data.teorico, 10) < parseInt(data.ventas, 10))&&(parseInt(data.teorico,10)>0)) {
+            $('td', row).css('background-color', '#E0F2D5');
+          }
+        }
       });
       table.columns().every(function() {
         var that = this;

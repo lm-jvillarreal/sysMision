@@ -29,7 +29,7 @@ include '../global_seguridad/verificar_sesion.php';
         <form method="POST" id="form-cambios">
           <div class="box box-danger" <?php echo $solo_lectura ?>>
             <div class="box-header">
-              <h3 class="box-title">Control de Artículos | Baja de artículos</h3>
+              <h3 class="box-title">Control de Artículos | Bitácora Cambios y Ofertas</h3>
             </div>
             <div class="box-body">
               <div class="row">
@@ -77,6 +77,17 @@ include '../global_seguridad/verificar_sesion.php';
                     <input type="text" name="auxiliar" id="auxiliar" class="form-control">
                   </div>
                 </div>
+                <dv class="col-md-3">
+                  <div class="form-group">
+                    <label for="no_aplica">*No aplica:</label>
+                    <select name="no_aplica" id="no_aplica" class="form-control">
+                      <option value=""></option>
+                      <option value="No aplica en sucursal">No aplica en sucursal</option>
+                      <option value="No hay existencia">No hay existencia</option>
+                      <option value="Complemento">Complemento</option>
+                    </select>
+                  </div>
+                </dv>
               </div>
             </div>
             <div class="box-footer text-right">
@@ -92,29 +103,29 @@ include '../global_seguridad/verificar_sesion.php';
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table id="lista_cambios" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <table id="lista_cambios" class="table table-striped table-bordered" cellspacing="0" width="100%" style="font-size: 0.9em;">
                     <thead>
                       <tr>
-                        <th width="5%">#</th>
-                        <th width="5%">Tipo</th>
-                        <th>Descripcion</th>
-                        <th width='5%'>Suc.</th>
-                        <th width="10%">Fecha</th>
-                        <th width="20%">Encargado</th>
-                        <th width="18%">Validar</th>
+                        <td width="5%"><strong>#</strong></td>
+                        <td width="5%"><strong>Tipo</strong></td>
+                        <td><strong>Descripcion</strong></td>
+                        <td width='5%'><strong>Suc.</strong></td>
+                        <td width="8%"><strong>Fecha</strong></td>
+                        <td width="17%"><strong>Encargado</strong></td>
+                        <td width="15%"><strong>Entregado</strong></td>
+                        <td width="25%"><strong>Validar</strong></td>
+                      </tr>
+                      <tr>
+                        <th width="5%"></th>
+                        <th width="5%"></th>
+                        <th></th>
+                        <th width='5%'></th>
+                        <th width="8%"></th>
+                        <th width="17%"></th>
+                        <th width="15%"></th>
+                        <th width="25%"></th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Tipo</th>
-                        <th>Descripcion</th>
-                        <th>Suc.</th>
-                        <th>Fecha</th>
-                        <th>Encargado</th>
-                        <th>Validar</th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
@@ -127,6 +138,7 @@ include '../global_seguridad/verificar_sesion.php';
     </div>
     <!-- /.content-wrapper -->
     <?php include 'modal_comentario.php'; ?>
+    <?php include 'modal_entregado.php'; ?>
     <?php include '../footer2.php'; ?>
 
     <!-- Control Sidebar -->
@@ -179,6 +191,15 @@ include '../global_seguridad/verificar_sesion.php';
             }
           },
           {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Cambios-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
             extend: 'copy',
             text: 'Copiar registros',
             className: 'btn btn-default',
@@ -214,6 +235,9 @@ include '../global_seguridad/verificar_sesion.php';
             "data": "encargado"
           },
           {
+            "data": "entregado"
+          },
+          {
             "data": "validar"
           }
         ]
@@ -230,6 +254,11 @@ include '../global_seguridad/verificar_sesion.php';
       });
     }
     $('#tipo').select2({
+      placeholder: 'Seleccione una opcion',
+      lenguage: 'es',
+      minimumResultsForSearch: Infinity
+    });
+    $('#no_aplica').select2({
       placeholder: 'Seleccione una opcion',
       lenguage: 'es',
       minimumResultsForSearch: Infinity
@@ -293,6 +322,7 @@ include '../global_seguridad/verificar_sesion.php';
             } else {
               swal("Registro exitoso", "El movimiento ha sido registrado", "success");
               $(":text").val('');
+              $("#no_aplica").val('').trigger("change.select2");
             }
           }
         });
@@ -342,6 +372,7 @@ include '../global_seguridad/verificar_sesion.php';
         success: function(respuesta) {
           if (respuesta == "ok") {
             alertify.success("El comentario se registró correctamente");
+            $("#lista_cambios").DataTable().ajax.reload();
           } else {
             alertify.error("Existió un error");
           }
@@ -365,6 +396,43 @@ include '../global_seguridad/verificar_sesion.php';
     $("#encargado").change(function() {
       var texto = $('select[name="encargado"] option:selected').text();
       $("#auxiliar").val(texto);
+    });
+    $('#modal-entregado').on('show.bs.modal', function(e) {
+      var entregado = $(e.relatedTarget).data().entregado;
+      var id_cambio = $(e.relatedTarget).data().id;
+      //console.log(comentario);
+      $(this).find('#nombre_recibe').val(entregado);
+      $(this).find('#ide').val(id_cambio);
+    });
+    $("#btn-entrega").click(function() {
+      var url = "insertar_entregado.php";
+      var nombre_recibe = $("#nombre_recibe").val();
+      var id_cambio = $("#ide").val();
+      //alert(id_cambio);
+      $.ajax({
+        url: url,
+        type: "POST",
+        dateType: "html",
+        data: {
+          nombre_recibe: nombre_recibe,
+          id_cambio: id_cambio
+        },
+        success: function(respuesta) {
+          if (respuesta == "ok") {
+            alertify.success("El registro se actualizó correctamente");
+            $("#lista_cambios").DataTable().ajax.reload();
+          } else {
+            alertify.error("Existió un error");
+          }
+          $('#modal-entregado').modal('hide');
+        },
+        error: function(xhr, status) {
+          alert("error");
+          //alert(xhr);
+        },
+      });
+      //$(":text").val('');
+      return false;
     });
   </script>
 </body>

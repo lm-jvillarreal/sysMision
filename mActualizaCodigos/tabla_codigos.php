@@ -11,7 +11,6 @@ $cadenaCodigos = "SELECT ARTC_ARTICULO, ARTC_DESCRIPCION FROM COM_ARTICULOS WHER
 $consulta_codigos = oci_parse($conexion_central, $cadenaCodigos);
 oci_execute($consulta_codigos);
 $n=1;
-$cuerpo="";
 while ($row_codigos = oci_fetch_row($consulta_codigos)) {
   $cadenaValidar = "SELECT * FROM productos WHERE codigo_producto = '$row_codigos[0]'";
   $validar = mysqli_query($conexion,$cadenaValidar);

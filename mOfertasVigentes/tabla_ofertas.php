@@ -11,6 +11,8 @@ $hora=date ("h:i:s");
 $sucursal = $_POST['sucursal'];
 $departamento = $_POST['departamento'];
 
+$datos=array();
+
 if($sucursal=='1'){
 	$conexion_sucursal = $conexion_do;
 }elseif($sucursal=='2'){
@@ -19,6 +21,8 @@ if($sucursal=='1'){
 	$conexion_sucursal = $conexion_vill;
 }elseif($sucursal=='4'){
 	$conexion_sucursal = $conexion_all;
+}elseif($sucursal=='5'){
+	$conexion_sucursal = $conexion_lp;
 }
 
 $cadena_codigos = "SELECT
@@ -70,20 +74,20 @@ while ($row_codigos = oci_fetch_row($consulta_codigos)) {
     $precio_venta = number_format($precio_total,2,'.',' ');
     
     $cadena_ofertas = "SELECT confi.coon_tipo, artc.aron_procdescuentooprecio,
-	to_char(confi.cood_vigencia_fin,'DD/MM/YYYY'),
-	to_char(confi.cood_vigencia_fin,'YYYY-MM-DD'),
-	artc.aroc_sucursal,confi.cooc_descripcion,
-	confi.coon_id_oferta
-	FROM pvs_configuracion_oferta  confi
-	INNER JOIN pvs_articulos_oferta artc
-	ON confi.coon_id_oferta = artc.coon_id_oferta
-	AND confi.cood_vigencia_ini <= TO_DATE('$fecha','dd/mm/yyyy')
-	AND confi.cood_vigencia_fin >= TO_DATE('$fecha','dd/mm/yyyy')
-	AND artc.aroc_articulo = '$row_codigos[2]'
-	AND artc.aroc_sucursal = '$sucursal'
-	AND confi.coon_baja_sn = '0'
-	AND artc.aron_baja_sn = '0'
-	order by artc.aron_procdescuentooprecio ASC";
+												to_char(confi.cood_vigencia_fin,'DD/MM/YYYY'),
+												to_char(confi.cood_vigencia_fin,'YYYY-MM-DD'),
+												artc.aroc_sucursal,confi.cooc_descripcion,
+												confi.coon_id_oferta
+											FROM pvs_configuracion_oferta  confi
+												INNER JOIN pvs_articulos_oferta artc
+												ON confi.coon_id_oferta = artc.coon_id_oferta
+												AND confi.cood_vigencia_ini <= TO_DATE('$fecha','dd/mm/yyyy')
+												AND confi.cood_vigencia_fin >= TO_DATE('$fecha','dd/mm/yyyy')
+												AND artc.aroc_articulo = '$row_codigos[2]'
+												AND artc.aroc_sucursal = '$sucursal'
+												AND confi.coon_baja_sn = '0'
+												AND artc.aron_baja_sn = '0'
+												ORDER BY artc.aron_procdescuentooprecio ASC";
 	//echo $cadena_ofertas;
 	//Se ejecuta la consulta de ofertas
 	$parametros_ofertas = oci_parse($conexion_sucursal,$cadena_ofertas);
@@ -92,44 +96,35 @@ while ($row_codigos = oci_fetch_row($consulta_codigos)) {
 	$existe_oferta = oci_num_rows($parametros_ofertas);
 
     if($existe_oferta==0){
-        $folio_oferta="";
-        $vigencia_oferta="";
-        $oferta="";
+			$folio_oferta="";
+			$vigencia_oferta="";
+			$oferta="";
     }else{
-        $tipo_oferta = $row_ofertas[0];
-		$cantidad_oferta = $row_ofertas[1];
-		$vigencia_oferta = $row_ofertas[2];
-		$fecha_resta_vigencia = $row_ofertas[3];
-		$folio_oferta = $row_ofertas[6];
+			$tipo_oferta = $row_ofertas[0];
+			$cantidad_oferta = $row_ofertas[1];
+			$vigencia_oferta = $row_ofertas[2];
+			$fecha_resta_vigencia = $row_ofertas[3];
+			$folio_oferta = $row_ofertas[6];
 
-		if ($tipo_oferta=='0') {
-			$precio_descuento = $precio_venta - (($cantidad_oferta/100)*$precio_venta);
-		}elseif ($tipo_oferta=='1') {
-			$precio_descuento = $cantidad_oferta;
-		}
-		$oferta = number_format($precio_descuento,2,'.',' ');
+			if ($tipo_oferta=='0') {
+				$precio_descuento = $precio_venta - (($cantidad_oferta/100)*$precio_venta);
+			}elseif ($tipo_oferta=='1') {
+				$precio_descuento = $cantidad_oferta;
+			}
+			$oferta = number_format($precio_descuento,2,'.',' ');
     }
-
-	$renglon = "
-		{
-			\"depto\": \"$escape_depto\",
-			\"familia\": \"$escape_familia\",
-			\"codigo\": \"$row_codigos[2]\",
-        \"descripcion\": \"$escape_descripcion\",
-        \"precio\": \"$precio_venta\",
-        \"costo\": \"$row_codigos[8]\",
-        \"folio_oferta\": \"$folio_oferta\",
-        \"vigencia_oferta\": \"$vigencia_oferta\",
-        \"oferta\": \"$oferta\"
-		},";
-	$cuerpo = $cuerpo.$renglon;
+		
+	array_push($datos,array(
+		"depto"=>$escape_depto,
+		"familia"=>$escape_familia,
+		"codigo"=>$row_codigos[2],
+		"descripcion"=>$escape_descripcion,
+		"precio"=>$precio_venta,
+		"costo"=>$row_codigos[8],
+		"folio_oferta"=>$folio_oferta,
+		"vigencia_oferta"=>$vigencia_oferta,
+		"oferta"=>$oferta
+	));
 }
-$cuerpo2 = trim($cuerpo, ',');
-
-$tabla = "
-["
-.$cuerpo2.
-"]
-";
-echo $tabla;
+echo utf8_encode(json_encode($datos));
 ?>

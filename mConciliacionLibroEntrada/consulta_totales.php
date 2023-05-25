@@ -54,7 +54,7 @@ $array=array(
   $totalDev,
   $totalCF,
   $totalNC,
-  $granTotal,
+  round($granTotal,3),
   $totalNC2
 );
 $array = json_encode($array);

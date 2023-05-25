@@ -5,9 +5,10 @@
 
   $id_caja = $_POST['id_caja'];
   
-  $cadena  = "SELECT id,num_reporte,fecha_llegada,falla,num_serie_anterior,num_serie,actualizo
-              FROM historial_equipos
-              WHERE activo = '1'
+  $cadena  = "SELECT he.id,he.num_reporte,he.fecha_llegada,fe.nombre,he.num_serie_anterior,he.num_serie,he.actualizo,he.falla
+  FROM historial_equipos he, fallas_equipos fe
+  WHERE he.activo = '1'
+  AND he.falla = fe.id
               AND id_caja = '$id_caja'";
   $consulta = mysqli_query($conexion, $cadena);
 

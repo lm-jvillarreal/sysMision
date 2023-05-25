@@ -194,7 +194,8 @@
 				'language': {"url": "../plugins/DataTables/Spanish.json"},
 				"paging": true,
 				"dom": 'Bfrtip',
-		        buttons: [{
+		        buttons: [
+				  {
 		            extend: 'pageLength',
 		            text: 'Registros',
 		            className: 'btn btn-default'

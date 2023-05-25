@@ -25,7 +25,7 @@ $cadena_ordenes = "SELECT
 					orden_compra
 					INNER JOIN proveedores ON orden_compra.id_proveedor = proveedores.numero_proveedor
 					INNER JOIN sucursales ON orden_compra.id_sucursal = sucursales.id
-					WHERE orden_compra.activo = '1'
+					WHERE orden_compra.activo = '1' AND orden_compra.id_proveedor<>''
 					".$filtro_sucursal."
 					AND orden_compra.STATUS = '1'
 					ORDER BY
@@ -42,12 +42,12 @@ while ($row_ordenes = mysqli_fetch_array($consulta_ordenes)) {
 
 	$ver = "<center><a href=$ruta class='btn btn-success' target='blank' $entcoc>Ver</a></center>";
 	$liberar = "<center><a href='liberar_orden.php?id_orden=$row_ordenes[3]' class='btn btn-danger'>Liberar</a></center>";
-
+	$escape_prov=mysqli_real_escape_string($conexion,$row_ordenes[1]);
 	$renglon = "
 		{
 			\"folio\": \"$row_ordenes[3]\",
 			\"no_proveedor\": \"$row_ordenes[0]\",
-			\"proveedor\": \"$row_ordenes[1]\",
+			\"proveedor\": \"$escape_prov\",
 			\"no_orden\": \"$row_ordenes[2]\",
 			\"fecha_llegada\": \"$row_ordenes[4]\",
 			\"retraso\": \"$row_ordenes[5]\",

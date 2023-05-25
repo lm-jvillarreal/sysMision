@@ -15,6 +15,8 @@ if($id_sede == '1'){
 	$conexion_central = $conexion_all;
 }elseif($id_sede=='5'){
 	$conexion_central = $conexion_lp;
+}elseif($id_sede=='6'){
+	$conexion_central = $conexion_mm;
 }
 
 $codigo_producto = $_POST['codigo'];
@@ -59,7 +61,7 @@ $cadena_ofertas = "SELECT confi.coon_tipo, artc.aron_procdescuentooprecio
         AND artc.aroc_sucursal = '$id_sede'
         AND confi.coon_baja_sn = '0'
 		AND artc.aron_baja_sn = '0'
-		order by confi.coon_id_oferta desc";
+		order by artc.aron_procdescuentooprecio asc";
 	//echo $cadena_ofertas;
 	//Se ejecuta la consulta de ofertas
 	$parametros_ofertas = oci_parse($conexion_central,$cadena_ofertas);

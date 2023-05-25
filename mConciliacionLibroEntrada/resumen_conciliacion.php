@@ -11,6 +11,7 @@ $hora = date("h:i:s");
 
 <head>
   <?php include '../head.php'; ?>
+  <link href="https://cdn.datatables.net/fixedcolumns/3.2.4/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
 </head>
 
 <body class="hold-transition skin-red sidebar-mini">
@@ -38,7 +39,7 @@ $hora = date("h:i:s");
           <div class="box-body">
             <form method="POST" id="form-datos">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="fecha_inicio">*Fecha de inicio:</label>
                     <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicio" data-link-format="yyyy-mm-dd">
@@ -48,7 +49,7 @@ $hora = date("h:i:s");
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="fecha_fin">*Fecha final:</label>
                     <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha_fin" data-link-format="yyyy-mm-dd">
@@ -56,6 +57,14 @@ $hora = date("h:i:s");
                       <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="sucursal">*Sucursal</label>
+                    <select name="sucursal" id="sucursal" class="form-control select2">
+                      <option value=""></option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -80,23 +89,26 @@ $hora = date("h:i:s");
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table id='libro_diario' class='table table-striped table-bordered' cellspacing='0' width='120%'>
+                  <table id='libro_diario' class='display table table-striped table-bordered nowrap' style="width:100%" cellspacing='0' width='100%'>
                     <thead>
                       <tr>
-                        <th width='5%'>F.E.</th>
-                        <th width='5%'>Cve.</th>
+                        <th>F.E.</th>
+                        <th>Cve.</th>
                         <th>Proveedor</th>
-                        <th width='5%'>Remisión</th>
-                        <th width='8%'>Remisión($)</th>
-                        <th width='8%'>Entrada($)</th>
-                        <th width='8%'>Devolución($)</th>
-                        <th width='8%'>C.F.($)</th>
-                        <th width='8%'>(-)D.C.($)</th>
-                        <th width='8%'>(+)D.C.($)</th>
-                        <th width='5%'>G.Total</th>
-                        <th width='5%'>Dif</th>
-                        <th width='5%'>Concilia</th>
-                        <th width='5%'></th>
+                        <th>Dificultad</th>
+                        <th>Tipo</th>
+                        <th>Remisión</th>
+                        <th>Remisión($)</th>
+                        <th>Entrada($)</th>
+                        <th>Devolución($)</th>
+                        <th>C.F.($)</th>
+                        <th>(-)D.C.($)</th>
+                        <th>(+)D.C.($)</th>
+                        <th>G.Total</th>
+                        <th>Dif</th>
+                        <th>Escaneado</th>
+                        <th>Concilia</th>
+                        <th></th>
                       </tr>
                     </thead>
                   </table>
@@ -132,6 +144,8 @@ $hora = date("h:i:s");
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/fixedcolumns/3.2.4/js/dataTables.fixedColumns.min.js"></script>
   <!-- Page script -->
   <script>
     $(document).ready(function(e) {
@@ -141,18 +155,49 @@ $hora = date("h:i:s");
       libro_diario();
     });
 
+    $('#sucursal').select2({
+    placeholder: 'Seleccione una opcion',
+    lenguage: 'es',
+    minimumResultsForSearch: Infinity,
+    ajax: { 
+      url: "consulta_sucursales.php",
+      type: "post",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          searchTerm: params.term // search term
+        };
+      },
+      processResults: function (response) {
+      return {
+        results: response
+      };
+      },
+      cache: true
+    }
+  });
+
     function libro_diario() {
       fecha_inicio = $("#fecha_inicial").val();
       fecha_fin = $("#fecha_final").val();
+      sucursal = $("#sucursal").val();
       $('#libro_diario').dataTable().fnDestroy();
       $('#libro_diario').DataTable({
         'language': {
           "url": "../plugins/DataTables/Spanish.json"
         },
         "paging": false,
+        fixedColumns: {
+          leftColumns: 1,
+          rightColumns: 1
+        },
         'order': [
           [0, "desc"]
         ],
+        "scrollX": true,
+        "scrollY": "300px",
+        "scrollCollapse": true,
         "dom": 'Bfrtip',
         buttons: [{
             extend: 'excel',
@@ -197,7 +242,8 @@ $hora = date("h:i:s");
           "dataSrc": "",
           "data": {
             fecha_inicio: fecha_inicio,
-            fecha_fin: fecha_fin
+            fecha_fin: fecha_fin,
+            sucursal: sucursal
           }
         },
         "columns": [{
@@ -208,6 +254,12 @@ $hora = date("h:i:s");
           },
           {
             "data": "nombre_proveedor"
+          },
+          {
+            "data": "dificultad"
+          },
+          {
+            "data": "tipo_proveedor"
           },
           {
             "data": "remision"
@@ -235,6 +287,9 @@ $hora = date("h:i:s");
           },
           {
             "data": "diferencia"
+          },
+          {
+            "data": "escaneada"
           },
           {
             "data": "usuario_concilia"
@@ -270,6 +325,7 @@ $hora = date("h:i:s");
         }
       });
     };
+
     function echori(id_ficha) {
       var url = "marcar_echori.php";
       $.ajax({
@@ -284,6 +340,7 @@ $hora = date("h:i:s");
         }
       });
     };
+
     function sm(id_ficha) {
       var url = "marcar_sm.php";
       $.ajax({
@@ -298,6 +355,7 @@ $hora = date("h:i:s");
         }
       });
     };
+
     function escarg(id_ficha) {
       var url = "marcar_escarg.php";
       $.ajax({
@@ -308,6 +366,21 @@ $hora = date("h:i:s");
         }, // Adjuntar los campos del formulario enviado.
         success: function(respuesta) {
           alertify.success("La entrada ha sido marcada como ESCARG");
+          libro_diario();
+        }
+      });
+    };
+
+    function ropa(id_ficha) {
+      var url = "marcar_ropa.php";
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+          id_ficha: id_ficha
+        }, // Adjuntar los campos del formulario enviado.
+        success: function(respuesta) {
+          alertify.success("La entrada ha sido marcada como ROPA");
           libro_diario();
         }
       });
@@ -329,9 +402,10 @@ $hora = date("h:i:s");
         }
       });
     });
-    function imp_ficha(oc){
-    window.open("../mLiberar_orden/imprimir_folio.php?foc="+oc,"folio","width=320,height=900,menubar=no,titlebar=no");
-  }
+
+    function imp_ficha(oc) {
+      window.open("../mLiberar_orden/imprimir_folio.php?foc=" + oc, "folio", "width=320,height=900,menubar=no,titlebar=no");
+    }
   </script>
 </body>
 

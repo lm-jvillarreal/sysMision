@@ -4,7 +4,7 @@ date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d");
 $hora=date ("h:i:s");
 //$anio = date("Y");
-$anio = '2020';
+$anio = '2022';
 
 $cadena_NC = "SELECT CONCAT('$',FORMAT(SUM(total),2)) FROM gastos_aportaciones WHERE anio = '$anio' AND concepto = 'GASTO POR ANIVERSARIO'";
 $consulta_NC = mysqli_query($conexion, $cadena_NC);
@@ -30,8 +30,7 @@ $gastos = $row_gastos[0];
 $aportaciones = $row_aportaciones[0];
 $restante = $gastos - $aportaciones;
 
-setlocale(LC_MONETARY, 'en_US');
-$restante = money_format('%(#10n', $restante);
+$restante='$'.number_format($restante, 2, '.', ',');
 
 $imprimir = '
 		<div class="col-md-3">

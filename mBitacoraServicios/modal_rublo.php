@@ -4,7 +4,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Registro de Rublos</h4>
+        <h4 class="modal-title">Registro de Rubros</h4>
       </div>
       <div class="modal-body">
         <form method="POST" id="form_datos_rublo">
@@ -12,7 +12,7 @@
               <input type="number" id="id_registro_modal" name="id_registro_modal" value="0" class="hidden">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="rublo">*Nombre Rublo</label><br>
+                        <label for="rublo">*Nombre Rubro</label><br>
                         <input type="text" id="rublo_modal" class="form-control" name="rublo_modal" onkeyup="if(event.keyCode == 13)guardar();">
                     </div>
                 </div>

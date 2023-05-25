@@ -136,7 +136,7 @@
 	        ],
           "ajax": {
               "type": "POST",
-              "url": "http://200.1.1.197/SMPruebas/mAutTiempoExtra/tabla_tiempo2.php",
+              "url": "tabla_tiempo2.php",
               "dataSrc": ""
           },
           "columns": [

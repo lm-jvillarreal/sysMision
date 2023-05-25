@@ -46,10 +46,11 @@ function capturar(id_mapeo, id_detalle, codigo, cantidad, n) {
     });
 }
 
-function editar_renglon(codigo, descripcion, id){
+function editar_renglon(codigo, descripcion, id, consecutivo){
     $('#txtCodProd').val(codigo);
     $('#txtDescripcionM').val(descripcion);
     $('#txtIdRenglon').val(id);
+    $('#txtConsecutivo').val(consecutivo);
     $('#modal_editar').modal('show');
 }
 

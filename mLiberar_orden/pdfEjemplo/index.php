@@ -29,7 +29,8 @@ error_reporting(E_ALL ^ E_NOTICE);
                 ORDD_FECHA,
                 NOMBREPROVEEDOR,
                 ORDC_CONDPAGO,
-                NOMBREUSUARIO
+                NOMBREUSUARIO,
+                ORDN_ESTATUS
             FROM
                 COM_ORDENES_COMPRA_VW
             WHERE
@@ -46,7 +47,11 @@ error_reporting(E_ALL ^ E_NOTICE);
     $n_prov = $s[4];
     $cond_pago = $s[5];
     $comprador = $s[6];
-
+    $estatus=$s[7];
+    if($estatus=='6'){
+        echo '<script language="javascript">alert("La OC tiene estatus de CANCELADA");</script>'; 
+        echo '<script language="javascript">window.close();</script>'; 
+    }else{
   date_default_timezone_set('America/Monterrey');
   $fecha_hoy = date('Y-m-d');
   $hora = date('H:i:s');
@@ -246,4 +251,5 @@ $pdf->Output('OC -.pdf', 'I');
 //============================================================+
 // END OF FILE
 //============================================================+
+}
 ?>

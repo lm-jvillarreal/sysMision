@@ -22,8 +22,8 @@
 		$verificar = mysqli_query($conexion,"SELECT id FROM equipos_escaner WHERE no_serial = '$serial_no_e' AND activo = '1'");
 		$existe = mysqli_num_rows($verificar);
 		if ($existe == 0){
-			$cadena = "INSERT INTO equipos_escaner (id_marca,serie,id_modelo,class_no,fecha_fabricacion,no_serial,id_caja,fecha,hora,id_usuario,activo)
-            VALUES('$marca_e','$serie_e','$modelo_e','$class_no_e','$fecha_fabricacion_e','$serial_no_e','$id_caja','$fecha','$hora','$id_usuario','1')";
+			$cadena = "INSERT INTO equipos_escaner (id_marca,serie,id_modelo,class_no,fecha_fabricacion,no_serial,id_caja,id_tipo,fecha,hora,id_usuario,activo)
+            VALUES('$marca_e','$serie_e','$modelo_e','$class_no_e','$fecha_fabricacion_e','$serial_no_e','$id_caja','2','$fecha','$hora','$id_usuario','1')";
             $consulta = mysqli_query($conexion,$cadena);
 
             if(!empty($_FILES['archivo_e']['name'])){

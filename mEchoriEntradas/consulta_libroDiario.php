@@ -8,6 +8,7 @@ include '../global_seguridad/verificar_sesion.php';
 
 $fecha_inicial = (!isset($_POST['fecha_inicio'])) ? $fecha : $_POST['fecha_inicio'];
 $fecha_final = (!isset($_POST['fecha_fin'])) ? $fecha : $_POST['fecha_fin'];
+$tipo_entrada=$_POST['tipo_entrada'];
 
 $filtro_sucursal = ($solo_sucursal == '1') ? " AND le.sucursal = '$id_sede'" : "";
 
@@ -30,7 +31,7 @@ $cadena_ordenes = "SELECT
 						libro_diario as le 
 					INNER JOIN orden_compra ON le.orden_compra = orden_compra.id
                     AND le.sucursal = orden_compra.id_sucursal
-					WHERE le.tipo = '3' AND (le.fecha >= '$fecha_inicial'
+					WHERE le.tipo = '$tipo_entrada' AND (le.fecha >= '$fecha_inicial'
 					AND le.fecha <= '$fecha_final')".
 					$filtro_sucursal."
 					ORDER BY le.numero_nota ASC";

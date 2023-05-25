@@ -171,15 +171,15 @@ oci_execute($consulta_principal);
 	            ->setCellValue('D1', 'Descripcion Articulo')
 	            ->setCellValue('E1', 'P. de venta')
 	            ->setCellValue('F1', 'P. de Compra')
-                ->setCellValue('G1', 'U. vendidas')
-                ->setCellValue('H1', 'Cantidad')
-                ->setCellValue('I1', 'Existencia')
-                ->setCellValue('J1', 'SXROB')
-                ->setCellValue('K1', 'SXMBOD')
-                ->setCellValue('L1', 'SXMCAR')
-                ->setCellValue('M1', 'SXMFCI')
-                ->setCellValue('N1', 'SXMFTA')
-                ->setCellValue('O1', 'SXMPAN');
+							->setCellValue('G1', 'U. vendidas')
+							->setCellValue('H1', 'Cantidad')
+							->setCellValue('I1', 'Existencia')
+							->setCellValue('J1', 'SXROB')
+							->setCellValue('K1', 'SXMBOD')
+							->setCellValue('L1', 'SXMCAR')
+							->setCellValue('M1', 'SXMFCI')
+							->setCellValue('N1', 'SXMFTA')
+							->setCellValue('O1', 'SXMPAN');
 
 
 	$fila = 2;
@@ -194,15 +194,15 @@ oci_execute($consulta_principal);
 	            ->setCellValue('D'.$fila, $row_principal[3])
 	            ->setCellValue('E'.$fila, $row_principal[4])
 	            ->setCellValue('F'.$fila, $row_principal[5])
-                ->setCellValue('G'.$fila, $row_principal[6])
-                ->setCellValue('H'.$fila, $row_principal[7])
-                ->setCellValue('I'.$fila, $row_principal[8])
-                ->setCellValue('J'.$fila, $row_principal[9])
-                ->setCellValue('K'.$fila, $row_principal[10])
-                ->setCellValue('L'.$fila, $row_principal[11])
-                ->setCellValue('M'.$fila, $row_principal[12])
-                ->setCellValue('N'.$fila, $row_principal[13])
-                ->setCellValue('O'.$fila, $row_principal[14]);
+							->setCellValue('G'.$fila, $row_principal[6])
+							->setCellValue('H'.$fila, $row_principal[7])
+							->setCellValue('I'.$fila, $row_principal[8])
+							->setCellValue('J'.$fila, $row_principal[9])
+							->setCellValue('K'.$fila, $row_principal[10])
+							->setCellValue('L'.$fila, $row_principal[11])
+							->setCellValue('M'.$fila, $row_principal[12])
+							->setCellValue('N'.$fila, $row_principal[13])
+							->setCellValue('O'.$fila, $row_principal[14]);
 
 
 
@@ -230,41 +230,41 @@ oci_execute($consulta_principal);
     		->getColumnDimension('F')
     		->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
-        	->getColumnDimension('G')
-        	->setAutoSize(true);
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension('G')
+				->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
-        	->getColumnDimension('H')
-        	->setAutoSize(true);
-        
-        $objPHPExcel->getActiveSheet()
-        	->getColumnDimension('I')
-        	->setAutoSize(true);
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension('H')
+				->setAutoSize(true);
+			
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension('I')
+				->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
-        	->getColumnDimension('J')
-        	->setAutoSize(true);
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension('J')
+				->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
-        	->getColumnDimension('K')
-        	->setAutoSize(true);
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension('K')
+				->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
-        	->getColumnDimension('L')
-        	->setAutoSize(true);
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension('L')
+				->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
-        	->getColumnDimension('M')
-        	->setAutoSize(true);
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension('M')
+				->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
-        	->getColumnDimension('N')
-        	->setAutoSize(true);
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension('N')
+				->setAutoSize(true);
 
-        $objPHPExcel->getActiveSheet()
-        	->getColumnDimension('O')
-        	->setAutoSize(true);
+			$objPHPExcel->getActiveSheet()
+				->getColumnDimension('O')
+				->setAutoSize(true);
 
 	$fila = $fila + 1;
 	}

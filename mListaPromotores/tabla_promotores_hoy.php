@@ -39,7 +39,7 @@
     
     //$existe_promotor = mysqli_num_rows($cadena_veri);
     $row_v = mysqli_fetch_array($cadena_veri);
-    $existe_promotor=count($row_v[0]);
+    $existe_promotor=(count($row_v[0]));
     if ($existe_promotor == 0){
       $color = "danger";
       $texto = "Iniciar";

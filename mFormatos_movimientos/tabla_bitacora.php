@@ -5,17 +5,35 @@ date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d"); 
 $hora=date ("h:i:s");
 
+$fecIni = $_POST["fecha_inicial"];
+$fecFin = str_replace("-","",$_POST["fecha_final"]);
+$parametro = $_POST['parametro'];
+$fecha      = date('Y-m-d');
+$prim_dia   = date('Y-m-01');
+
+if($parametro==0){
+    $fechaInicioLW = $prim_dia;
+    $fechaFinLW = $fecha;
+  }else{
+    $fechaInicioLW = $fecIni;
+    $fechaFinLW = $fecFin;
+  }
+
 $filtro_sucursal =($solo_sucursal=='1') ? " AND sucursal='$id_sede'":"";
  
-$cadena_formatos ="SELECT f.id, f.tipo_movimiento, s.nombre, f.estatus, date_format(f.fecha, '%d/%m/%Y'), f.nombre_solicita, f.folio_infofin, f.usuario_libera
-                    FROM formatos_movimientos as f 
+$cadena_formatos ="SELECT f.id, f.tipo_movimiento, s.nombre, f.estatus, date_format(f.fecha, '%d/%m/%Y'), f.nombre_solicita, f.folio_infofin, f.usuario_libera, nombre_genera
+                    FROM formatos_movimientos as f
                     INNER JOIN sucursales as s ON f.sucursal = s.id
-                    WHERE f.estatus = '2' or f.estatus = '3'";
+                    WHERE f.fecha BETWEEN CAST('$fechaInicioLW' AS DATE) 
+                    AND CAST('$fechaFinLW' AS DATE) 
+                    AND (f.estatus = '1' OR f.estatus = '2' OR f.estatus = '3')";
 
 $consulta_formatos = mysqli_query($conexion,$cadena_formatos);
 $cuerpo ="";
 while ($row_formatos = mysqli_fetch_array($consulta_formatos)) {
-    if ($row_formatos[3]=='2') {
+    if($row_formatos[3]=='1'){
+        $estatus = "<center><span class='label label-primary'>Asociado</span></center>";
+    }elseif ($row_formatos[3]=='2') {
         $estatus = "<center><span class='label label-success'>Liberado</span></center>";
 	}elseif($row_formatos[3]=='3'){
         $estatus = "<center><span class='label label-danger'>Cancelado</span></center>";
@@ -37,6 +55,8 @@ while ($row_formatos = mysqli_fetch_array($consulta_formatos)) {
         $nom_movimiento='MERMA FRUTAS Y VERDURAS';
     }elseif($row_formatos[1]=='SXMEDO'){
         $nom_movimiento='MERMA MAL ESTADO';
+    }elseif($row_formatos[1]=='SXMCAD'){
+        $nom_movimiento='MERMA POR CADUCIDAD';
     }elseif($row_formatos[1]=='SXMPAN'){
         $nom_movimiento='MERMA PANADERÍA';
     }elseif($row_formatos[1]=='SXMTOR'){
@@ -53,7 +73,7 @@ while ($row_formatos = mysqli_fetch_array($consulta_formatos)) {
         $nom_movimiento='TRANSFERENCIA DEPTOS.';
     }
 
-    $cadena_libera = "SELECT CONCAT(p.nombre,' ',p.ap_paterno,' ',p.ap_materno)FROM personas as p INNER JOIN usuarios as u ON p.id=u.id_persona AND u.id = '$row_formatos[7]'";
+    $cadena_libera = "SELECT CONCAT(p.nombre,' ',p.ap_paterno,' ',p.ap_materno)FROM personas as p INNER JOIN usuarios as u ON p.id=u.id_persona AND u.id = '$row_formatos[8]'";
     $usuario_libera = mysqli_query($conexion, $cadena_libera);
     $row_libera = mysqli_fetch_array($usuario_libera);
     $nombre_libera = $row_libera[0];

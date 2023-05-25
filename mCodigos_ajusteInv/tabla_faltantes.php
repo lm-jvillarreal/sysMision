@@ -20,7 +20,8 @@ while ($row_detalle = mysqli_fetch_array($consulta_detalle)) {
 	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 1, '$row_detalle[1]'), 
 	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 2, '$row_detalle[1]'), 
 	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 3, '$row_detalle[1]'), 
-	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 4, '$row_detalle[1]') 
+	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 4, '$row_detalle[1]'),
+	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 5, '$row_detalle[1]')  
 FROM 
 	dual";
 	$st = oci_parse($conexion_central, $cadena_existencia);
@@ -34,6 +35,7 @@ FROM
 	$arb = "<center><a href='#' data-id = '$row_detalle[1]' data-suc = '2' data-toggle = 'modal' data-target = '#modal-ue' class='btn btn-success' target='blank'>$row_existencia[1]</a></center>";
 	$vill = "<center><a href='#' data-id = '$row_detalle[1]' data-suc = '3' data-toggle = 'modal' data-target = '#modal-ue' class='btn btn-success' target='blank'>$row_existencia[2]</a></center>";
 	$all = "<center><a href='#' data-id = '$row_detalle[1]' data-suc = '4' data-toggle = 'modal' data-target = '#modal-ue' class='btn btn-success' target='blank'>$row_existencia[3]</a></center>";
+	$pet = "<center><a href='#' data-id = '$row_detalle[1]' data-suc = '5' data-toggle = 'modal' data-target = '#modal-ue' class='btn btn-success' target='blank'>$row_existencia[4]</a></center>";
 	$sucursal = "<center><a href='#' data-id = '$row_detalle[0]' data-id_compra = '$row_detalle[4]' data-toggle = 'modal' data-target = '#modal-comp'>$row_detalle[3]</center>";
 	$renglon = "
 	{
@@ -46,6 +48,7 @@ FROM
 		\"arb\": \"$arb\",
 		\"vill\": \"$vill\",
 		\"all\": \"$all\",
+		\"pet\": \"$pet\",
 		\"ajuste\": \"$ajuste\"
 	},";
 	$cuerpo = $cuerpo.$renglon;

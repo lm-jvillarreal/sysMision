@@ -490,7 +490,7 @@
     $cadena_infmovaso = "SELECT COUNT(*)
                             FROM formatos_movimientos AS f
                             INNER JOIN sucursales AS s ON f.sucursal = s.id 
-                            WHERE f.estatus = '2'
+                            WHERE f.estatus = '1'
                             AND f.fecha BETWEEN CAST('$fecha1' AS DATE) AND CAST('$fecha2' AS DATE)
                             AND sucursal = '$sucursal'";
 
@@ -501,7 +501,7 @@
     $cadena_infmovaso = "SELECT COUNT(*)
                             FROM formatos_movimientos AS f
                             INNER JOIN sucursales AS s ON f.sucursal = s.id 
-                            WHERE f.estatus = '2'
+                            WHERE f.estatus = '1'
                             AND f.fecha BETWEEN CAST('$fecha1_mes' AS DATE) AND CAST('$fecha2_mes' AS DATE)
                             AND sucursal = '$sucursal'";
 

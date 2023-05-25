@@ -105,26 +105,15 @@ include '../global_seguridad/verificar_sesion.php';
 							<table id="lista_devoluciones" class="table table-striped table-bordered" cellspacing="0" width="100%">
 								<thead>
 									<tr>
-
 										<th width="5%">Folio</th>
 										<th width="10%">Movimiento</th>
 										<th>Proveedor</th>
+										<th width="10%">Tipo. Prov</th>
 										<th width="10%">Fecha</th>
 										<th width="10%">Sucursal</th>
-										<th width="5%">Liberar</th>
+										<th width="10%"></th>
 									</tr>
 								</thead>
-								<tfooter>
-									<tr>
-
-										<th>Folio</th>
-										<th>Movimiento</th>
-										<th>Proveedor</th>
-										<th>Fecha</th>
-										<th>Sucursal</th>
-										<th>Liberar</th>
-									</tr>
-								</tfooter>
 							</table>
 						</div>
 					</div>
@@ -148,12 +137,12 @@ include '../global_seguridad/verificar_sesion.php';
 
 	<?php include '../footer.php'; ?>
 	<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 	<!-- Page script -->
 	<script>
 		$('#sucursal').select2({
@@ -260,26 +249,30 @@ include '../global_seguridad/verificar_sesion.php';
 			return false;
 		});
 		$("#btn-guardar").click(function() {
-			var url = "insertar_devoluciones.php";
-			$.ajax({
-				url: url,
-				type: "POST",
-				dateType: "html",
-				data: $('#form-datos').serialize(),
-				success: function(respuesta) {
-					if (respuesta == "ok") {
-						alertify.success("Devolución registrada correctamente");
-					} else if (respuesta == "repetido") {
-						alertify.error("El registro ya existe");
-					}
-				},
-				error: function(xhr, status) {
-					alert("error");
-					//alert(xhr);
-				},
-			});
-			cargar_tabla();
-			$(":text").val('');
+			if ($("#movimiento").val() == "" || $("#folio").val() == "" || $("#sucursal").val() == "") {
+				alertify.error("Selecciona todos los datos");
+			} else {
+				var url = "insertar_devoluciones.php";
+				$.ajax({
+					url: url,
+					type: "POST",
+					dateType: "html",
+					data: $('#form-datos').serialize(),
+					success: function(respuesta) {
+						if (respuesta == "ok") {
+							alertify.success("Devolución registrada correctamente");
+						} else if (respuesta == "repetido") {
+							alertify.error("El registro ya existe");
+						}
+					},
+					error: function(xhr, status) {
+						alert("error");
+						//alert(xhr);
+					},
+				});
+				cargar_tabla();
+				$(":text").val('');
+			}
 			return false;
 		})
 
@@ -292,7 +285,8 @@ include '../global_seguridad/verificar_sesion.php';
 				},
 				"paging": false,
 				"dom": 'Bfrtip',
-				buttons: [{
+				buttons: [
+					{
 						extend: 'pageLength',
 						text: 'Registros',
 						className: 'btn btn-default'
@@ -300,6 +294,15 @@ include '../global_seguridad/verificar_sesion.php';
 					{
 						extend: 'excel',
 						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
 						className: 'btn btn-default',
 						title: 'Modulos-Lista',
 						exportOptions: {
@@ -316,7 +319,7 @@ include '../global_seguridad/verificar_sesion.php';
 							_: '%d lignes copiées',
 							1: '1 ligne copiée'
 						}
-					},
+					}
 				],
 				"ajax": {
 					"type": "POST",
@@ -334,6 +337,9 @@ include '../global_seguridad/verificar_sesion.php';
 						"data": "proveedor"
 					},
 					{
+						"data": "tipo_proveedor"
+					},
+					{
 						"data": "fecha"
 					},
 					{
@@ -347,7 +353,23 @@ include '../global_seguridad/verificar_sesion.php';
 		}
 		$(document).ready(function() {
 			cargar_tabla();
-		})
+		});
+
+		function eliminar(registro) {
+			var url = "eliminar_devolucion.php"; // El script a dónde se realizará la petición.
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: {
+					registro: registro
+				}, // Adjuntar los campos del formulario enviado.
+				success: function(respuesta) {
+					alertify.error("Folio de devolución eliminado correctamente");
+					cargar_tabla();
+				}
+			});
+			return false;
+		}
 	</script>
 </body>
 

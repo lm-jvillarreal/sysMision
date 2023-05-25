@@ -188,12 +188,12 @@ include '../global_seguridad/verificar_sesion.php';
         },
         "paging": false,
         "dom": 'Bfrtip',
-
-        buttons: [{
-            extend: 'pageLength',
-            text: 'Registros',
-            className: 'btn btn-default'
-          },
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},         
           {
             extend: 'excel',
             text: 'Exportar a Excel',
@@ -203,6 +203,15 @@ include '../global_seguridad/verificar_sesion.php';
               columns: ':visible'
             }
           },
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'FaltantesLista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
           {
             extend: 'copy',
             text: 'Copiar registros',

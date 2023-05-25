@@ -17,7 +17,7 @@
                             FROM me_control_tiempos me1
                             WHERE activo = '1'
                             AND me1.id_persona = me_control_tiempos.id_persona
-                            AND me1.tipo = '1'
+                            AND (me1.tipo = '1' OR me1.tipo = '5')
                             ) AS Extra,
                             (
                             SELECT SUM(TIME_TO_SEC(diferencia))
@@ -36,6 +36,8 @@
                 tipo 
                 WHEN '1' THEN
                 'Extra' 
+                WHEN '5' THEN
+                'Extra'
                 WHEN '2' THEN
                 'Permiso' 
                 ELSE 'Pagado'

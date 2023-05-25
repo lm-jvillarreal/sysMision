@@ -3,8 +3,9 @@
   include '../global_settings/conexion_oracle.php';
 
   $id_pago = $_POST['id_pago'];
+  $filtro_tabla=$_POST['filtro'];
 
-  $filtro=(!empty($registros_propios) == '1')?" AND id_usuario = '$id_usuario'":"";
+  $filtro=($filtro_tabla == '1')?" AND id_usuario = '$id_usuario'":"";
 
   if($id_pago == 0){
     $filtro1 = " AND NOT EXISTS (SELECT NULL FROM detalle_pago_servicios WHERE detalle_pago_servicios.id_bitacora_servicio = bitacora_servicios.id AND activo = '1')";
@@ -64,7 +65,7 @@
       $ruta2="";
     }
     $boton_ver ="<a class='venobox btn btn-$color btn-sm' href='$ruta2' alt='Imagen 1' data-gall='myGallery_$numero' title='$row_proveedores[1]'><i class='fa fa-file-image-o fa-lg'></i></a>";
-    $boton_editar ="<button onclick='editar($row[0])' class='btn btn-warning'><i class='fa fa-edit fa-lg' aria-hidden='true'></button>";
+    $boton_editar ="<button onclick='editar($row[0])' class='btn btn-sm btn-warning'><i class='fa fa-edit fa-lg' aria-hidden='true'></button>";
     
     $boton_comentario = "<a href='#' data-id = '$row[0]' data-toggle = 'modal' data-target = '#modal-default1' target='blank' class='btn btn-danger'><i class='fa fa-commenting fa-lg' aria-hidden='true'></i></a>";
     $gasto = ($row[4] != "")?$row[4]:"0";

@@ -1,19 +1,21 @@
 <?php
-  include '../global_seguridad/verificar_sesion.php';
-  function _data_last_month_day() { 
-    $month = date('m');
-    $year = date('Y');
-    $day = date("d", mktime(0,0,0, $month+1, 0, $year));
-    return date('Y-m-d', mktime(0,0,0, $month, $day, $year));
-  };
-  /** Actual month first day **/
-  function _data_first_month_day() {
-    $month = date('m');
-    $year = date('Y');
-    return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
-  }
-  $fecha1 = _data_first_month_day();
-  $fecha2 = _data_last_month_day();
+include '../global_seguridad/verificar_sesion.php';
+function _data_last_month_day()
+{
+  $month = date('m');
+  $year = date('Y');
+  $day = date("d", mktime(0, 0, 0, $month + 1, 0, $year));
+  return date('Y-m-d', mktime(0, 0, 0, $month, $day, $year));
+};
+/** Actual month first day **/
+function _data_first_month_day()
+{
+  $month = date('m');
+  $year = date('Y');
+  return date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
+}
+$fecha1 = _data_first_month_day();
+$fecha2 = _data_last_month_day();
 ?>
 <!DOCTYPE html>
 <html>
@@ -49,8 +51,8 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="fecha">*Fecha:</label>
-                  <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha" data-link-format="yyyy-mm-dd" >
-                    <input class="form-control" size="16" type="text"  id="fecha1" name="fecha1" value="<?php echo $fecha1?>" onchange='cargar_tabla()'>
+                  <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" id="fecha1" name="fecha1" value="<?php echo $fecha1 ?>" onchange='cargar_tabla()'>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                   </div>
@@ -59,8 +61,8 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="fecha">*Fecha:</label>
-                  <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha" data-link-format="yyyy-mm-dd" >
-                    <input class="form-control" size="16" type="text"  id="fecha2" name="fecha2" value="<?php echo $fecha2?>" onchange='cargar_tabla()'>
+                  <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" id="fecha2" name="fecha2" value="<?php echo $fecha2 ?>" onchange='cargar_tabla()'>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                   </div>
@@ -71,20 +73,21 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table id="lista_cambios" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <table id="lista_cambios" class="table table-striped table-bordered" cellspacing="0" width="100%" style="font-size: 0.8em;">
                     <thead>
                       <tr>
-                        <th width="5%">#</th>
+                        <th width="3%">#</th>
                         <th width="5%">Tipo</th>
                         <th>Descripcion</th>
                         <th width='5%'>Suc.</th>
                         <th width="10%">F. Captura</th>
                         <th width="10%">F. Libera</th>
-                        <th width="10%">Duración</th>
+                        <th width="5%">Duración</th>
                         <th width="20%">Comentario</th>
-                        <th width="10">Solicita</th>
-                        <th width="10">Libera</th>
-                        <th width="10">Status</th>
+                        <th width="5%">Solicita</th>
+                        <th width="5%">Libera</th>
+                        <th width='5%'>Encargado</th>
+                        <th width="5%">Status</th>
                       </tr>
                     </thead>
                   </table>
@@ -123,6 +126,7 @@
     $(document).ready(function() {
       cargar_tabla();
     })
+
     function cargar_tabla() {
       var fecha1 = $('#fecha1').val();
       var fecha2 = $('#fecha2').val();
@@ -149,6 +153,15 @@
             }
           },
           {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
             extend: 'copy',
             text: 'Copiar registros',
             className: 'btn btn-default',
@@ -164,7 +177,10 @@
           "type": "POST",
           "url": "lista_bitacora.php",
           "dataSrc": "",
-          "data":{'fecha1':fecha1,'fecha2':fecha2},
+          "data": {
+            'fecha1': fecha1,
+            'fecha2': fecha2
+          },
         },
         "columns": [{
             "data": "id"
@@ -197,21 +213,24 @@
             "data": "libera"
           },
           {
+            "data": "encargado"
+          },
+          {
             "data": "estatus"
           }
         ]
       });
     }
     $('.form_date').datetimepicker({
-      language:  'es',
+      language: 'es',
       weekStart: 1,
-      todayBtn:  1,
+      todayBtn: 1,
       autoclose: 1,
       todayHighlight: 1,
       startView: 2,
       minView: 2,
       forceParse: 0
-    }); 
+    });
   </script>
 </body>
 

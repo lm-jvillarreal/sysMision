@@ -67,8 +67,8 @@ include '../global_seguridad/verificar_sesion.php';
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+    <?php include 'modal_detalle.php'; ?>
     <?php include '../footer2.php'; ?>
-
     <!-- Control Sidebar -->
 
     <!-- /.control-sidebar -->
@@ -160,6 +160,15 @@ include '../global_seguridad/verificar_sesion.php';
 							columns: ':visible'
 						}
 					},
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
 					{
 						extend: 'copy',
 						text: 'Copiar registros',
@@ -203,6 +212,81 @@ include '../global_seguridad/verificar_sesion.php';
           }
         ]
       });
+    }
+    function cargar_tabla_detalle(sucursal, tipomov, foliomov) {
+      $('#lista_detalle').dataTable().fnDestroy();
+      $('#lista_detalle').DataTable({
+        'language': {
+          "url": "../plugins/DataTables/Spanish.json"
+        },
+        "paging": false,
+				"dom": 'Bfrtip',
+				buttons: [{
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					},
+				],
+        "ajax": {
+          "type": "POST",
+          "url": "tabla_modal.php",
+          "dataSrc": "",
+          "data":{
+            sucursal: sucursal,
+            tipomov: tipomov,
+            foliomov: foliomov
+          }
+        },
+        "columns": [{
+            "data": "artc_articulo"
+          },
+          {
+            "data": "artc_descripcion"
+          },
+          {
+            "data": "cant_surtida"
+          },
+          {
+            "data": "costo_promedio"
+          },
+          {
+            "data": "unidad_medida"
+          }
+        ]
+      });
+    }
+    function detalle(sucursal, tipomov, folio){
+      $("#modal-detalle").modal("show");
+      cargar_tabla_detalle(sucursal,tipomov,folio);
     }
   </script>
 </body>

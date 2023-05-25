@@ -23,6 +23,10 @@ if(isset($_POST['fecha_inicio']) && isset($_POST['fecha_fin'])){
             'Villegas' 
             WHEN '4' THEN
             'Allende' 
+            WHEN '5' THEN
+            'Petaca'
+            WHEN '6' THEN
+            'Montemorelos'  
             ELSE 'Otra'
           END AS sucursal,
           ctb_usuario,
@@ -49,6 +53,10 @@ else{
             'Villegas' 
             WHEN '4' THEN
             'Allende' 
+            WHEN '5' THEN
+            'Petaca'
+            WHEN '6' THEN
+            'Montemorelos'  
             ELSE 'Otra'
           END AS sucursal,
           ctb_usuario,

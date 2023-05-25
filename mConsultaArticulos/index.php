@@ -42,7 +42,7 @@ $hora = date("h:i:s");
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                   <div class="form-group">
-                    <label for="bodega">*Precio Publico</label>
+                    <label for="bodega" id='lblPP'>*Precio Publico</label>
                     <input readonly class="form-control" type="text" id="precio_publico">
                   </div>
                 </div>
@@ -89,11 +89,14 @@ $hora = date("h:i:s");
           </div>
           <div class="box box-footer">
             <div class="row">
-              <div class="col-md-6 text-left">
+              <div class="col-md-4 text-left">
                 <button onclick="cargar_tabla()" class="btn btn-danger">Historial de Traspasos</button>
               </div>
-              <div class="col-md-6 text-right">
+              <div class="col-md-4 text-right">
                 <button id="btnEntradas" class="btn btn-danger">Historial de entradas</button>
+              </div>
+              <div class="col-md-4 text-right">
+                <button id="btnESCARG" class="btn btn-danger">Historial de ESCARG</button>
               </div>
             </div>
           </div>
@@ -204,6 +207,7 @@ $hora = date("h:i:s");
   include 'modal_cantidades.php';
   include 'modal_buscar.php';
   include 'modal.php';
+  include 'modal_precio.php'
   ?>
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
@@ -212,7 +216,7 @@ $hora = date("h:i:s");
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-  
+
   <script>
     function cargar_tabla() {
       var codigo = $("#codigo").val();
@@ -225,6 +229,43 @@ $hora = date("h:i:s");
         "order": [
           [0, "desc"]
         ],
+        "dom": 'Bfrtip',
+         buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+					{
+						extend: 'excel',
+						text: 'Exportar a Excel',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+					{
+						extend: 'copy',
+						text: 'Copiar registros',
+						className: 'btn btn-default',
+						copyTitle: 'Ajouté au presse-papiers',
+						copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+						copySuccess: {
+							_: '%d lignes copiées',
+							1: '1 ligne copiée'
+						}
+					}
+				],
         "ajax": {
           "type": "POST",
           "url": "tabla_traspasos.php",
@@ -267,7 +308,7 @@ $hora = date("h:i:s");
       });
     }
 
-    function cargar_entradas() {
+    function cargar_entradas(tipomov) {
       var codigo = $("#codigo").val();
       $('#lista_entradas').dataTable().fnDestroy();
       $('#lista_entradas').DataTable({
@@ -316,7 +357,8 @@ $hora = date("h:i:s");
           "url": "tabla_entradas.php",
           "dataSrc": "",
           "data": {
-            codigo: codigo
+            codigo: codigo,
+            tipomov: tipomov
           }
         },
         "columns": [{
@@ -488,6 +530,8 @@ $hora = date("h:i:s");
           $('#o_arb').val(array[1]);
           $('#o_vil').val(array[2]);
           $('#o_all').val(array[3]);
+          $('#o_pet').val(array[4]);
+          $('#o_mm').val(array[5]);
         }
       });
     }
@@ -514,7 +558,9 @@ $hora = date("h:i:s");
           $('#ex_villegas').val(array[2]);
           $('#ex_allende').val(array[3]);
           $('#ex_lp').val(array[4]);
-          $('#ex_cedis').val(array[5]);
+          $('#ex_mm').val(array[5]);
+          $('#ex_cedis').val(array[6]);
+          $('#ex_cedisRopa').val(array[7]);
         }
       });
     }
@@ -583,8 +629,14 @@ $hora = date("h:i:s");
     });
 
     $("#btnEntradas").click(function() {
+      cargar_entradas("entradas");
+    })
+    $("#btnESCARG").click(function(){
+      cargar_entradas("ESCARG");
+    });
+    $("#lblPP").dblclick(function(){
       var codigo = $("#codigo").val();
-      cargar_entradas(codigo);
+      preciopub();
     })
 
     function cargar_lista() {
@@ -638,6 +690,33 @@ $hora = date("h:i:s");
           },
         ]
       });
+    }
+
+    function preciopub() {
+      var url = "consulta_precio.php";
+      var artc_articulo = $("#codigo").val();
+      if (artc_articulo == "") {
+
+      } else {
+        $.ajax({
+          data: {
+            'codigo': artc_articulo
+          }, //datos que se envian a traves de ajax
+          url: url, //archivo que recibe la peticion
+          type: 'POST', //método de envio
+          dateType: 'html',
+          success: function(response) {
+            $('#modal_precio').modal('show');
+            var array = eval(response);
+            $('#do_precio').val(array[0]);
+            $('#arb_precio').val(array[1]);
+            $('#vill_precio').val(array[2]);
+            $('#all_precio').val(array[3]);
+            $('#pet_precio').val(array[4]);
+            $('#mm_precio').val(array[5]);
+          }
+        });
+      }
     }
   </script>
 

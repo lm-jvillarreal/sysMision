@@ -7,7 +7,7 @@ date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d");
 $hora=date ("h:i:s");
 //$anio = date("Y");
-$anio = '2020';
+$anio = '2022';
 
 $ide_registro = $_POST['ide_registro'];
 $proveedor = $_POST['proveedor'];

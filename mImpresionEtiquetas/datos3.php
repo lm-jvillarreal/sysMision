@@ -5,7 +5,16 @@
     $fecha1      = $_POST['fecha1'];
     $fecha2      = $_POST['fecha2'];
 
-    $cadena_principal = mysqli_query($conexion,"SELECT id,nombre FROM sucursales WHERE (id != '11' AND id !='12' AND id!='99') ORDER BY id");
+    $cadena_principal = mysqli_query($conexion,"SELECT
+                                                  id,
+                                                  nombre 
+                                                FROM
+                                                  sucursales 
+                                                WHERE
+                                                  activo = '1' 
+                                                  AND id != 99 
+                                                ORDER BY
+                                                  id");
 
     while($row_sucursal = mysqli_fetch_array($cadena_principal)){
     	$consulta = mysqli_query($conexion,"SELECT

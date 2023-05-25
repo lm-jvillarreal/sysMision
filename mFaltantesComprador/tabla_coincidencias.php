@@ -15,11 +15,11 @@ $cadena_detalle = "SELECT f.cve_articulo,
                     f.depto, 
                     f.familia,
                     count(cve_articulo) as conteo,
-                    s.nombre
-                    FROM faltantes_pasven as f INNER JOIN sucursales as s ON f.sucursal = s.id
+                    (SELECT nombre FROM sucursales WHERE id=f.sucursal)
+                    FROM faltantes_pasven as f
                     WHERE (f.estatus = '1' or f.estatus='3' or f.estatus='4')
                     GROUP BY f.cve_articulo, f.sucursal
-                    order by count(*) desc";
+                    order by count(*)";
 
 $consulta_detalle = mysqli_query($conexion, $cadena_detalle);
 $cuerpo ="";
@@ -36,7 +36,8 @@ while ($row_detalle = mysqli_fetch_array($consulta_detalle)) {
 	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 3, '$row_detalle[1]'), 
 	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 4, '$row_detalle[1]'),
 	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 5, '$row_detalle[1]'),
-	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 99, '$row_detalle[1]')   
+	spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 99, '$row_detalle[1]'),
+	(SELECT ARTC_DESCRIPCION FROM COM_ARTICULOS WHERE ARTC_ARTICULO='$row_detalle[1]') AS DESCRIPCION   
 FROM 
 	dual";
 	$st = oci_parse($conexion_central, $cadena_existencia);
@@ -49,13 +50,14 @@ FROM
 	$all = "<center><a href='#' data-id = '$row_detalle[1]' data-suc = '4'  data-toggle = 'modal' data-target = '#modal-ue' target='blank'>$row_existencia[3]</a></center>";
 	$pet = "<center><a href='#' data-id = '$row_detalle[1]' data-suc = '5'  data-toggle = 'modal' data-target = '#modal-ue' target='blank'>$row_existencia[4]</a></center>";
 	$cedis = "<center><a href='#' data-id = '$row_detalle[1]' data-suc = '99'  data-toggle = 'modal' data-target = '#modal-ue' target='blank'>$row_existencia[5]</a></center>";
+	$artc_descripcion = mysqli_real_escape_string($conexion,$row_existencia[6]);
 	$renglon = "
 	{
 		\"no\": \"$i\",
 		\"depto\": \"$escape_depto\",
 		\"fam\": \"$escape_fam\",
 		\"codigo\": \"$row_detalle[1]\",
-		\"descripcion\": \"$escape_desc\",
+		\"descripcion\": \"$artc_descripcion\",
 		\"sucursal\": \"$row_detalle[6]\",
 		\"conteo\": \"$conteo\",
 		\"do\": \"$do\",

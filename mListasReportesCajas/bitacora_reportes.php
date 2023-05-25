@@ -26,7 +26,7 @@
     <section class="content">
       <div class="box box-danger">
         <div class="box-header">
-          <h3 class="box-title">Bitacora de Reportes de Cajas</h3>
+          <h3 class="box-title">Bitácora de Reportes de Cajas</h3>
           <br>
         </div>
         <div class="box-body">
@@ -98,6 +98,7 @@
         'language': {"url": "../plugins/DataTables/Spanish.json"},
         "paging":   false,
         "dom": 'Bfrtip',
+        "order": ["0", "ASC"],
         buttons: [{
               extend: 'pageLength',
               text: 'Registros',

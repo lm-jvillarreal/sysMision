@@ -34,6 +34,7 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones del módulo</li>
         <li class="active"><a href="index.php"><i class="fa fa-bars"></i> <span>Generar Reporte</span></a></li>
+        <li class="active"><a href="indexInicioRpts.php"><i class="fa fa-bars"></i> <span>Inicio</span></a></li>
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones de navegaci&oacute;n</li>

@@ -30,8 +30,14 @@
 										<label for="cantidad">La Petaca</label>
 										<input type="text" readonly id="ex_lp" name="cantidad" class="form-control">
 										<br>
+										<label for="cantidad">Montemorelos</label>
+										<input type="text" readonly id="ex_mm" name="cantidad" class="form-control">
+										<br>
 										<label for="cantidad">CEDIS</label>
 										<input type="text" readonly id="ex_cedis" name="cantidad" class="form-control">
+										<br>
+										<label for="cantidad">CEDIS Ropa</label>
+										<input type="text" readonly id="ex_cedisRopa" name="cantidad" class="form-control">
 									</div>
 						        </div>
 							</div>

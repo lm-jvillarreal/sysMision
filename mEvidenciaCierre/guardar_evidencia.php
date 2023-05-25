@@ -21,7 +21,7 @@ $rowId=mysqli_fetch_array($consultaId);
 $id_historial=$rowId[0];
 
 if($id_historial>0){
-  $destino =  "img/". $id_historial.".".$extension; 
+  $destino =  "img/". $id_historial.".".$extension;
   if (copy($_FILES['file']['tmp_name'],$destino))  { 
     $status = "Archivo subido"; 
   }else{ 

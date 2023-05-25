@@ -99,10 +99,20 @@ $hora = date("h:i:s");
   <!-- ./wrapper -->
 
   <?php include '../footer.php'; ?>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-more.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    
   <!-- Page script -->
   <script>
     function ingresar_cantidad(codigo) {
-
       $.ajax({
         data: {
           'codigo': codigo
@@ -159,23 +169,28 @@ $hora = date("h:i:s");
     }
 
     function agregar_articulo(codigo, id_caja, cantidad, descripcion) {
-      $.ajax({
-        data: {
-          'codigo': codigo,
-          'id_caja': id_caja,
-          'cantidad': cantidad,
-          'descripcion': descripcion
-        }, //datos que se envian a traves de ajax
-        url: 'agregar_articulo.php', //archivo que recibe la peticion
-        type: 'POST', //método de envio
-        dateType: 'html',
-        success: function(response) {
-          //$("#frmDatos")[0].reset();
-          //blanco();
-          //recargar_tabla(id_caja);
-          recargar_tabla(id_caja);
-        }
-      });
+      if (codigo === "" || id_caja === "" || cantidad === "" || descripcion === "") {
+        alertify.error("Existen datos vacíos");
+      } else {
+        $.ajax({
+          data: {
+            'codigo': codigo,
+            'id_caja': id_caja,
+            'cantidad': cantidad,
+            'descripcion': descripcion
+          }, //datos que se envian a traves de ajax
+          url: 'agregar_articulo.php', //archivo que recibe la peticion
+          type: 'POST', //método de envio
+          dateType: 'html',
+          success: function(response) {
+            $("#form-datos")[0].reset();
+            //blanco();
+            //recargar_tabla(id_caja);
+            recargar_tabla(id_caja);
+            $("#codigo_caja").focus();
+          }
+        });
+      }
     }
 
     function recargar_tabla(id_caja) {
@@ -193,7 +208,8 @@ $hora = date("h:i:s");
     }
 
     function save() {
-      location.reload();
+      $("#form-datos")[0].reset();
+      $("#codigo_caja").focus();
     }
 
 

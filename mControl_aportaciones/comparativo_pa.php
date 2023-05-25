@@ -42,6 +42,7 @@
                         <th>Proveedor</th>
                         <th width="10%">Proyección</th>
                         <th width="10%">Aportación</th>
+                        <th width="10%">Concepto</th>
                         <th width="10%">Diferencia</th>
                         <th width="10%">Comprador</th>
                       </tr>
@@ -52,6 +53,7 @@
                         <th>Proveedor</th>
                         <th width="10%">Proyección</th>
                         <th width="10%">Aportación</th>
+                        <th width="10%">Concepto</th>
                         <th width="10%">Diferencia</th>
                         <th width="10%">Comprador</th>
                       </tr>
@@ -111,6 +113,7 @@
               { "data": "proveedor" },
               { "data": "proyeccion" },
               { "data": "aportacion" },
+              {"data": "concepto"},
               { "data": "diferencia" },
               { "data": "comprador" }
           ]

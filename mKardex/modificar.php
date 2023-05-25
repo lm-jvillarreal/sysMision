@@ -44,7 +44,7 @@
 								ON rm.modn_folio = m.modn_folio 
 								AND m.almn_almacen = rm.almn_almacen 
 								AND m.modc_tipomov = rm.modc_tipomov 
-								WHERE m.modc_tipomov IN ('AJUPOS', 'ECHORI','EGRAL','ENTCOC', 'ENTMEQ','ENTPRE','ENTSOC', 'ETRANS','ETRASE','EXCONV','EXDEV')
+								WHERE m.modc_tipomov IN ('AJUPOS', 'RAPOS', 'ECHORI','EGRAL','ENTCOC', 'ENTMEQ','ENTPRE','ENTSOC', 'ETRANS','ETRASE','EXCONV','EXDEV')
 								AND m.MOVD_FECHAAFECTACION >= TRUNC (TO_DATE ('$fecha_inicial', 'YYYY/MM/DD'))
 								AND m.MOVD_FECHAAFECTACION < TRUNC (TO_DATE ('$fecha_final', 'YYYY/MM/DD')) + 1
 								AND rm.ARTC_ARTICULO = '$codigo'
@@ -62,7 +62,7 @@
 								AND m.modc_tipomov = rm.modc_tipomov 
 								WHERE m.modc_tipomov IN ('SALMEQ', 'SALXVE
 								','SGRAL', 	'STRANS', 	'STRASE', 	'SVALPR',	'SXCONV',	'SXMBOD', 	'SXMCAR', 	'SXMPAN',	'SXMTOR',	'SXROB',	'TRADEP',	
-								'VALCI',	'DEVCTR',	'DEVXCO','DMPROV')
+								'VALCI',	'DEVCTR',	'DEVXCO','DMPROV', 'AJUNEG', 'RANEG', 'SXMCAD')
 								AND m.MOVD_FECHAAFECTACION >= TRUNC (TO_DATE ('$fecha_inicial', 'YYYY/MM/DD'))
 								AND m.MOVD_FECHAAFECTACION < TRUNC (TO_DATE ('$fecha_final', 'YYYY/MM/DD')) + 1
 								AND rm.ARTC_ARTICULO = '$codigo'

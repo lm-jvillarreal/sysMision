@@ -37,6 +37,7 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
         <li class="active"><a href="index_dif_gral.php"><i class="fa fa-file-text-o"></i> <span>Diferencias Globales</span></a></li>
         <li class="active"><a href="historial.php"><i class="fa fa-file-text-o"></i> <span>Historial</span></a></li>
         <li class="active"><a href="resumen.php"><i class="fa fa-bar-chart"></i> <span>Resumen</span></a></li>
+        <li class="active"><a href="index_copy.php"><i class="fa fa-file-text-o"></i> <span>EnDesarrollo</span></a></li>
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones de navegaci&oacute;n</li>

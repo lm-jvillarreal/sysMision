@@ -18,5 +18,5 @@ $modifica_estado = mysqli_query($conexion, $cadena_modifica);
 
 // $modifica_estado = mysqli_query($conexion, $cadena_modifica);
 
-// echo "ok";
-// ?>
+ echo "ok";
+ ?>

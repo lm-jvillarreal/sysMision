@@ -114,6 +114,7 @@ $fecha2 = _data_last_month_day();
       </section>
       <!-- /.content -->
     </div>
+    <?php include 'modal_coincidencias.php'; ?>
     <!-- /.content-wrapper -->
     <?php include '../footer2.php'; ?>
 
@@ -166,7 +167,6 @@ $fecha2 = _data_last_month_day();
         },
         "paging": false,
         "dom": 'Bfrtip',
-
         buttons: [{
             extend: 'pageLength',
             text: 'Registros',
@@ -182,6 +182,15 @@ $fecha2 = _data_last_month_day();
             }
           },
           {
+						extend: 'pdf',
+						text: 'Exportar a PDF',
+						className: 'btn btn-default',
+						title: 'Modulos-Lista',
+						exportOptions: {
+							columns: ':visible'
+						}
+					},
+          {
             extend: 'copy',
             text: 'Copiar registros',
             className: 'btn btn-default',
@@ -191,6 +200,13 @@ $fecha2 = _data_last_month_day();
               _: '%d lignes copiées',
               1: '1 ligne copiée'
             }
+          },
+          {
+            text: 'Coincidencias',
+            action: function() {
+              coincidencias();
+            },
+            counter: 1
           },
         ],
         "ajax": {
@@ -220,6 +236,56 @@ $fecha2 = _data_last_month_day();
     }
     $("#btnGenerar").click(function() {
       cargar_tabla();
+    });
+    function tabla_modal() {
+      var articulo = $("#modal_descripcion").val();
+      var f_inicio = $("#fecha_inicial_modal").val();
+      var f_fin = $("#fecha_final_modal").val();
+      $('#lista_articulos').dataTable().fnDestroy();
+      $('#lista_articulos').DataTable({
+        'language': {
+          "url": "../plugins/DataTables/Spanish.json"
+        },
+        'paging': false,
+        "ajax": {
+          "type": "POST",
+          "url": "tabla_coincidencias.php",
+          "dataSrc": "",
+          "data": {
+            articulo: articulo,
+            f_inicio: f_inicio,
+            f_fin: f_fin
+          }
+        },
+        "columns": [{
+            "data": "id"
+          },
+          {
+            "data": "folio_solicitud"
+          },
+          {
+            "data": "sucursal"
+          },
+          {
+            "data": "codigo"
+          },
+          {
+            "data": "descripcion"
+          },
+          {
+            "data": "fecha"
+          }
+        ]
+      });
+    }
+    function coincidencias() {
+      $("#modal-coincidencias").modal("show");
+    }
+    $("#modal_descripcion").keypress(function(e) { //Función que se desencadena al presionar enter
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if (code == 13) {
+        tabla_modal();
+      }
     });
   </script>
 </body>

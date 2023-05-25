@@ -42,7 +42,6 @@
                         <th width="15%">Comentario</th>
                         <th width="20%">Autorizar</th>
                         <th width="5%">Rechazar</th>
-                        
                       </tr>
                     </thead>
                     <tfoot>
@@ -70,7 +69,7 @@
   <!-- /.content-wrapper -->
   <?php include 'modal_pagar.php'; ?>
   <?php include 'modal_rechazar.php'; ?>
- <?php include '../footer2.php'; ?>
+  <?php include '../footer2.php'; ?>
 
   <!-- Control Sidebar -->
   
@@ -137,7 +136,8 @@
 	        ],
       "ajax": {
         "type": "POST",
-        "url": "http://200.1.1.197/SMPruebas/mAutorizacionIncidencias/tabla_pendientes.php",
+        "url": "tabla_pendientes.php",
+        //http://200.1.1.197/SMPruebas/mAutorizacionIncidencias/
         "dataSrc": ""
       },
       "columns": [
@@ -156,7 +156,7 @@
   //modal para adjuntar archivos.
   $('#modal-default').on('show.bs.modal', function(e) {
     var id_registro = $(e.relatedTarget).data().id;
-    var url = "http://200.1.1.197/SMPruebas/mAutorizacionIncidencias/consulta_datos_modal.php"; // El script a dónde se realizará la petición.
+    var url = "consulta_datos_modal.php"; // El script a dónde se realizará la petición.http://200.1.1.197/SMPruebas/mAutorizacionIncidencias/
       $.ajax({
         type: "POST",
         url: url,
@@ -199,7 +199,7 @@
   });
     $('#modal-rechazar').on('show.bs.modal', function(e) {
     var id_registroo = $(e.relatedTarget).data().id;
-    var url = "http://200.1.1.197/SMPruebas/mAutorizacionIncidencias/consulta_datos_modall.php"; // El script a dónde se realizará la petición.
+    var url = "consulta_datos_modall.php"; // El script a dónde se realizará la petición.http://200.1.1.197/SMPruebas/mAutorizacionIncidencias/
       $.ajax({
         type: "POST",
         url: url,
@@ -209,10 +209,10 @@
           var array = eval(respuesta);
          
           $('#nombre_persona').html(array[0]);
-          $('#registro').val(array[2]);
+          $('#registro').val(array[3]);//incidencia
           $('#id_registroo').val(array[1]);
-          $('#sugerencia').val(array[3]);
-          $('#comentario_inicio').val(array[4]);
+          $('#sugerencia').val(array[5]);
+          $('#comentario_inicio').val(array[6]);
           $('#folio').val(array[6]);
         }
       });

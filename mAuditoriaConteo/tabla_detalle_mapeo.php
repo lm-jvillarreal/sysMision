@@ -8,12 +8,16 @@
 					D.descripcion, 
 					C.cantidad,
 					D.Id,
-					C.Id
+					C.Id,
+					D.estante,
+					D.consecutivo_mueble
 				FROM inv_detalle_mapeo D
 				INNER JOIN inv_captura C ON D.id = C.id_detalle_mapeo
 				INNER JOIN inv_mapeo M ON M.id = D.id_mapeo
 				AND D.id_mapeo = C.id_mapeo
-				where D.id_mapeo = '$id_mapeo'";
+				where D.id_mapeo = '$id_mapeo'
+				GROUP BY D.id 
+              	ORDER BY D.estante, D.consecutivo_mueble";
 				//echo "$qry";
 		$exQry = mysqli_query($conexion, $qry);
 		date_default_timezone_set('America/Monterrey');
@@ -71,6 +75,8 @@
 			<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 				<thead>
 					<tr>
+						<th>Nivel</th>
+						<th>Consecutivo</th>
 						<th>Codigo</th>
                     	<th>Descripcion</th>
                     	<th>Conteo</th>
@@ -83,6 +89,8 @@
 					{
 					?>
 						<tr>
+							<td><?php echo "$row[5]" ?></td>
+							<td><?php echo "$row[6]" ?></td>
 							<td>
 								<?php echo "$row[0]"; ?>
 							</td>

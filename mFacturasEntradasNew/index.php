@@ -39,7 +39,9 @@ $hora = date("h:i:s");
                       <option value="3">Villegas</option>
                       <option value="4">Allende</option>
                       <option value="5">La Petaca</option>
+                      <option value="6">Montemorelos</option>
                       <option value="99">CEDIS</option>
+                      <option value="203">CEDIS Ropa</option>
                     </select>
                   </div>
                 </div>
@@ -69,7 +71,7 @@ $hora = date("h:i:s");
                 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                   <div class="form-group">
                     <label for="bodega">Total</label>
-                    <input type="text" name="proveedor" id="txtTotal" class="form-control" readonly>
+                    <input type="text" name="txtTotal" id="txtTotal" class="form-control" readonly>
                   </div>
                 </div>
               </div>
@@ -108,12 +110,16 @@ $hora = date("h:i:s");
     <?php include '../footer2.php'; ?>
     <div class="control-sidebar-bg"></div>
   </div>
-  <?php include 'modal.php'; ?>
-  <?php include '../footer.php';
-  include 'modal_carta.php';
-  include 'modal_opciones.php';
-  include 'modal_entrada.php';
-  ?>
+  
+  <?php include '../footer.php';?>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
 
 
   <!-- <script>CargarBodega();</script>
@@ -313,22 +319,22 @@ $hora = date("h:i:s");
       var impuesto = $('#cmbImpuesto_' + n).val();
       $('#clave_' + n).val(impuesto);
 
-      var f_cantidad=parseFloat(cantidad);
-      var f_diferencia=parseFloat(diferencia);
+      var f_cantidad = parseFloat(cantidad);
+      var f_diferencia = parseFloat(diferencia);
 
       var calculo = f_cantidad * f_diferencia;
       console.log(calculo);
       $('#total_bruto_' + n).val(calculo);
       if (impuesto != 0) {
-        var f_impuesto=parseFloat(impuesto);
-        var f_calculo=parseFloat(calculo);
+        var f_impuesto = parseFloat(impuesto);
+        var f_calculo = parseFloat(calculo);
         calculo = f_impuesto * f_calculo;
         console.log(impuesto);
       } else {
         calculo = calculo;
-        
+
       }
-      
+
       $('#total_' + n).text(calculo);
       $('#totali_' + n).val(calculo);
 
@@ -376,7 +382,7 @@ $hora = date("h:i:s");
       var proveedor = $('#proveedor').val();
       var dif_total = $('#txtTotal').val();
       var tipo_operacion = $("#tipo_operacion").val();
-      if (folio=="" || tipo_mov=="" || sucursal=="" || tipo_operacion=="") {
+      if (folio == "" || tipo_mov == "" || sucursal == "" || tipo_operacion == "") {
         alert("Rellenar todos los datos");
       } else {
         if (dif_total == 0 || dif_total == "") {
@@ -395,7 +401,7 @@ $hora = date("h:i:s");
           }).then(function(respuesta) {
             return respuesta.text().then(function(text) {
               console.log(text);
-              location.reload();
+              //location.reload();
               window.open("nota_cargo.php?folio=" + folio + "&tipo_mov=" + tipo_mov + "&sucursal=" + sucursal);
             });
           });

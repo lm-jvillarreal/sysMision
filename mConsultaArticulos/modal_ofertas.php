@@ -26,6 +26,11 @@
 										<br>
 										<label for="cantidad">Allende</label>
 										<input readonly type="text" id="o_all" name="cantidad" class="form-control">
+										<br>
+										<label for="cantidad">Petaca</label>
+										<input readonly type="text" id="o_pet" name="cantidad" class="form-control">
+										<label for="cantidad">Montemorelos</label>
+										<input readonly type="text" id="o_mm" name="cantidad" class="form-control">
 									</div>
 						        </div>
 							</div>

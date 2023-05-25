@@ -28,8 +28,8 @@
 			$verificar = mysqli_query($conexion,"SELECT id FROM control_equipos WHERE numero_serie = '$numero_serie' AND id_modelo = '$modelo' AND activo = '1'");
 			$existe = mysqli_num_rows($verificar);
 			if ($existe == 0){
-				$cadena = "INSERT INTO control_equipos (id_marca,id_modelo,numero_serie,llave_banorte,id_caja,afiliacion,usuario,contrasena,tipo,cashback,cifrada,fecha,hora,id_usuario,activo)
-				VALUES('$marca','$modelo','$numero_serie','$llave_banorte','$caja','$afiliacion','$usuario','$contraseña','$tipo','$cashback','$cifrada','$fecha','$hora','$id_usuario','1')";
+				$cadena = "INSERT INTO control_equipos (id_marca,id_modelo,numero_serie,llave_banorte,id_caja,afiliacion,usuario,contrasena,tipo,cashback,cifrada,id_tipo,fecha,hora,id_usuario,activo)
+				VALUES('$marca','$modelo','$numero_serie','$llave_banorte','$caja','$afiliacion','$usuario','$contraseña','$tipo','$cashback','$cifrada','1','$fecha','$hora','$id_usuario','1')";
 				$consulta = mysqli_query($conexion,$cadena);
 				echo "ok";
 			}

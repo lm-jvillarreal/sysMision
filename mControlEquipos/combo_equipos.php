@@ -2,13 +2,13 @@
     include '../global_seguridad/verificar_sesion.php';
 
   	if(!isset($_POST['searchTerm'])){ 
-	  $cadena_modelos = "SELECT id,CONCAT(nombre,' - ',descripcion)
-                        FROM cajas_catalogo_equipos 
+	  $cadena_modelos = "SELECT id_tipo,nombre
+                        FROM tipos_equipos 
                         WHERE activo = '1'";
 	}else{ 
 	  $search = $_POST['searchTerm'];   
-	  $cadena_modelos = "SELECT id,nombre 
-      FROM cajas_catalogo_equipos 
+	  $cadena_modelos = "SELECT id_tipo,nombre 
+      FROM tipos_equipos 
       WHERE activo = '1' AND nombre like '%".$search."%'";
 	} 
 	$consulta_modelos = mysqli_query($conexion, $cadena_modelos);

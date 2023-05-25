@@ -13,16 +13,13 @@ while ($row_permisos = mysqli_fetch_array($consulta_permisos))
   $activo = ($row_permisos[2]=="0") ? "" : "checked";
   $editar = "<center><a href='#' onclick='editar($row_permisos[0])'>$row_permisos[0]</a></center>";
   
-  
   $chk_activo = "<center><input type='checkbox' name='activo' id='activo' $activo onchange='estatus($row_permisos[0])'></center>";
-   // $boton_editar = "<a class='btn btn-warning' href='editar_pregunta.php?id=$row_permisos[0]'>Editar</a>";
 
   $renglon = "
   {
     \"id\": \"$editar\",
     \"nombre\": \"$row_permisos[1]\",
       \"activo\": \"$chk_activo\"
-      
     },";
   $cuerpo = $cuerpo.$renglon;
 }

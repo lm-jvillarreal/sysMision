@@ -25,9 +25,17 @@ $Final      = new DateTime($fecha_completa_fin);
 $interval   = $Inicio->diff($Final);
 $diferencia = $interval->format('%h:%i');
 
-
-$cadena = mysqli_query($conexion,"INSERT INTO me_control_tiempos (fecha,hora_inicio,hora_fin,diferencia,comentarios,id_usuario,tipo,fecha_registro,hora_registro,id_persona,activo)
-			VALUES('$fecha_inicio','$hora_inicio','$hora_final','$diferencia','$comentario','$id_usuario','$tipo_registro','$fecha','$hora','$nombre_usuario','1')");
+if($tipo_registro = "5") {
+    $cadena1 = "INSERT INTO me_control_tiempos (fecha,hora_inicio,hora_fin,diferencia,comentarios,id_usuario,tipo,fecha_registro,hora_registro,id_persona,activo)
+			    VALUES('$fecha_inicio','$hora_inicio','$hora_final','$diferencia','$comentario','$id_usuario','$tipo_registro','$fecha','$hora','$nombre_usuario','1');
+                INSERT INTO me_control_tiempos (fecha,hora_inicio,hora_fin,diferencia,comentarios,id_usuario,tipo,fecha_registro,hora_registro,id_persona,activo)
+                VALUES('$fecha_inicio','$hora_inicio','$hora_final','$diferencia','Doble','$id_usuario','$tipo_registro','$fecha','$hora','$nombre_usuario','1')";
+    $consulta = mysqli_query($conexion,$cadena1);
+}else{
+    $cadena1 = "INSERT INTO me_control_tiempos (fecha,hora_inicio,hora_fin,diferencia,comentarios,id_usuario,tipo,fecha_registro,hora_registro,id_persona,activo)
+			 VALUES('$fecha_inicio','$hora_inicio','$hora_final','$diferencia','$comentario','$id_usuario','$tipo_registro','$fecha','$hora','$nombre_usuario','1')";
+    $consulta = mysqli_query($conexion,$cadena1);
+}
 /////////////////////////////////////CONTROL TIEMPOS///////////////////////////////////////////////////////////
 
 /////////////////////////////////////AGENDA///////////////////////////////////////////////////////////
@@ -81,6 +89,10 @@ else if ($tipo_registro == "2"){
 	$tipo  = "Permiso";
 	$color = "#FF0000";
 }
+else if ($tipo_registro == "5"){
+	$tipo  = "Extra";
+	$color = "#33FFE9";
+}
 
 $fecha_completa_inicio = $fecha_inicio .' 12:00:00';
 $fecha_completa_final  = $fecha_fin .' 12:00:00';
@@ -91,8 +103,8 @@ $folio        = $row_folio[0] + 1;
 
 $nombre = $title.' - '.$tipo;
 
-$cadena = mysqli_query($conexion,"INSERT INTO agenda (folio,title,start,end,id_usuario,fecha,hora,backgroundColor,borderColor)
-			VALUES ('$folio','$nombre','$fecha_completa_inicio','$fecha_completa_final','$id_usuario','$fecha','$hora','$color','$color')");
-echo "ok";
+//$cadena = mysqli_query($conexion,"INSERT INTO agenda (folio,title,start,end,id_usuario,fecha,hora,backgroundColor,borderColor)
+			//VALUES ('$folio','$nombre','$fecha_completa_inicio','$fecha_completa_final','$id_usuario','$fecha','$hora','$color','$color')");
+echo "$cadena";
 /////////////////////////////////////AGENDA///////////////////////////////////////////////////////////
 ?>

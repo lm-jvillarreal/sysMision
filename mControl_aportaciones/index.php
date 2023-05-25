@@ -50,6 +50,7 @@ include '../global_seguridad/verificar_sesion.php';
                         <option value="APORTACION POR DIA DEL NIÑO">APORTACION DIA DEL NIÑO</option>
                         <option value="FONDOS">FONDOS</option>
                         <option value="APERTURA LA PETACA">APERTURA LA PETACA</option>
+                        <option value="APERTURA MONTEMORELOS">APERTURA MONTEMORELOS</option>
                       </select>
                     </div>
                   </div>
@@ -317,6 +318,159 @@ include '../global_seguridad/verificar_sesion.php';
               </div>
             </div>
           </div>
+          <div class="col-md-6">
+            <div class="box box-danger">
+              <div class="box-header">
+                <h3 class="box-title">Proyección |Jesús Hernandez</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="info-box bg-aqua">
+                      <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                      <div class="info-box-content">
+                        <span class="info-box-text">PROYECCIÓN</span>
+                        <span class="info-box-number">
+                          <div id="totalJB"></div>
+                        </span>
+
+                        <div class="progress">
+                          <div class="progress-bar" id="prgrsJB"></div>
+                        </div>
+                        <span class="progress-description">
+                          <div id="porcientoGB"></div>
+                        </span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-box bg-red">
+                      <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                      <div class="info-box-content">
+                        <span class="info-box-text">APORTACIONES</span>
+                        <span class="info-box-number">
+                          <div id="AptotalJB"></div>
+                        </span>
+
+                        <div class="progress">
+                          <div class="progress-bar" id="ApprgrsJB"></div>
+                        </div>
+                        <span class="progress-description">
+                          <div id="ApporcientoJB"></div>
+                        </span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="box box-danger">
+              <div class="box-header">
+                <h3 class="box-title">Proyección |Manuel Cuevas</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="info-box bg-aqua">
+                      <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                      <div class="info-box-content">
+                        <span class="info-box-text">PROYECCIÓN</span>
+                        <span class="info-box-number">
+                          <div id="totalMC"></div>
+                        </span>
+
+                        <div class="progress">
+                          <div class="progress-bar" id="prgrsMC"></div>
+                        </div>
+                        <span class="progress-description">
+                          <div id="porcientoMC"></div>
+                        </span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-box bg-red">
+                      <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                      <div class="info-box-content">
+                        <span class="info-box-text">APORTACIONES</span>
+                        <span class="info-box-number">
+                          <div id="AptotalMC"></div>
+                        </span>
+
+                        <div class="progress">
+                          <div class="progress-bar" id="ApprgrsMC"></div>
+                        </div>
+                        <span class="progress-description">
+                          <div id="ApporcientoMC"></div>
+                        </span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="box box-danger">
+              <div class="box-header">
+                <h3 class="box-title">Proyección |Armando de Leon</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="info-box bg-aqua">
+                      <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                      <div class="info-box-content">
+                        <span class="info-box-text">PROYECCIÓN</span>
+                        <span class="info-box-number">
+                          <div id="totalADL"></div>
+                        </span>
+
+                        <div class="progress">
+                          <div class="progress-bar" id="prgrsADL"></div>
+                        </div>
+                        <span class="progress-description">
+                          <div id="porcientoADL"></div>
+                        </span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-box bg-red">
+                      <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                      <div class="info-box-content">
+                        <span class="info-box-text">APORTACIONES</span>
+                        <span class="info-box-number">
+                          <div id="AptotalADL"></div>
+                        </span>
+
+                        <div class="progress">
+                          <div class="progress-bar" id="ApprgrsADL"></div>
+                        </div>
+                        <span class="progress-description">
+                          <div id="ApporcientoADL"></div>
+                        </span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-md-6">
@@ -408,6 +562,9 @@ include '../global_seguridad/verificar_sesion.php';
       proyeccion(11, 'CW');
       proyeccion(7, 'GC');
       proyeccion(9, 'JR');
+      proyeccion(10, 'JB');
+      proyeccion(57, 'MC');
+      proyeccion(155, 'ADL');
       resumen_comprador();
       entradas_salidas();
       resumen_tipo();
@@ -460,7 +617,7 @@ include '../global_seguridad/verificar_sesion.php';
               type: 'column'
             },
             title: {
-              text: 'Desglose de Aportaciones, 2019'
+              text: 'Desglose de Aportaciones, 2020'
             },
             subtitle: {
               text: 'Registro por Comprador'
@@ -526,7 +683,7 @@ include '../global_seguridad/verificar_sesion.php';
               plotShadow: false
             },
             title: {
-              text: 'Aportaciones<br>Comparativo<br>2019',
+              text: 'Aportaciones<br>Comparativo<br>2020',
               align: 'center',
               verticalAlign: 'middle',
               y: 40
@@ -583,7 +740,7 @@ include '../global_seguridad/verificar_sesion.php';
               type: 'column'
             },
             title: {
-              text: 'Desglose de Aportaciones, 2019'
+              text: 'Desglose de Aportaciones, 2020'
             },
             subtitle: {
               text: 'Registro por Tipo'
@@ -647,7 +804,7 @@ include '../global_seguridad/verificar_sesion.php';
               type: 'column'
             },
             title: {
-              text: 'Desglose de Aportaciones, 2019'
+              text: 'Desglose de Aportaciones, 2022'
             },
             subtitle: {
               text: 'Registro por Proveedor'
@@ -703,7 +860,7 @@ include '../global_seguridad/verificar_sesion.php';
         text: 'Gráfica de Comparacion'
       },
       xAxis: {
-        categories: ['2017', '2018', '2019']
+        categories: ['2017', '2018', '2019', '2020','2021','2022']
       },
       yAxis: {
         title: {

@@ -39,8 +39,9 @@ while ($row_traspasos = oci_fetch_row($consulta_traspasos)) {
 	$cadena_sucursal = "SELECT id, nombre FROM sucursales WHERE id = '$row_traspasos[6]'";
 	$consulta_sucursal = mysqli_query($conexion, $cadena_sucursal);
 	$row_sucursal_envia = mysqli_fetch_array($consulta_sucursal);
-
-	$detalles = "<center><a href='#'' data-id = '$row_traspasos[0]' data-toggle='modal' data-target='#modal-default' class='btn btn-success'>Visualizar</a></center>";
+	$btnVisualizar="<a href='#' data-id = '$row_traspasos[0]' data-toggle='modal' data-target='#modal-default' class='btn btn-success btn-sm'><i class='fa fa-search fa-lg' aria-hidden='true'></i></a>";
+	$btnImprimir="<a href='solicitud_etiquetas.php?ide=$row_traspasos[0]' target='blank' class='btn btn-danger btn-sm'><i class='fa fa-print fa-lg' aria-hidden='true'></i></a>";
+	$detalles = "<center>".$btnVisualizar."&nbsp;".$btnImprimir."</center>";
 
 	$renglon = "
 		{

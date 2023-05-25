@@ -72,7 +72,7 @@ include '../global_seguridad/verificar_sesion.php';
                <?php echo "$row[4]"; //descripcion ?>
              </td>
              <td align="center">
-               <a href="javascript:editar_renglon('<?php echo"$row[3]"; ?>', '<?php echo"$row[4]"; ?>', <?php echo $row[7] ?>);"><i class="fa fa-pencil fa-2x color-icono" aria-hidden="true"></i></a>
+               <a href="javascript:editar_renglon('<?php echo"$row[3]"; ?>', '<?php echo"$row[4]"; ?>', <?php echo $row[7] ?>, <?php echo $row[5] ?>);"><i class="fa fa-pencil fa-2x color-icono" aria-hidden="true"></i></a>
              </td>
              <td align="center">
                <a href="javascript:eliminar_renglon('<?php echo"$row[7]"; ?>');"><i class="fa fa-trash fa-2x color-icono" aria-hidden="true"></i></a>

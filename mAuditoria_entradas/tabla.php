@@ -46,6 +46,9 @@ while ($row = oci_fetch_row($consulta_detalle)) {
 		case '5':
 			$sucursal = 'La Petaca';
 			break;
+		case '6':
+			$sucursal = 'Montemorelos';
+			break;
 		case '99':
 			$sucursal = 'CEDIS LINARES';
 			break;
@@ -122,6 +125,9 @@ while ($row = oci_fetch_row($consulta_detalle)) {
 			break;
 		case '5':
 			$sucursal = 'La Petaca';
+			break;
+		case '6':
+			$sucursal = 'Montemorelos';
 			break;
 		case '99':
 			$sucursal = 'CEDIS LINARES';

@@ -1,8 +1,12 @@
 <?php 
   include '../global_seguridad/verificar_sesion.php';
-  
-  $filtro=(!empty($registros_propios) == '1')?" AND id_usuario = '$id_usuario'":"";
-  $cadena  = "SELECT id,descripcion,monto_total,(SELECT nombre FROM sucursales WHERE sucursales.id = pagos_servicios.id_sucursal) FROM pagos_servicios WHERE activo = '1'".$filtro;
+
+  $filtro_tabla=$_POST['filtro'];
+  $fecha_Inicio = $_POST['fecha_inicial'];
+  $fecha_Final = $_POST['fecha_final'];
+
+  $filtro=($filtro_tabla == '1')?" AND id_usuario = '$id_usuario'":"";
+  $cadena  = "SELECT id,descripcion,monto_total,(SELECT nombre FROM sucursales WHERE sucursales.id = pagos_servicios.id_sucursal), DATE_FORMAT(fecha,'%d/%m/%Y') FROM pagos_servicios WHERE activo = '1' AND fecha BETWEEN '$fecha_Inicio' AND '$fecha_Final'".$filtro;
   $consulta = mysqli_query($conexion, $cadena);
 
   $cuerpo = "";
@@ -21,6 +25,7 @@
       \"Descripcion\": \"$row[1]\",
       \"MontoTotal\": \"$ $row2[0]\",
       \"Sucursal\": \"$row[3]\",
+      \"Fecha\": \"$row[4]\",
       \"Acciones\": \"$boton_editar $boton_eliminar $boton_pdf\"
       },";
     $cuerpo = $cuerpo.$renglon;

@@ -101,7 +101,7 @@ include '../global_seguridad/verificar_sesion.php';
 				'language': {
 					"url": "../plugins/DataTables/Spanish.json"
 				},
-				"order": ([ 7, 'desc' ]),
+				"order": ([7, 'desc']),
 				"paging": false,
 				"dom": 'Bfrtip',
 				buttons: [{
@@ -181,24 +181,29 @@ include '../global_seguridad/verificar_sesion.php';
 		function asocia(id_formato) {
 			var url = "asocia_formato.php";
 			var folio = $("#folio_" + id_formato).val();
-			$.ajax({
-				url: url,
-				type: "POST",
-				dateType: "html",
-				data: {
-					folio: folio,
-					id_formato: id_formato
-				},
-				success: function(respuesta) {
-					alertify.success("El formato ha sido asociado correctamente");
-				},
-				error: function(xhr, status) {
-					alert("error");
-					//alert(xhr);
-				},
-			});
-			cargar_tabla();
-			return false;
+			if (folio == "" || folio==null) {
+				alertify.error("Debes ingresar un folio");
+				return false;
+			} else {
+				$.ajax({
+					url: url,
+					type: "POST",
+					dateType: "html",
+					data: {
+						folio: folio,
+						id_formato: id_formato
+					},
+					success: function(respuesta) {
+						alertify.success("El formato ha sido asociado correctamente");
+					},
+					error: function(xhr, status) {
+						alert("error");
+						//alert(xhr);
+					},
+				});
+				cargar_tabla();
+				return false;
+			}
 		}
 
 		function cancelar(id_folio) {

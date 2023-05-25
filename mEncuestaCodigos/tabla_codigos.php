@@ -21,7 +21,7 @@ while ($row = mysqli_fetch_array($consulta)){
     $cadena2 = mysqli_query($conexion,"SELECT id FROM detalle_examen WHERE codigo = '$row[1]' AND activo = '1' AND id_examen = '$id_examen'");
       $cantidad = mysqli_num_rows($cadena2);
       if($cantidad == 0){
-        $boton_seleccionar = "<button type='button' class='btn btn-default' id='boton_$numero' onclick='seleccionar($numero)'><i class='fa fa-check fa-lg' aria-hidden='true'></i></button><input id='selecciona_$numero' type='hidden' name='seleccionado[]' form='form_datos' value='0'> <input type='hidden' name='id_codigo[]' form='form_datos' value='$row[1]' class='botones'>";
+        $boton_seleccionar = "<button type='button' class='btn btn-default' id='boton_$numero' onclick='seleccionar($numero)'><i class='fa fa-check fa-lg' aria-hidden='true'></i></button><input id='selecciona_$numero' type='text name='seleccionado[]' form='form_datos' value='0'> <input type='text' name='id_codigo[]' form='form_datos' value='$row[1]' class='botones'>";
       }else{
         $boton_seleccionar ="<button type='button' class='btn btn-danger btn-sm' onclick='eliminar_codigo($row[1])'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></button>";
       }

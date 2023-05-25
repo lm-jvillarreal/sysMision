@@ -42,10 +42,7 @@
                   <div class="form-group">
                     <label>*Sucursal:</label>
                     <select name="id_sucursal" id="id_sucursal" class="form-control">
-                        <option value="1">Diaz Ordaz</option>
-                        <option value="2">Arboledas</option>
-                        <option value="3">Villegas</option>
-                        <option value="4">Allende</option>
+                        <option value=""></option>
                     </select>
                   </div>
                 </div>
@@ -58,13 +55,13 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>*Marca:</label>
-                    <input type="text" name="marca" id="marca" class="form-control" placeholder="Marca del UPS">
+                    <select name="marca" id="marca" class="form-control select2"></select>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>*Modelo:</label>
-                    <input type="text" name="modelo" id="modelo" class="form-control" placeholder="Modelo del UPS">
+                    <select name="modelo" id="modelo" class="form-control select2"></select>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -271,6 +268,8 @@
             $('#form_datos')[0].reset();
             cargar_tabla();
             cargar();
+          }else if(respuesta=="ok_actualizado"){
+            alertify.success("Registro actualizado correctamente");
           }else if(respuesta=="duplicado"){
             alertify.error("El registro ya existe");
           }else if(respuesta=="vacio"){
@@ -407,6 +406,83 @@
         }
       });
   }
+  $(function () {
+      $('#id_sucursal').select2({
+        placeholder: 'Seleccione una opcion',
+        lenguage: 'es',
+        //minimumResultsForSearch: Infinity
+        ajax: { 
+       url: "combo_sucursales.php",
+       type: "post",
+       dataType: 'json',
+       delay: 250,
+       data: function (params) {
+        return {
+          searchTerm: params.term // search term
+        };
+       },
+       processResults: function (response) {
+         return {
+            results: response
+         };
+       },
+       cache: true
+      }
+      })
+    });
+    
+    $(function () {
+      $('#modelo').select2({
+        placeholder: 'Seleccione una opcion',
+        lenguage: 'es',
+        //minimumResultsForSearch: Infinity
+        ajax: { 
+       url: "combo_modelos_ups.php",
+       type: "post",
+       dataType: 'json',
+       delay: 250,
+       data: function (params) {
+        var marca = $('#marca').val();
+        return {
+          searchTerm: params.term, // search term
+          marca:marca
+        };
+       },
+       processResults: function (response) {
+         return {
+            results: response
+         };
+       },
+       cache: true
+      }
+      })
+    });
+    $(function () {
+      $('#marca').select2({
+        placeholder: 'Seleccione una opcion',
+        lenguage: 'es',
+        //minimumResultsForSearch: Infinity
+        ajax: { 
+         url: "combo_marcas_ups.php",
+         type: "post",
+         dataType: 'json',
+         delay: 250,
+         data: function (params) {
+          var equipo = $('#equipo').val();
+          return {
+            searchTerm: params.term, // search term
+            equipo: equipo
+          };
+         },
+         processResults: function (response) {
+           return {
+              results: response
+           };
+         },
+         cache: true
+        }
+      })
+    });
   cargar();
   $('.form_datetime').datetimepicker({
     //language:  'fr',

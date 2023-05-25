@@ -14,7 +14,8 @@
             WHERE
               MODN_FOLIO = '$folio'
             AND ALMN_ALMACEN = '$almacen'
-            AND MODC_TIPOMOV = '$movimiento'";
+            AND MODC_TIPOMOV = '$movimiento'
+            ";
              //echo "$qry";
       $st = oci_parse($conexion_central, $qry);
       oci_execute($st);
@@ -60,8 +61,8 @@
               <td align="center">
                 <input type="text" size="10" value="<?php echo $row[0] ?>" class="form-control" name="articulo[]" readonly>
               </td>
-              <td align="center">
-                <input type="text" size="40" class="form-control" value="<?php echo $row[1] ?>" name="descripcion[]" readonly >
+              <td align="center"><?php echo $row[1] ?>
+                <div style="display: none;"><input type="text" size="40" class="form-control" value="<?php echo $row[1] ?>" name="descripcion[]" readonly ></div>
               </td>
               <td align="center" id="<?php echo $n ?>">
                 <input type="text" size="3" value="<?php echo $row[2] ?>" class="form-control" name="cantidad[]" id="cantidad_<?php echo $n ?>" readonly>

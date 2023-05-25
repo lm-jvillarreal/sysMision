@@ -14,7 +14,7 @@ $cadena_proveedor = "SELECT proveedor FROM proveedores WHERE numero_proveedor = 
 $consulta_proveedor = mysqli_query($conexion, $cadena_proveedor);
 $row_proveedor = mysqli_fetch_array($consulta_proveedor);
 
-$cadena_nota = "SELECT numero_nota FROM libro_diario WHERE orden_compra = $row_orden_compra[2]";
+$cadena_nota = "SELECT numero_nota FROM libro_diario WHERE orden_compra = $row_orden_compra[1]";
 $consulta_nota = mysqli_query($conexion, $cadena_nota);
 $row_nota = mysqli_fetch_array($consulta_nota);
 

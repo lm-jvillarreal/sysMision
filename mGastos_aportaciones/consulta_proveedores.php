@@ -3,10 +3,10 @@ include '../global_seguridad/verificar_sesion.php';
 include '../global_settings/conexion_oracle.php';
 
 if(!isset($_POST['searchTerm'])){ 
-  $cadena_proveedores = "SELECT PR.PROC_CVEPROVEEDOR, CONCAT(CONCAT(PR.PROC_CVEPROVEEDOR,'' ), PR.PROC_NOMBRE) FROM CXP_PROVEEDORES pr";
+  $cadena_proveedores = "SELECT PR.PROC_CVEPROVEEDOR, CONCAT(CONCAT(PR.PROC_CVEPROVEEDOR,'' ), PR.PROC_NOMBRE) FROM CXP_PROVEEDORES pr WHERE pr.PRON_ESTATUS=0";
 }else{ 
   $search = $_POST['searchTerm'];   
-  $cadena_proveedores = "SELECT PR.PROC_CVEPROVEEDOR, CONCAT(CONCAT(PR.PROC_CVEPROVEEDOR,'' ), PR.PROC_NOMBRE) FROM CXP_PROVEEDORES pr WHERE PR.PROC_NOMBRE like '%".$search."%'";
+  $cadena_proveedores = "SELECT PR.PROC_CVEPROVEEDOR, CONCAT(CONCAT(PR.PROC_CVEPROVEEDOR,'' ), PR.PROC_NOMBRE) FROM CXP_PROVEEDORES pr WHERE pr.PRON_ESTATUS=0 AND PR.PROC_NOMBRE like '%".$search."%'";
 } 
 
 

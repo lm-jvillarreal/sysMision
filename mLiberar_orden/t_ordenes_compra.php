@@ -9,29 +9,29 @@ include '../global_seguridad/verificar_sesion.php';
 $filtro_sucursal = ($solo_sucursal == '1') ? " AND orden_compra.id_sucursal = '$id_sede'" : "";
 
 $cadena_ordenes = "SELECT
-	                proveedores.numero_proveedor,
-	                proveedores.proveedor,
-	                orden_compra.orden_compra,
-	                orden_compra.id,
-	                DATE_FORMAT(orden_compra.fecha_llegada, '%d/%m/%Y'),
-	                DATEDIFF(curdate(), fecha_llegada),
-	                orden_compra.ruta,
-	                proveedores.id,
-					orden_compra.id_sucursal,
-					sucursales.nombre,
-	                orden_compra.hora_inicio,
-	                orden_compra.comentarios,
-	                orden_compra.tipo
-	            FROM
-	                proveedores
-	            INNER JOIN orden_compra ON proveedores.numero_proveedor = orden_compra.id_proveedor
-				INNER JOIN sucursales ON sucursales.id = orden_compra.id_sucursal
-	            WHERE orden_compra.activo = '1' AND orden_compra.hora_inicio is null ".
-	            $filtro_sucursal.
-	            "AND orden_compra.hora_inicio IS NULL
-							AND (orden_compra.tipo = '1' or orden_compra.tipo ='2')
-	            ORDER BY
-		           orden_compra.fecha_llegada ASC";
+							proveedores.numero_proveedor,
+							proveedores.proveedor,
+							orden_compra.orden_compra,
+							orden_compra.id,
+							DATE_FORMAT(orden_compra.fecha_llegada, '%d/%m/%Y'),
+							DATEDIFF(curdate(), fecha_llegada),
+							orden_compra.ruta,
+							proveedores.id,
+							orden_compra.id_sucursal,
+							sucursales.nombre,
+							orden_compra.hora_inicio,
+							orden_compra.comentarios,
+							orden_compra.tipo
+					FROM
+							proveedores
+					INNER JOIN orden_compra ON proveedores.numero_proveedor = orden_compra.id_proveedor
+					INNER JOIN sucursales ON sucursales.id = orden_compra.id_sucursal
+					WHERE orden_compra.activo = '1'".
+					$filtro_sucursal.
+					"AND orden_compra.hora_inicio IS NULL
+					AND (orden_compra.tipo = '1' or orden_compra.tipo ='2')
+					ORDER BY
+					orden_compra.fecha_llegada ASC";
 
 //echo $cadena_ordenes;
 $consulta_ordenes = mysqli_query($conexion, $cadena_ordenes);

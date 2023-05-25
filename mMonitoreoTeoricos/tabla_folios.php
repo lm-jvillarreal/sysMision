@@ -14,10 +14,11 @@ while ($row_folios = mysqli_fetch_array($consulta_folios)) {
   $link = "<center><a href='#' class='btn btn-danger' onclick='eliminar($row_folios[0])'><i class='fa fa-trash fa-lg' aria-hidden='true'></i></a></center>";
 	$ver = "<center><a href='#' data-folio = '$row_folios[0]' data-toggle = 'modal' data-target = '#modal-teoricos' class='btn btn-primary' target='blank'><i class='fa fa-search fa-lg' aria-hidden='true'></i></a></center>";
 	$compartir = "<center><a href='#' data-folio = '$row_folios[0]' data-toggle = 'modal' data-target = '#modal-compartir' class='btn btn-success' target='blank'><i class='fa fa-share fa-lg' aria-hidden='true'></i></a></center>";
+	$escape_desc = mysqli_real_escape_string($conexion,$row_folios[1]);
 	$renglon = "
 		{
 		\"folio\": \"$row_folios[0]\",
-		\"descripcion\": \"$row_folios[1]\",
+		\"descripcion\": \"$escape_desc\",
 		\"cantidad\": \"$row_folios[2]\",
     \"fecha\": \"$row_folios[3]\",
     \"usuario\": \"$row_folios[5]\",

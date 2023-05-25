@@ -6,20 +6,35 @@
 
 	$id_modelo = $_POST['id'];
 	
-	$cadena = mysqli_query($conexion,"SELECT id_marca, (SELECT marca FROM marcas WHERE marcas.id = modelos.id_marca),modelo,tipo,CASE tipo
-	WHEN '1' THEN
-	  'PINPAD'
-	WHEN '2' THEN
-	  'DUAL-UP'
-	WHEN '3' THEN
-	  'GRPS'
-	ELSE
-	  'Ninguno'
-	END AS tipo FROM modelos WHERE id = '$id_modelo'");
+	$cadena = mysqli_query($conexion,"SELECT
+	modelos.id,
+	marcas.marca,
+	modelos.modelo,
+	modelos.tipo,
+CASE
+		tipo 
+		WHEN '1' THEN
+		'PINPAD' 
+		WHEN '2' THEN
+		'DUAL-UP' 
+		WHEN '3' THEN
+		'GRPS' ELSE 'Ninguno' 
+	END AS tipo 
+FROM
+	modelos,
+	marcas 
+WHERE
+	modelos.id = '$id_modelo' 
+	AND modelos.id_marca = marcas.id");
 
 	$row = mysqli_fetch_array($cadena);
 
-	$array = array($row[0],$row[1],$row[2],$row[3],$row[4]);
+	$array = array(
+		$row[0],//id_modelo
+		$row[1],//marca
+		$row[2],//modelo
+		$row[3],//tipo
+		$row[4]);//nombre_tipo
 	$array1 = json_encode($array);
 	
 	echo $array1;

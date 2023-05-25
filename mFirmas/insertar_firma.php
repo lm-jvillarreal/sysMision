@@ -5,21 +5,20 @@
 	$hora  = date('h:i:s');
 
 	$cantidad      = "";
-	$id_registro     = $_POST['id_registro'];
-	$id_persona = $_POST['id_persona'];
+	$id_registro   = $_POST['id_registro'];
+	$id_persona    = $_POST['id_persona'];
 	$departamento  = $_POST['departamento'];
-	$sucursal  = $_POST['sucursal'];
-	$puesto    = $_POST['puesto'];
-	$permisos   =$_POST['permisos'];
+	$sucursal  	   = $_POST['sucursal'];
+	$puesto    	   = $_POST['puesto'];
+	$permisos      = $_POST['permisos'];
 	$cantidad      = count($permisos);
 
 	$f_nombre = $_FILES["archivos"]['name'];
 	$f_tamano = $_FILES["archivos"]['size']; 
-	$f_tipo = $_FILES["archivos"]['type'];
+	$f_tipo   = $_FILES["archivos"]['type'];
 
 	$ext = explode(".", $_FILES['archivos']['name']);
 	$extension = end($ext);
-
 
 	for ($i=0; $i <$cantidad; $i++)
 	{
@@ -29,8 +28,8 @@
 		$cant      = mysqli_num_rows($verificar);
 		if ($cant==0) 
 		{
-			$cadena= mysqli_query($conexion,"INSERT INTO firmas_autorizadas(nombre, departamento, sucursal, puesto, id_permiso, activo)
-			VALUES ('$id_persona', '$departamento','$sucursal', '$puesto', '$permisos[$i]','1')");
+			 $cadena= mysqli_query($conexion,"INSERT INTO firmas_autorizadas(nombre, departamento, sucursal, puesto, id_permiso, activo)
+			 VALUES ('$id_persona', '$departamento','$sucursal', '$puesto', '$permisos[$i]','1')");
 
 			//Copia de firma
 			$cadena_maximo = "SELECT MAX(id) FROM firmas_autorizadas";

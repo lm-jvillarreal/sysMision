@@ -33,26 +33,26 @@ if ($conteo==0) {
 }else{
 
 $cadena_ue = "SELECT * FROM (SELECT
-														detalle.MODN_FOLIO,
-														TO_CHAR(movs.MOVD_FECHAAFECTACION, 'DD/MM/YYYY'),
-														detalle.modc_tipomov,
-														detalle.RMON_CANTSURTIDA,
-														detalle.RMOC_UNIMEDIDA,
-														(SELECT CONCAT(PROC_CVEPROVEEDOR,PROC_NOMBRE) FROM cxp_proveedores WHERE TRIM(PROC_CVEPROVEEDOR) = TRIM(movs.MOVC_CVEPROVEEDOR)) AS Proveedor,
-														TO_CHAR(movs.MOVD_FECHAAFECTACION, 'YYYY-MM-DD')
-														FROM
-														INV_RENGLONES_MOVIMIENTOS detalle
-														INNER JOIN INV_MOVIMIENTOS movs ON movs.ALMN_ALMACEN = detalle.ALMN_ALMACEN 
-														AND detalle.MODN_FOLIO = movs.MODN_FOLIO 
-														AND movs.MODC_TIPOMOV = detalle.MODC_TIPOMOV 
-														WHERE
-														ARTC_ARTICULO = '$codigo' 
-														AND movs.ALMN_ALMACEN = '$id_sede' 
-														AND detalle.ALMN_ALMACEN = '$id_sede'
-														AND movs.MOVD_FECHAAFECTACION IS NOT NULL
-														AND ( detalle.MODC_TIPOMOV = 'ENTSOC' OR detalle.MODC_TIPOMOV = 'ENTCOC' OR detalle.MODC_TIPOMOV = 'ETRANS')
-														ORDER BY
-														movs.MOVD_FECHAAFECTACION DESC)
+								detalle.MODN_FOLIO,
+								TO_CHAR(movs.MOVD_FECHAAFECTACION, 'DD/MM/YYYY'),
+								detalle.modc_tipomov,
+								detalle.RMON_CANTSURTIDA,
+								detalle.RMOC_UNIMEDIDA,
+								(SELECT CONCAT(PROC_CVEPROVEEDOR,PROC_NOMBRE) FROM cxp_proveedores WHERE TRIM(PROC_CVEPROVEEDOR) = TRIM(movs.MOVC_CVEPROVEEDOR)) AS Proveedor,
+								TO_CHAR(movs.MOVD_FECHAAFECTACION, 'YYYY-MM-DD')
+								FROM
+								INV_RENGLONES_MOVIMIENTOS detalle
+								INNER JOIN INV_MOVIMIENTOS movs ON movs.ALMN_ALMACEN = detalle.ALMN_ALMACEN 
+								AND detalle.MODN_FOLIO = movs.MODN_FOLIO 
+								AND movs.MODC_TIPOMOV = detalle.MODC_TIPOMOV 
+								WHERE
+								ARTC_ARTICULO = '$codigo' 
+								AND movs.ALMN_ALMACEN = '$id_sede' 
+								AND detalle.ALMN_ALMACEN = '$id_sede'
+								AND movs.MOVD_FECHAAFECTACION IS NOT NULL
+								AND ( detalle.MODC_TIPOMOV = 'ENTSOC' OR detalle.MODC_TIPOMOV = 'ENTCOC' OR detalle.MODC_TIPOMOV = 'ETRANS')
+								ORDER BY
+								movs.MOVD_FECHAAFECTACION DESC)
 							WHERE ROWNUM <=1";
 
 $st = oci_parse($conexion_central, $cadena_ue);

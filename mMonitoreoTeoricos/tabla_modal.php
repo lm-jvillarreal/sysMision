@@ -23,7 +23,9 @@ $encabezado = "
                 <th width='5%'>VILL</th>
                 <th width='5%'>ALL</th>
                 <th width='5%'>LP</th>
+                <th width='5%'>MM</th>
                 <th width='5%'>CEDIS</th>
+                <th width='5%'>ROPA</th>
                 <th width='5%'></th>
                 <th width='4%'></th>
                 <th width='4%'></th>
@@ -38,7 +40,9 @@ $encabezado = "
                 spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 3, '$row[0]'), 
                 spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 4, '$row[0]'),
                 spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 5, '$row[0]'),
-                spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 99, '$row[0]')
+                spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 6, '$row[0]'),
+                spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 99, '$row[0]'),
+                spin_articulos.fn_existencia_disponible_todos ( 13, NULL, NULL, 1, 1, 203, '$row[0]')
               FROM 
                 dual";
                 $st = oci_parse($conexion_central, $cadena_existencia);
@@ -78,6 +82,12 @@ $encabezado = "
                   </td>
                   <td>
                     $row_existencia[5]
+                  </td>
+                  <td>
+                    $row_existencia[6]
+                  </td>
+                  <td>
+                    $row_existencia[7]
                   </td>
                   <td>
                     $total

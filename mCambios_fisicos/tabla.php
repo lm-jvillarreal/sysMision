@@ -13,9 +13,20 @@ if ($solo_sucursal == '1') {
 }elseif($solo_sucursal == '0'){
 	$filtro_sucursal = "";
 }
-$cadena_cambios = "SELECT cambios.id, cambios.id_proveedor, cambios.codigo, cambios.producto, cambios.cantidad, proveedores.proveedor, cambios.id_sucursal, date_format(cambios.fecha, '%d/%m/%Y')
-					FROM  cambios INNER JOIN proveedores ON cambios.id_proveedor = proveedores.numero_proveedor 
-					AND cambios.estatus = '0'".$filtro_sucursal.$filtro_proveedor;
+$cadena_cambios = "SELECT
+									cambios.id,
+									cambios.id_proveedor,
+									cambios.codigo,
+									cambios.producto,
+									cambios.cantidad,
+									proveedores.proveedor,
+									(SELECT nombre FROM sucursales WHERE id=cambios.id_sucursal),
+									date_format( cambios.fecha, '%d/%m/%Y' ) ,
+									(SELECT nombre_usuario FROM usuarios WHERE id=cambios.usuario)
+									FROM
+									cambios
+									INNER JOIN proveedores ON cambios.id_proveedor = proveedores.numero_proveedor 
+									AND cambios.estatus = '0'".$filtro_sucursal.$filtro_proveedor;
 //echo $cadena_cambios;
 
 $consulta_cambios = mysqli_query($conexion, $cadena_cambios);
@@ -26,7 +37,7 @@ if ($solo_lectura!='') {
 	$disabled='';
 }
 while ($row_cambios=mysqli_fetch_array($consulta_cambios)) {
-	$liberar = "<a href='javascript:liberar_cambioFisico($row_cambios[0])' class='btn btn-success' style=$disabled>Liberar</a>";
+	$liberar = "<a href='javascript:liberar_cambioFisico($row_cambios[0])' class='btn btn-success btn-sm' style=$disabled><i class='fa fa-check-circle  fa-lg' aria-hidden='true'></i></a>";
 	$proveedor = $row_cambios[1]." - ".$row_cambios[5];
 	$producto = $row_cambios[2]." - ".$row_cambios[3];
 	$renglon = "
@@ -37,7 +48,8 @@ while ($row_cambios=mysqli_fetch_array($consulta_cambios)) {
 		\"cantidad\": \"$row_cambios[4]\",
 		\"sucursal\": \"$row_cambios[6]\",
 		\"fecha_alta\": \"$row_cambios[7]\",
-		\"liberar\": \"$liberar\"
+		\"liberar\": \"$liberar\",
+		\"usuario\": \"$row_cambios[8]\"
 	  },";
 	$cuerpo = $cuerpo.$renglon;
 }

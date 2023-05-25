@@ -28,12 +28,13 @@ $i=0;
 while ($row_cartas=mysqli_fetch_array($consulta_cartas)) {
 	$i++;
 	$liberar = "<a href='javascript:liberar_devolucion($row_cartas[7])' class='btn btn-success'>Liberar</a>";
+	$escape_prov=mysqli_real_escape_string($conexion,$row_cartas[6]);
 	$renglon = "
 		{
 		\"no\": \"$i\",
 		\"folio\": \"$row_cartas[1]\",
 	   \"movimiento\": \"$row_cartas[4]\",
-	   \"proveedor\": \"$row_cartas[6]\",
+	   \"proveedor\": \"$escape_prov\",
 	   \"fecha\": \"$row_cartas[3]\",
 	   \"sucursal\": \"$row_cartas[0]\",
 	   \"usuario\": \"$row_cartas[8]\",

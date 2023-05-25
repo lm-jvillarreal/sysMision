@@ -1,30 +1,32 @@
 <?php
-  include '../global_seguridad/verificar_sesion.php';
+include '../global_seguridad/verificar_sesion.php';
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
   <?php include '../head.php'; ?>
 </head>
+
 <body class="hold-transition skin-red sidebar-mini">
-<div class="wrapper">
+  <div class="wrapper">
 
-  <header class="main-header">
-    <?php include '../header.php'; ?>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <?php include 'menuV3.php'; ?>
-    <!-- /.sidebar -->
-  </aside>
+    <header class="main-header">
+      <?php include '../header.php'; ?>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <?php include 'menuV3.php'; ?>
+      <!-- /.sidebar -->
+    </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <!-- Main content -->
-    <section class="content">
-        <div class="box box-danger" <?php echo $solo_lectura?>>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <!-- Main content -->
+      <section class="content">
+        <div class="box box-danger" <?php echo $solo_lectura ?>>
           <!-- <div class="box box-danger"> -->
           <div class="box-header">
             <h3 class="box-title">Reporte por Check-List</h3>
@@ -49,7 +51,7 @@
                     <label for="descripcion_modulo">*Desde:</label>
                     <div class="form-group">
                       <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha1" data-link-format="yyyy-mm-dd">
-                        <input class="form-control" size="16" type="text" value="<?php echo $fecha?>" readonly id="fecha1" name="fecha1">
+                        <input class="form-control" size="16" type="text" value="<?php echo $fecha ?>" readonly id="fecha1" name="fecha1">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                       </div>
@@ -61,7 +63,7 @@
                     <label for="descripcion_modulo">*Hasta:</label>
                     <div class="form-group">
                       <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="fecha2" data-link-format="yyyy-mm-dd">
-                        <input class="form-control" size="16" type="text" value="<?php echo $fecha?>" readonly id="fecha2" name="fecha2">
+                        <input class="form-control" size="16" type="text" value="<?php echo $fecha ?>" readonly id="fecha2" name="fecha2">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                       </div>
@@ -99,56 +101,86 @@
                         <th></th>
                         <th></th>
                       </tr>
-                    </tbody>  
+                    </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      <!-- /.row -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
- <?php include '../footer2.php'; ?>
+        <!-- /.row -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <?php include '../footer2.php'; ?>
 
-  <!-- Control Sidebar -->
-  
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
+    <!-- Control Sidebar -->
+
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
 
-<?php include '../footer.php';?>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-<!-- Page script -->
-<script>
-  $(function(){
-    $('#sucursal').select2({
+  <?php include '../footer.php'; ?>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+  <!-- Page script -->
+  <script>
+    $(function() {
+      $('#sucursal').select2({
+        placeholder: 'Seleccione una opcion',
+        lenguage: 'es',
+        //minimumResultsForSearch: Infinity
+        ajax: {
+          url: "combo_sucursal.php",
+          type: "post",
+          dataType: 'json',
+          delay: 250,
+          data: function(params) {
+            $("#checklist").select2("trigger", "select", {
+              data: {
+                id: '',
+                text: ''
+              }
+            });
+            return {
+              searchTerm: params.term // search term
+            };
+          },
+          processResults: function(response) {
+            return {
+              results: response
+            };
+          },
+          cache: true
+        }
+      })
+    })
+    $('#checklist').select2({
       placeholder: 'Seleccione una opcion',
       lenguage: 'es',
       //minimumResultsForSearch: Infinity
-      ajax: { 
-        url: "combo_sucursal.php",
+      ajax: {
+        url: "combo_checklist.php",
         type: "post",
         dataType: 'json',
         delay: 250,
-        data: function (params) {
-          $("#checklist").select2("trigger", "select",{data:{id:'',text:''}});
+        data: function(params) {
+          var sucursal = $('#sucursal').val();
           return {
-            searchTerm: params.term // search term
+            searchTerm: params.term, // search term
+            sucursal: sucursal
           };
         },
-        processResults: function (response) {
+        processResults: function(response) {
           return {
             results: response
           };
@@ -156,41 +188,19 @@
         cache: true
       }
     })
-  })
-  $('#checklist').select2({
-    placeholder: 'Seleccione una opcion',
-    lenguage: 'es',
-    //minimumResultsForSearch: Infinity
-    ajax: { 
-      url: "combo_checklist.php",
-      type: "post",
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
-        var sucursal = $('#sucursal').val();
-        return {
-          searchTerm: params.term, // search term
-          sucursal:sucursal
-        };
-      },
-      processResults: function (response) {
-        return {
-          results: response
-        };
-      },
-      cache: true
-    }
-  })
-   function cargar_tabla() {
-    var checklist = $('#checklist').val();
-    var sucursal  = $('#sucursal').val();
 
-    var fecha1  = $('#fecha1').val();
-    var fecha2  = $('#fecha2').val();
-    $('#lista_checklist').dataTable().fnDestroy();
-    $('#lista_checklist').DataTable( {
-      'language': {"url": "../plugins/DataTables/Spanish.json"},
-        "paging":   false,
+    function cargar_tabla() {
+      var checklist = $('#checklist').val();
+      var sucursal = $('#sucursal').val();
+
+      var fecha1 = $('#fecha1').val();
+      var fecha2 = $('#fecha2').val();
+      $('#lista_checklist').dataTable().fnDestroy();
+      $('#lista_checklist').DataTable({
+        'language': {
+          "url": "../plugins/DataTables/Spanish.json"
+        },
+        "paging": false,
         "dom": 'Bfrtip',
         buttons: [{
             extend: 'pageLength',
@@ -227,51 +237,66 @@
             }
           }
         ],
-      "ajax": {
-        "type": "POST",
-        "url": "tabla_r1.php",
-        "dataSrc": "",
-        "data":{'checklist':checklist,'sucursal':sucursal,'fecha1':fecha1,'fecha2':fecha2}
-      },
-      "columns": [
-        { "data": "#" , "width": "5%"},
-        { "data": "Fecha" },
-        { "data": "Calificacion" , "width": "5%"},
-        { "data": "Usuario" },
-      ]
+        "ajax": {
+          "type": "POST",
+          "url": "tabla_r1.php",
+          "dataSrc": "",
+          "data": {
+            'checklist': checklist,
+            'sucursal': sucursal,
+            'fecha1': fecha1,
+            'fecha2': fecha2
+          }
+        },
+        "columns": [{
+            "data": "#",
+            "width": "5%"
+          },
+          {
+            "data": "Fecha"
+          },
+          {
+            "data": "Calificacion",
+            "width": "5%"
+          },
+          {
+            "data": "Usuario"
+          },
+        ]
+      });
+    }
+    $('.form_datetime').datetimepicker({
+      //language:  'fr',
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 2,
+      forceParse: 0,
+      showMeridian: 1
     });
-  } 
-  $('.form_datetime').datetimepicker({
-    //language:  'fr',
-    weekStart: 1,
-    todayBtn:  1,
-    autoclose: 1,
-    todayHighlight: 1,
-    startView: 2,
-    forceParse: 0,
-    showMeridian: 1
-  });
-  $('.form_date').datetimepicker({
-    language:  'es',
-    weekStart: 1,
-    todayBtn:  1,
-    autoclose: 1,
-    todayHighlight: 1,
-    startView: 2,
-    minView: 2,
-    forceParse: 0
-  });
-  $('.form_time').datetimepicker({
-    language:  'fr',
-    weekStart: 1,
-    todayBtn:  1,
-    autoclose: 1,
-    todayHighlight: 1,
-    startView: 1,
-    minView: 0,
-    maxView: 1,
-    forceParse: 0
-  });
-</script>
+    $('.form_date').datetimepicker({
+      language: 'es',
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 2,
+      minView: 2,
+      forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+      language: 'fr',
+      weekStart: 1,
+      todayBtn: 1,
+      autoclose: 1,
+      todayHighlight: 1,
+      startView: 1,
+      minView: 0,
+      maxView: 1,
+      forceParse: 0
+    });
+  </script>
 </body>
+
 </html>

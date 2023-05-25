@@ -2,6 +2,7 @@
 include '../global_seguridad/verificar_sesion.php';
 //Fecha y hora actual
 date_default_timezone_set('America/Monterrey');
+$fecha_inicio = date("Y-m-01");
 $fecha = date("Y-m-d");
 $hora = date("h:i:s");
 ?>
@@ -40,8 +41,8 @@ $hora = date("h:i:s");
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="fecha_inicio">*Fecha de inicio:</label>
-                    <div class="input-group date form_date" data-date="<?php echo $fecha ?>" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicio" data-link-format="yyyy-mm-dd">
-                      <input class="form-control" size="16" type="text" value="<?php echo $fecha ?>" readonly id="fecha_inicial" name="fecha_inicial">
+                    <div class="input-group date form_date" data-date="<?php echo $fecha_inicio ?>" data-date-format="yyyy-mm-dd" data-link-field="fecha_inicio" data-link-format="yyyy-mm-dd">
+                      <input class="form-control" size="16" type="text" value="<?php echo $fecha_inicio ?>" readonly id="fecha_inicial" name="fecha_inicial">
                       <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
@@ -67,6 +68,7 @@ $hora = date("h:i:s");
                       <option value="3">Villegas</option>
                       <option value="4">Allende</option>
                       <option value="5">La Petaca</option>
+                      <option value="6">Montemorelos</option>
                       <option value="99">CEDIS</option>
                     </select>
                   </div>

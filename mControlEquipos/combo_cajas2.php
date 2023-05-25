@@ -21,6 +21,5 @@
 	while ($row=mysqli_fetch_array($consulta_modelos)) {
 	 $data[] = array("id"=>$row[0], "text"=>$row[1]); 
 	}
-
 	echo json_encode($data);
 ?>

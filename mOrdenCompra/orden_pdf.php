@@ -2,7 +2,7 @@
 $id_orden_compra = $_GET["id"];
 $conexion=mysqli_connect("200.1.1.178","jvillarreal","Xoops1991","sysadmision2");
 mysqli_set_charset($conexion, "utf8");
-$cadena = "SELECT (SELECT nombre FROM proveedores_mantenimiento WHERE proveedores_mantenimiento.id_proveedor = ordenes_compra_mantenimiento.id_proveedor),
+$cadena = "SELECT (SELECT razon_social FROM proveedores_mantenimiento WHERE proveedores_mantenimiento.id_proveedor = ordenes_compra_mantenimiento.id_proveedor),
                 folio,
                 DATE_FORMAT(fecha, '%d-%m-%Y'),
                 vendedor,
@@ -100,7 +100,7 @@ $html="
 	</tr>
 	<tr>
 		<td align=\"left\">
-			
+			<h4>Proveedor: $row[0]</h4>
 		</td>
 		<td align=\"right\">
 			<h4>Fecha: $row[2]</h4>
@@ -122,12 +122,12 @@ $html="
 $pdf->writeHTML($html, true, false, true, false, 'C');
 
 $encabezado_tabla = "
-<table border=\"1\">
+<table border=\"1\" width=\"100%\">
 	<tr>
-		<th width=\"13%\">Cantidad</th>
-		<th width=\"61%\">Concepto</th>
-		<th width=\"13%\">Costo</th>
-		<th width=\"13%\">Importe</th>
+		<th width=\"9%\">Cant.</th>
+		<th width=\"53%\">Concepto</th>
+		<th align='right' width=\"18%\">Costo</th>
+		<th align='right' width=\"20%\">Importe</th>
 	</tr>";
 
 $cadena_detalle = "SELECT cantidad, concepto, costo, importe
@@ -144,8 +144,8 @@ while ($row_detalle = mysqli_fetch_array($consulta_detalle)) {
 	<tr>
 		<td>$row_detalle[0]</td>
 		<td align=\"left\"> $row_detalle[1]</td>
-        <td>$ $costo</td>
-        <td>$ $importe</td>
+        <td align=\"right\">$ $costo</td>
+        <td align=\"right\">$ $importe</td>
 	</tr>
 	";
 	$total_body = $total_body.$renglon;
@@ -157,21 +157,21 @@ $footer_tabla="
 $html = $encabezado_tabla.$total_body.$footer_tabla;
 $pdf->writeHTML($html, true, false, true, false, 'C');
 
-$total = money_format('%i', $total);
 $iva = round($total * .16,2);
-$iva = money_format('%i', $iva);
 $total_iva = $total + $iva;
+$total = money_format('%i', $total);
+$iva = money_format('%i', $iva);
 $total_iva = money_format('%i', $total_iva);
 $html = "
-<table border=\"0\" align=\"center\">
+<table border=\"0\" align=\"right\">
 	<tr>
-		<td>Sub-Total: $$total</td>
+		<td>Sub-Total: $ $total</td>
 	</tr>
 	<tr>
-		<td>I.V.A: $$iva</td>
+		<td>I.V.A: $ $iva</td>
     </tr>
     <tr>
-		<td>Total: $$total_iva</td>
+		<td>Total: $ $total_iva</td>
 	</tr>
 </table>
 ";
@@ -180,7 +180,7 @@ $pdf->writeHTML($html, true, false, true, false, 'C');
 $html = "
 <table border=\"0\" align=\"center\">
 	<tr>
-		<td>_______________________</td>
+		<td>____________________________________________</td>
 	</tr>
 	<tr>
 		<td>

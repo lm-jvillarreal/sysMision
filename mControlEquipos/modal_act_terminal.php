@@ -31,7 +31,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="terminal">*Marca</label>
-                <select id="marca_m" style="width: 100%" name="marca_m">
+                <select id="marca_mc" style="width: 100%" name="marca_mc">
                   <option></option>
                 </select>
             </div>
@@ -39,7 +39,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="documento">*Modelo</label>
-              <select name="modelo_m" id="modelo_m" style="width: 100%"></select>
+              <select name="modelo_mc" id="modelo_mc" style="width: 100%"></select>
             </div>
           </div>
         </div>

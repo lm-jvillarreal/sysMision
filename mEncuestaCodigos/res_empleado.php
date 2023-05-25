@@ -96,6 +96,13 @@
 <script src="../plugins/bootstrap-fileinput-master/js/locales/es.js" type="text/javascript"></script>
 <script src="../plugins/bootstrap-fileinput-master/themes/fa/theme.js" type="text/javascript"></script>
 <script src="../plugins/bootstrap-fileinput-master/themes/explorer-fa/theme.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <!-- Page script -->
 <script>
     $('#consultar').click(function(){
@@ -106,7 +113,8 @@
     lenguage: 'es',
     //minimumResultsForSearch: Infinity
     ajax: {
-      url: "http://200.1.1.197/SMPruebas/mTiempoExtra/select_persona2.php",
+      url: "select_persona.php",
+      //http://200.1.1.197/SMPruebas/mTiempoExtra/
       type: "post",
       dataType: 'json',
       delay: 250,

@@ -72,6 +72,7 @@ $hora       = date('h:i:s');
                     <select name="tipo_registro" id="tipo_registro" class="combo" style="width: 100px">
                       <option value="1">Extra</option>
                       <option value="2">Permiso</option>
+                      <option value="5">Doble</option>
                     </select>
                   </div>
                 </div>

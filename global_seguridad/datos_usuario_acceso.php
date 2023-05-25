@@ -26,7 +26,8 @@
 				ON modulos.id = detalle_usuario.id_modulo 
 				AND detalle_usuario.id_usuario = '$id_usuario' 
 				AND modulos.nombre_carpeta ='$nombre_modulo' 
-				AND detalle_usuario.activo='1'";
+				AND detalle_usuario.activo='1'
+				AND modulos.activo='1'";
 				
 	$consulta = mysqli_query($conexion, $cadena);
 	$acceso_modulo =  mysqli_num_rows($consulta);

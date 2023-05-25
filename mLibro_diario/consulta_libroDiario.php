@@ -13,7 +13,7 @@ $filtro_sucursal = ($solo_sucursal == '1') ? " AND le.sucursal = '$id_sede'" : "
 
 $cadena_ordenes = "SELECT
 						le.id_proveedor,
-            (SELECT CONCAT(numero_proveedor,' ',proveedor) FROM proveedores WHERE numero_proveedor = le.id_proveedor GROUP BY numero_proveedor),
+            (SELECT CONCAT(numero_proveedor,' ',proveedor) FROM proveedores WHERE numero_proveedor = le.id_proveedor LIMIT 1),
 					  DATE_FORMAT(orden_compra.fecha_final, '%d/%m/%Y'),
 						le.numero_nota, 
 						le.numero_factura,
@@ -63,12 +63,13 @@ while ($row_ordenes = mysqli_fetch_array($consulta_ordenes)) {
 	}else{
 		$escarg="<center><a href='#' data-nota = '$row_ordenes[3]' data-toggle = 'modal' data-target = '#modal-escarg' class='btn btn-primary' target='blank'>$row_ordenes[14]</a></center>";
 	}
+	$escape_desc = mysqli_real_escape_string($conexion, $row_ordenes[1]);
 	$renglon = "
 		{
 			\"folio\": \"$reimprimir\",
 			\"generar_carta\": \"$generar_carta\",
 			\"escarg\": \"$escarg\",
-	   	\"no_proveedor\": \"$row_ordenes[1]\",
+	   	\"no_proveedor\": \"$escape_desc\",
 	   	\"fecha_entrada\": \"$row_ordenes[2]\",
 	   	\"factura\": \"$row_ordenes[4]\",
 	   	\"total\": \"$row_ordenes[5]\",

@@ -51,6 +51,7 @@ include '../global_seguridad/verificar_sesion.php';
                     <option value="3">Villegas</option>
                     <option value="4">Allende</option>
                     <option value="5">La Pecata</option>
+                    <option value="6">Montemorelos</option>
                   </select>
                 </div>
               </div>
@@ -100,12 +101,13 @@ include '../global_seguridad/verificar_sesion.php';
                   <div class="form-group">
                     <label for="concepto">*Concepto</label>
                     <select name="concepto" id="concepto" class="form-control">
-                      <option value=""></option>
-                      <option value="APORTACION ANIVERSARIO" selected="TRUE">Aportación Aniversario</option>
+                      <option value=""  selected="TRUE"></option>
+                      <option value="APORTACION ANIVERSARIO">Aportación Aniversario</option>
                       <option value="APORTACION POR DIA DEL NIÑO">Aportación Día del Niño</option>
                       <option value="PLAN COMERCIAL">Plan Comercial</option>
                       <option value="FONDOS">Fondos</option>
                       <option value="APERTURA LA PETACA">Apertura La Petaca</option>
+                      <option value="APERTURA MONTEMORELOS">Apertura Montemorelos</option>
                     </select>
                   </div>
                 </div>

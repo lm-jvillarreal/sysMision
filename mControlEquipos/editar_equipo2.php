@@ -3,7 +3,7 @@
 
 	$id = $_POST['id'];
 	
-	$cadena = mysqli_query($conexion,"SELECT id, nombre, descripcion FROM cajas_catalogo_equipos WHERE id = '$id'");
+	$cadena = mysqli_query($conexion,"SELECT id_tipo, nombre, descripcion FROM tipos_equipos WHERE id_tipo = '$id'");
 
 	$row = mysqli_fetch_array($cadena);
 

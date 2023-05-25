@@ -15,7 +15,7 @@
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <?php include 'menuV6.php'; ?>
+    <?php include 'menuV.php'; ?>
     <!-- /.sidebar -->
   </aside>
 
@@ -35,6 +35,10 @@
                   <label for="">*Falla:</label>
                   <input type="text" class="form-control" id="falla" name="falla" placeholder="Nombre de Falla">
                   <input type="text" name="id_registro" id="id_registro" value="0" class="hidden">
+                </div>
+                <div class="form-group">
+                  <label for="equipo">*Equipo:</label><br>
+                  <select name="equipo" id="equipo" style="width: 250px"></select>
                 </div>
               </div>
               <div class="box-footer text-right">
@@ -101,7 +105,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 <!-- Page script -->
 <script>
-    $('#id_equipo').select2({
+    $('#equipo').select2({
         placeholder: 'Seleccione una opcion',
         lenguage: 'es',
         //minimumResultsForSearch: Infinity
@@ -192,7 +196,7 @@
               alertify.success("Registro guardado correctamente");
               $('#form_datos')[0].reset();
               cargar_tabla();
-              $("#id_equipo").select2("trigger", "select", {
+              $("#equipo").select2("trigger", "select", {
                 data: { id: '', text:'' }
               });
             }else if(respuesta=="duplicado"){
@@ -275,6 +279,9 @@
           var array = eval(respuesta);
           $('#id_registro').val(id);
           $('#falla').val(array[0]);
+          $("#equipo").select2("trigger", "select", {
+            data: { id: array[1], text:array[2] }
+          });
         }
       });
     }

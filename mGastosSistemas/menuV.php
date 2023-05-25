@@ -34,6 +34,7 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">Opciones del módulo</li>
       <li class="active"><a href="index.php"><i class="fa fa-dollar"></i> <span>Gastos</span></a></li>
+      <li class=""><a href="index2.php"><i class="fa fa-dollar"></i> <span>Gastos v2</span></a></li>
       <li><a href='#' data-id = '' data-toggle = 'modal' data-target = '#modal-default' target='blank'><i class="fa fa-square"></i><span>Rublos</span></a></li>
       <li class=""><a href="grafica_gastos.php"><i class = "fa fa-line-chart"></i><span>Grafica Gastos</span></a></li>
     </ul>

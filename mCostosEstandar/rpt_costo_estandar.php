@@ -15,7 +15,8 @@ ARTC.ARTC_ARTICULO, artc.artc_descripcion,
 (SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 1, SUBSTR(ARTC.ARTC_ARTICULO,4) ) FROM dual ) DO,
 (SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 2, SUBSTR(ARTC.ARTC_ARTICULO,4) ) FROM dual ) ARB,
 (SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 3, SUBSTR(ARTC.ARTC_ARTICULO,4) ) FROM dual ) VILL,
-(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 4, SUBSTR(ARTC.ARTC_ARTICULO,4) ) FROM dual ) ALLN,
+(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 4, SUBSTR(ARTC.ARTC_ARTICULO,4) ) FROM dual ) ALL,
+(SELECT spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 5, SUBSTR(ARTC.ARTC_ARTICULO,4) ) FROM dual ) PET
 artc.artn_costo_estandar AS Costo
 FROM COM_ARTICULOS ARTC 
 INNER JOIN COM_FAMILIAS FAM ON FAM.FAMC_FAMILIA = ARTC.ARTC_FAMILIA 
@@ -64,8 +65,9 @@ oci_execute($consulta_principal);
                 ->setCellValue('G1', 'DO')
                 ->setCellValue('H1', 'ARB')
                 ->setCellValue('I1', 'VILL')
-                ->setCellValue('J1', 'ALLN')
-                ->setCellValue('K1', 'Costo');
+                ->setCellValue('J1', 'ALL')
+								->setCellValue('K1', 'PET')
+                ->setCellValue('L1', 'Costo');
 
 
 	$fila = 2;
@@ -84,7 +86,8 @@ oci_execute($consulta_principal);
                 ->setCellValue('H'.$fila, $row_principal[7])
                 ->setCellValue('I'.$fila, $row_principal[8])
                 ->setCellValue('J'.$fila, $row_principal[9])
-                ->setCellValue('K'.$fila, $row_principal[10]);
+								->setCellValue('K'.$fila, $row_principal[9])
+                ->setCellValue('L'.$fila, $row_principal[11]);
 
 
 
@@ -130,6 +133,10 @@ oci_execute($consulta_principal);
 
         $objPHPExcel->getActiveSheet()
         	->getColumnDimension('K')
+        	->setAutoSize(true);
+
+				$objPHPExcel->getActiveSheet()
+        	->getColumnDimension('L')
         	->setAutoSize(true);
 
 	$fila = $fila + 1;

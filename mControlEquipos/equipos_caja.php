@@ -15,7 +15,7 @@
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <?php include 'menuV4.php'; ?>
+    <?php include 'menuV.php'; ?>
     <!-- /.sidebar -->
   </aside>
 
@@ -70,14 +70,12 @@
                       <tr>
                         <th>#</th>
                         <th>Equipo</th>
-                        <th>Descripcion</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -237,30 +235,34 @@
         "columns": [
             { "data": "#", "width":"3%" },
             { "data": "Nombre" },
-            { "data": "Descripcion" },
             { "data": "Editar", "width":"3%" },
             { "data": "Eliminar", "width":"3%" }
         ]
         });
     }
+    //al cambiar el valor de la caja la tabla se actualiza
     $('#caja').change(function(){
       cargar_tabla();
     })
+    //al cambiar el valor de la caja la tabla se actualiza
+
+    //funcion del submit para insertar
     $.validator.setDefaults( {
       submitHandler: function () {
         $.ajax({
           type: "POST",
           url: 'guardar_equipo.php',
-          data: $("#form_datos").serialize(), // Adjuntar los campos del formulario enviado.
+          data: $("#form_datos").serialize(),
           success: function(respuesta)
           {
             if (respuesta=="ok") {
               alertify.success("Registro guardado correctamente");
-              $('#form_datos')[0].reset();
               cargar_tabla();
-              $("#id_equipo").select2("trigger", "select", {
-                data: { id: '', text:'' }
-              });
+              //se dejan los campos con los valores para que la tabla conserve los filtros.
+              // $('#sucursal').val("").trigger('change.select2');
+              // $('#caja').val("").trigger('change.select2');
+              // $('#id_equipo').val("").trigger('change.select2');
+              //$('#form_datos')[0].reset();
             }else if(respuesta=="duplicado"){
               alertify.error("El registro ya existe");
             }else {
@@ -268,10 +270,12 @@
             }
           }
         });
-        // Evitar ejecutar el submit del formulario.
         return false;
       }
     });
+    //funcion del submit para insertar
+
+    //validaciones para insertar los datos
     $( document ).ready( function () {
       $( "#form_datos" ).validate( {
         rules: {
@@ -308,6 +312,8 @@
         }
       });
     });
+    //validaciones para insertar los datos
+
     function eliminar_equipo(id){
       swal({
         title: "¿Está seguro de eliminar registro?",
@@ -334,6 +340,7 @@
         }
       });
     }
+
     function editar_equipo(id){
       $.ajax({
         url: 'editar_equipodc.php',
@@ -342,110 +349,12 @@
         success: function(respuesta) {
           var array = eval(respuesta);
           $('#id_registro').val(id);
-          // $("#sucursal").select2("trigger", "select", {
-          //   data: { id: array[0], text:array[1] }
-          // });
           $("#id_equipo").select2("trigger", "select", {
             data: { id: array[4], text:array[5] }
           });
         }
       });
     }
-    $('.tipo').click(function(){
-      if($(this).hasClass('btn-success')){
-        $('#div2').show();
-        $(this).removeClass('btn-success');
-        $(this).addClass('btn-primary');
-        $(this).html('Sucursal:');
-        $('#tipo_modal').val('2');
-      }else{
-        $('#div2').hide();
-        $(this).removeClass('btn-danger');
-        $(this).addClass('btn-success');
-        $(this).html('Todas');
-        $('#tipo_modal').val('1');
-        $("#sucursal_modal").select2("trigger", "select", {
-          data: { id: '', text:'' }
-        });
-      }
-    });
-    $('#modal-default3').on('show.bs.modal', function(e) {
-      if($('.tipo').hasClass('btn-primary')){
-        $('#div2').hide();
-        $('.tipo').removeClass('btn-primary');
-        $('.tipo').addClass('btn-success');
-        $('.tipo').html('Todas');
-        $('#tipo_modal').val('1');
-        $("#sucursal_modal").select2("trigger", "select", {
-          data: { id: '', text:'' }
-        });
-        $("#caja_modal").select2("trigger", "select", {
-          data: { id: '', text:'' }
-        });
-      }
-    });
-    $('#sucursal_modal').select2({
-        placeholder: 'Seleccione una opcion',
-        lenguage: 'es',
-        //minimumResultsForSearch: Infinity
-        ajax: { 
-            url: "combo_sucursales.php",
-            type: "post",
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    searchTerm: params.term // search term
-                };
-            },
-            processResults: function (response) {
-                return {
-                    results: response
-                };
-            },
-            cache: true
-        }
-    })
-    $('#caja_modal').select2({
-        placeholder: 'Seleccione una opcion',
-        lenguage: 'es',
-        //minimumResultsForSearch: Infinity
-        ajax: { 
-            url: "combo_cajas3.php",
-            type: "post",
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    searchTerm: params.term // search term
-                };
-            },
-            processResults: function (response) {
-                return {
-                    results: response
-                };
-            },
-            cache: true
-        }
-    })
-    $('#guardar_var').click(function(){
-      $.ajax({
-        url: 'registro_multiple.php',
-        data: $('#form_datos2').serialize(),
-        type: "POST",
-        success: function(respuesta) {
-          if (respuesta=="ok") {
-            alertify.success("Registro guardado correctamente");
-            $('#modal-default3').modal('hide');
-            cargar_tabla();
-          }else if (respuesta == "vacio"){
-            alertify.error("Verifica Campos");
-          }else{
-            alertify.error("Ha ocurrido un error");
-          }
-        }
-      });
-    });
     $('#act_var').click(function(){
       $.ajax({
         url: 'actu_multiple.php',

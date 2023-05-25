@@ -145,7 +145,13 @@ $hora = date("h:i:s");
           [0, "desc"]
         ],
         "dom": 'Bfrtip',
-        buttons: [{
+        buttons: [
+          {
+						extend: 'pageLength',
+						text: 'Registros',
+						className: 'btn btn-default'
+					},
+          {
             extend: 'excel',
             text: 'Exportar a Excel',
             className: 'btn btn-default',

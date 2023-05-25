@@ -18,6 +18,7 @@ while ($rowRegistros = mysqli_fetch_array($consultaRegistros)) {
   $escapeProveedor = mysqli_real_escape_string($conexion, $rowRegistros[10]);
   $escapeDepto = mysqli_real_escape_string($conexion, $rowRegistros[11]);
   $escapeFamilia = mysqli_real_escape_string($conexion, $rowRegistros[12]);
+  $escapeComentario = mysqli_real_escape_string($conexion, $rowRegistros[26]);
   $check = "<div class='checkbox'><label><input type='checkbox' name='liberar[]' value='$rowRegistros[0]'></label></div>";
   if($rowRegistros[9]=='0'|| $rowRegistros[9]==NULL||$rowRegistros[15]=='0'||$rowRegistros[15]==NULL){
     $porcentaje='0';
@@ -50,7 +51,7 @@ while ($rowRegistros = mysqli_fetch_array($consultaRegistros)) {
     \"dias_inv\": \"$rowRegistros[19]\",
     \"meses_inv\": \"$rowRegistros[20]\",
     \"fecha_termina\": \"$fecha_termina\",
-    \"comentario\": \"$rowRegistros[26]\"
+    \"comentario\": \"$escapeComentario\"
 		},";
 	$cuerpo = $cuerpo.$renglon;
 }

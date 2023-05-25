@@ -34,6 +34,8 @@ $consulta_mods = mysqli_query($conexion, $cadena_mods);
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones del módulo</li>
         <li class="active"><a href="index.php"><i class="fa fa-bars"></i> <span>Generar Reporte</span></a></li>
+        <li><a href="revision_faltantes.php"><i class="fa fa-bars"></i> <span>Revisión</span></a></li>
+        <li><a href="bitacora_revisiones.php"><i class="fa fa-bars"></i> <span>Bitácora</span></a></li>
       </ul>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Opciones de navegaci&oacute;n</li>

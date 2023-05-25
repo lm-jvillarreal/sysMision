@@ -1,5 +1,6 @@
 <?php
 	include '../global_settings/conexion_oracle.php';
+	include '../global_seguridad/verificar_sesion.php';
 	$codigo = $_POST['codigo'];
 	$m_of = 0;
 	date_default_timezone_set('America/Monterrey');
@@ -30,6 +31,7 @@
 	$iva = ".".$row_nombre[3];
 	$ieps = ".0".$row_nombre[4];
 	$precio_impuestos = $row_nombre[1] + ($row_nombre[1] * $iva) + ($ieps * $row_nombre[1]);
+	$uc_impuestos = $row_nombre[2] + ($row_nombre[2] * $iva) + ($ieps * $row_nombre[2]);
 	$qry_oferta = "SELECT
 						A_F.ARON_PORCDESCUENTOOPRECIO,
 						TO_CHAR (
@@ -51,7 +53,8 @@
 					AND A_F.AROC_ARTICULO = '$codigo'
 					AND C_O.coon_baja_sn = '0'
 					AND A_F.aron_baja_sn = '0'
-					ORDER BY C_O.COON_ID_OFERTA DESC";
+					AND A_F.AROC_SUCURSAL = '$id_sede'
+					ORDER BY A_F.ARON_PORCDESCUENTOOPRECIO ASC";
 
 	$st_oferta = oci_parse($conexion_central, $qry_oferta);
 	oci_execute($st_oferta);
@@ -87,7 +90,7 @@
 	if ($precio_f == 0) {
 		$margen_oferta = 0;
 	}else{
-		$margen_oferta = 1 - ($row_nombre[2]/$precio_f);
+		$margen_oferta = 1 - ($uc_impuestos/$precio_f);
 		$m_of = $margen_oferta * 100;
 		$m_of = round($m_of, 1);
 	}
@@ -99,7 +102,9 @@
 					spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 3, '$codigo') + 
 					spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 4, '$codigo') +
 					spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 5, '$codigo') +
-					spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 99, '$codigo')
+					spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 99, '$codigo')+
+					spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 203, '$codigo')+
+					spin_articulos.fn_existencia_disponible_todos (13, NULL, NULL, 1, 1, 6, '$codigo')
 				FROM
 					dual";
 	$st_exis = oci_parse($conexion_central, $existencia);

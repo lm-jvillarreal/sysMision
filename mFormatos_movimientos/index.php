@@ -46,6 +46,7 @@ include '../global_seguridad/verificar_sesion.php';
 									<option value="SXMEDO">MERMA MAL ESTADO</option>
 									<option value="SXMPAN">MERMA PANADERIA/PASTELERIA</option>
 									<option value="SXMTOR">MERMA TORTILLERIA</option>
+									<option value="SXMCAD">MERMA POR CADUCIDAD</option>
 									<option value="SXMVAR">MERMA VARIEDADES</option>
 									<option value="SFAACC">FARMACIA ACCIDENTES</option>
 									<option value="SFCBOT">FARMACIA BOTIQUIN</option>
@@ -289,6 +290,8 @@ include '../global_seguridad/verificar_sesion.php';
 								window.open('mermas_robo.php', '_blank');
 							} else if (respuesta == "TRADEP") {
 								window.open('transferencia_deptos.php', '_blank');
+							}else if (respuesta == "SXMCAD") {
+								window.open('merma_cad.php', '_blank');
 							}
 						}
 					}

@@ -92,7 +92,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <input type="hidden" id="id_solicitud">
+                <input type="text" id="id_solicitud">
                 <label for="codigo">*Código</label>
                 <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Ingresa el código de producto"/>
               </div>

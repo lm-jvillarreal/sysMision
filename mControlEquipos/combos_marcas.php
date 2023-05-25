@@ -7,10 +7,10 @@
   	}
 
   	if(!isset($_POST['searchTerm'])){ 
-	  $cadena_marcas = "SELECT id,marca FROM marcas WHERE activo = '1'".$filtro_equipo;
+	  $cadena_marcas = "SELECT id,marca FROM marcas WHERE activo = '1'and id_equipo = '1'";
 	}else{ 
 	  $search = $_POST['searchTerm'];   
-	  $cadena_marcas = "SELECT id,marca FROM marcas WHERE activo = '1' ".$filtro_equipo." AND marca like '%".$search."%'";
+	  $cadena_marcas = "SELECT id,marca FROM marcas WHERE activo = '1'and id_equipo = '1'AND marca like '%".$search."%'";
 	} 
 
 	$consulta_marcas = mysqli_query($conexion, $cadena_marcas);

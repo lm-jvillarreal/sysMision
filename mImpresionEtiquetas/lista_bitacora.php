@@ -1,6 +1,6 @@
 <?php
 include '../global_seguridad/verificar_sesion.php';
-
+$datos=array();
 date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d"); 
 $hora=date ("H:i:s");
@@ -66,26 +66,17 @@ while ($row_detalle = mysqli_fetch_array($consulta_detalle)) {
 		$imprime = $row_detalle[5];
 	}
 	$esc_descripcion = mysqli_real_escape_string($conexion,$row_detalle[2]);
-	$renglon = "
-	{
-		\"id\": \"$row_detalle[0]\",
-		\"sucursal\": \"$row_detalle[1]\",
-		\"nombre\": \"$esc_descripcion\",
-		\"solicita\": \"$row_detalle[3]\",
-		\"fecha_solicitud\": \"$row_detalle[4]\",
-		\"imprime\": \"$imprime\",
-		\"fecha_impresion\": \"$row_detalle[6]\",
-		\"tiempo_transcurre\": \"$tiempo\",
-		\"calificacion\": \"$calificacion\"
-	},";
-	$cuerpo = $cuerpo.$renglon;
+	array_push($datos,array(
+		'id'=>$row_detalle[0],
+		'sucursal'=>$row_detalle[1],
+		'nombre'=>$esc_descripcion,
+		'solicita'=>$row_detalle[3],
+		'fecha_solicitud'=>$row_detalle[4],
+		'imprime'=>$imprime,
+		'fecha_impresion'=>$row_detalle[6],
+		'tiempo_transcurre'=>$tiempo,
+		'calificacion'=>$calificacion
+	));
 }
-$cuerpo2 = trim($cuerpo, ',');
-$tabla = "
-["
-.$cuerpo2.
-"]
-";
-//echo $cadena_detalle;
-echo $tabla;
+echo utf8_encode(json_encode($datos));
 ?>

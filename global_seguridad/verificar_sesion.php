@@ -5,13 +5,14 @@ session_start();
 date_default_timezone_set('America/Monterrey');
 $fecha=date("Y-m-d"); 
 $hora=date ("H:i:s");
-$seg_sesion=120 * 60;
+$seg_sesion=180 * 60;
 //antes de hacer los cálculos, compruebo que el usuario está logueado 
 //utilizamos el mismo script que antes 
 if (!isset($_SESSION["sysAdMision_autenticado"]) || $_SESSION["sysAdMision_autenticado"] != "SI")
 { 
     //si no está logueado lo envío a la página de autentificación 
     echo"<script language=\"javascript\">window.location=\"../mLogin/index.php\"</script>";
+    //echo $_SESSION["sysAdMision_autenticado"];
 } 
 else 
 {
